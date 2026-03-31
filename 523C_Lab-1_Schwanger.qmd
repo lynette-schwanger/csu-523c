@@ -143,7 +143,7 @@ White R near Watson gauge didn't start recording until 1985-10-01
 
 Little Colorado R near Cameron gauge has a gap of 731 days ending on 1994-12-31
 
-Colorado R Below Hoover Dam gauge had a gap of 239 days ending on 2023-03-26
+Colorado R Below Hoover Dam gauge has a gap of 239 days ending on 2023-03-26
 
 ---
 
@@ -235,11 +235,17 @@ This is the core relational data problem: observations in one table, attributes 
 Before writing a single `_join()` call, answer three questions:
 
 1. **What is the key?** Which column(s) connect the two tables?
+  
   The "site_no" column is the key.
+  
 2. **What is the relationship?** One-to-one, or one-to-many?
+  
   This is a one-to-many relationship. Each site in site_meta has exactly one set of metadata per gauge, but each site appears many times in raw.
+  
 3. **What happens to non-matching rows?** Keep them (with NAs), or drop them?
+  
   I'll use a left join to preserve all flow records in the raw dataset, retaining rows even where no matching site metadata existed. 
+  
   
 **a.** Pull site metadata for all 7 gauges. Before joining, verify that `site_no` is actually unique in `site_meta` — a duplicated key will silently inflate your row count.
 
@@ -328,7 +334,7 @@ ft_table_three
 
 Drought managers don't just watch absolute flow levels — they watch how current conditions compare to **historical norms**. The standard operational metric is the **7Q10**: the lowest 7-day average flow expected to occur once in 10 years. We'll use a related approach: flag when the 7-day rolling mean falls below the historical 10th percentile.
 
-**a.** For each gauge, compute the **7-day rolling mean** of daily discharge. Use `zoo::rollmean()` with `fill = NA` and `align = "right"` so each value represents the average of the current and 6 preceding days. If you havent see this function before, check out the documentation (`?rollmean`) and examples to understand how it works.
+**a.** For each gauge, compute the **7-day rolling mean** of daily discharge. Use `zoo::rollmean()` with `fill = NA` and `align = "right"` so each value represents the average of the current and 6 preceding days. If you haven't seen this function before, check out the documentation (`?rollmean`) and examples to understand how it works.
 
 ```{r}
 rolling_mean <- raw |>
