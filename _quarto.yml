@@ -1,6 +1,7 @@
 project:
   type: website
+  output-dir: docs
+
 website:
   title: "csu-523c"
-  output-dir: docs
   

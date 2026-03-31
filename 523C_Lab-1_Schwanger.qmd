@@ -38,7 +38,7 @@ The Colorado River Basin supplies drinking water to 40 million people across 7 U
 In this lab you will work with real streamflow records pulled directly from the **USGS National Water Information System (NWIS)** — the same federal system water managers query every morning. You will build a complete analytical pipeline: from raw API call to normalized comparisons, threshold detection, basin-wide trend visualization, and a predictive model of the Compact's key accounting point.
 
 ```{r}
-#| eval: false
+
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 
 pacman::p_load(
@@ -764,12 +764,6 @@ residual_histogram <- aug |>
   labs(title = "Residuals of Lees Ferry Flow Model", y = "Count", x = "Residuals")
 
 residual_histogram
-```
-
-```{r}
-aug |> 
-  arrange(desc(.resid)) |> 
-  select(water_year, .resid) |> head(5)
 ```
 
 **d.** In 3–4 sentences: (1) identify the outlier water year visible in your scatter plot. Which year is it and why did the model fail to predict it? (2) Do the residuals appear approximately normal, or is there a tail that concerns you? (3) Name two additional predictors that would most improve this model and explain the physical mechanism behind each.
