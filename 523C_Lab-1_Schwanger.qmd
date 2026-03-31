@@ -67,6 +67,7 @@ The data can be grabbed below!
 ```{r}
 #| label: data-pull
 #| cache: true
+#| output: false
 
 gauges <- tribble(
   ~site_no,     ~name,                           ~state,
@@ -90,10 +91,7 @@ raw <- readNWISdv(
   select(site_no, name, state, Date, Flow)
 
 glimpse(raw)
-```
 
-
-```{r}
 raw_check <- raw |>
   count(site_no) |>
   mutate(expected = as.numeric(as.Date("2023-12-31") - as.Date("1980-01-01")) + 1)
@@ -101,13 +99,18 @@ raw_check <- raw |>
 raw_check
 ```
 
+
 The following sites have less data than expected: 
-White R near Watson - 09306500
-Little Colorado R near Cameron - 09402500
-Colorado R Below Hoover Dam - 09423000
+
+09306500 - White R near Watson
+
+09402500 - Little Colorado R near Cameron
+
+09423000 - Colorado R Below Hoover Dam
 
 
 ```{r}
+#| output: false
 white_r_gaps <- raw |>
   filter(site_no == "09306500") |>
   arrange(Date) |>
@@ -115,17 +118,11 @@ white_r_gaps <- raw |>
   filter(gap > 1)
 
 white_r_gaps
-```
-No gaps in the data for White R near Watson gauge
 
-```{r}
 white_r_start <- raw |> 
   filter(site_no == "09306500") |> 
   summarise(min_date = min(Date), max_date = max(Date))
-```
-White R near Watson gauge didn't start recording until 1985-10-01
 
-```{r}
 little_co_gaps <- raw |>
   filter(site_no == "09402500") |>
   arrange(Date) |>
@@ -133,11 +130,7 @@ little_co_gaps <- raw |>
   filter(gap > 1)
 
 little_co_gaps
-```
-Little Colorado R near Cameron gauge has a gap of 731 days ending on 1994-12-31
 
-
-```{r}
 below_hoover_gaps <- raw |>
   filter(site_no == "09423000") |>
   arrange(Date) |>
@@ -146,6 +139,10 @@ below_hoover_gaps <- raw |>
 
 below_hoover_gaps
 ```
+White R near Watson gauge didn't start recording until 1985-10-01
+
+Little Colorado R near Cameron gauge has a gap of 731 days ending on 1994-12-31
+
 Colorado R Below Hoover Dam gauge had a gap of 239 days ending on 2023-03-26
 
 ---
@@ -194,6 +191,9 @@ table_two <- date_tables |>
 
 
 ```{r}
+#| label: tbl-one
+#| tbl-cap: "Colorado River Gauges with Highest Discharge on 9-30-2023"
+
 ft_table_one <- flextable(table_one) |>
   set_header_labels(
     site_no = "Site #",
@@ -201,13 +201,15 @@ ft_table_one <- flextable(table_one) |>
     state = "State",
     Flow = "Flow (cfs)") |>
   set_caption(paste0("Colorado River Gauges with Highest Discharge on ", format(my.date, "%m-%d-%Y"))) |>
-  font(fontname = "Times New Roman", part = "all") |>
   autofit()
 
 ft_table_one
 ```
 
 ```{r}
+#| label: tbl-two
+#| tbl-cap: "Colorado River Gauges with Greatest Day-Over-Day Flow Increase on 9-30-2023"
+
 ft_table_two <- flextable(table_two) |>
   set_header_labels(
     site_no = "Site #",
@@ -215,7 +217,6 @@ ft_table_two <- flextable(table_two) |>
     state = "State",
     flow_delta = "Flow Change") |>
   set_caption(paste0("Colorado River Gauges with Greatest Day-Over-Day Flow Increase on ", format(my.date, "%m-%d-%Y"))) |>
-  font(fontname = "Times New Roman", part = "all") |>
   autofit()
 
 ft_table_two
@@ -234,9 +235,12 @@ This is the core relational data problem: observations in one table, attributes 
 Before writing a single `_join()` call, answer three questions:
 
 1. **What is the key?** Which column(s) connect the two tables?
+  The "site_no" column is the key.
 2. **What is the relationship?** One-to-one, or one-to-many?
+  This is a one-to-many relationship. Each site in site_meta has exactly one set of metadata per gauge, but each site appears many times in raw.
 3. **What happens to non-matching rows?** Keep them (with NAs), or drop them?
-
+  I'll use a left join to preserve all flow records in the raw dataset, retaining rows even where no matching site metadata existed. 
+  
 **a.** Pull site metadata for all 7 gauges. Before joining, verify that `site_no` is actually unique in `site_meta` — a duplicated key will silently inflate your row count.
 
 ```{r}
@@ -261,8 +265,6 @@ site_meta |> count(site_no) |> filter(n > 1)
 ```{r}
 joined <- left_join(raw, site_meta, by = "site_no")
 ```
-# A left join was used to preserve all flow records in the raw dataset, retaining rows even where no matching site metadata existed. 
-
 
 **c.** Verify the join — this step is not optional:
 
@@ -271,6 +273,7 @@ nrow(joined) == nrow(raw)
 sum(is.na(joined$dec_lat_va)) == 0
 ```
 
+---
 
 # **Question 3**: Per-Unit-Area Normalization {#q3}
 
@@ -285,20 +288,19 @@ flow_sqmi <- joined |>
 
 **b.** On `my.date`, build a flextable showing **both raw and normalized rankings** side by side for all 7 gauges. Include columns for gauge name, raw discharge (cfs), drainage area (mi²), normalized flow (cfs/mi²), raw rank, and normalized rank. Sort by raw rank.
 
-```{r}
-date_tables_flow_sqmi <- flow_sqmi |>
-  filter(Date == my.date) 
-```
 
 ```{r}
+#| label: tbl-three
+#| tbl-cap: "Raw vs. Normalized Flow Rankings for Colorado River Gauges on 9-30-2023"
+
+date_tables_flow_sqmi <- flow_sqmi |>
+  filter(Date == my.date) 
+
 table_three <- date_tables_flow_sqmi |>
   mutate(raw_rank = rank(desc(Flow)), norm_rank = rank(desc(flow_per_sqmi))) |>
   arrange(raw_rank) |>
   select(name, drain_area_va, Flow, flow_per_sqmi, raw_rank, norm_rank) 
-```
 
-
-```{r}
 ft_table_three <- flextable(table_three) |>
   colformat_num(na_str = "NA") |>
   set_header_labels(
@@ -310,7 +312,6 @@ ft_table_three <- flextable(table_three) |>
     norm_rank = "Normalized Rank") |>
   set_caption(paste0("Raw vs. Normalized Flow Rankings for Colorado River Gauges on ", format(my.date, "%m-%d-%Y"))) |>
   add_footer_lines("NA indicates no recorded flow on this date") |>
-  font(fontname = "Times New Roman", part = "all") |>
   autofit()
 
 ft_table_three
@@ -319,7 +320,7 @@ ft_table_three
 
 **c.** Answer in 2–3 sentences: (1) do the raw and normalized rankings differ, and if so, which gauge changes most dramatically? (2) Why does per-area normalization matter for comparing gauges in the Colorado Basin? (3) Name one analysis where you would use raw discharge and one where you would use normalized discharge.
 
-> ...Raw and normalized discharge rankings differ significantly. Colorado R at Glenwood Springs and Little Colorado R near Cameron show the most dramatic change. Colorado R at Glenwood jumps from 5th in raw discharge to 1st in normalized flow, while Little Colorado R near Cameron drops from 1st to 5th once its large drainage area is accounted for. Per-area normalization matters in the Colorado Basin because the gauges span a wide range of watershed sizes, so raw discharge largely reflects drainage area rather than actual runoff intensity or precipitation. Normalization of discharge allows for more meaningful comparison across sites. Raw discharge is important for infrastructure design such as bridges or dams, while normalized discharge is more valuable when comparing runoff responses to storm events. 
+> Raw and normalized discharge rankings differ significantly. Colorado R at Glenwood Springs and Little Colorado R near Cameron show the most dramatic change. Colorado R at Glenwood jumps from 5th in raw discharge to 1st in normalized flow, while Little Colorado R near Cameron drops from 1st to 5th once its large drainage area is accounted for. Per-area normalization matters in the Colorado Basin because the gauges span a wide range of watershed sizes, so raw discharge largely reflects drainage area rather than actual runoff intensity or precipitation. Normalization of discharge allows for more meaningful comparison across sites. Raw discharge is important for infrastructure design such as bridges or dams, while normalized discharge is more valuable when comparing runoff responses to storm events. 
 
 ---
 
@@ -374,28 +375,28 @@ scale_color_manual(values = c("10th Percentile Low-Flow Threshold, 1980–2010 B
 **e.** How many days per year, on average, did Lees Ferry fall below its low-flow threshold in **2000–2010** vs. **2011–2023**? Produce a small summary table and answer in 2–3 sentences: (1) did below-threshold days increase or decrease? (2) Is this a shift in isolated dry years or a persistent baseline change? (3) What does this imply for Compact delivery obligations?
 
 ```{r}
+#| output: false
 lf_thresh_2000_2010 <- rolling_mean |>
   filter(site_no == "09380000", Date >= "2000-01-01" & Date <= "2010-12-31") |>
   summarise(avg_days_below = round(sum(below_threshold, na.rm = TRUE) / n_distinct(year(Date)))) |>
   mutate(period = "2000-2010")
-```
 
-```{r}
 lf_thresh_2011_2023 <- rolling_mean |>
   filter(site_no == "09380000", Date >= "2011-01-01" & Date <= "2023-12-31") |>
   summarise(avg_days_below = round(sum(below_threshold, na.rm = TRUE) / n_distinct(year(Date)))) |>
   mutate(period = "2011-2023")
-```
 
-```{r}
 summary_table <- bind_rows(lf_thresh_2000_2010, lf_thresh_2011_2023)
 
 summary_table
 ```
 
 ```{r}
+#| label: tbl-four
+#| tbl-cap: "Average Days per Year Below Threshold at Lees Ferry"
+
 ft_summary_table <- flextable(summary_table) |>
-  set_header_labels( period = "Period", avg_days_below = "Average Days per Year Below\nThreshold at Lees Ferry") |>
+  set_header_labels( period = "Period", avg_days_below = "Average Days") |>
   autofit() |>
   align(align = "center", part = "all")
 
@@ -403,7 +404,7 @@ ft_summary_table
 ```
 
 
-> ... Below threshold days decreased from an average of 36 days per year in 2000-2010 to an average of 28 days per year in 2011-2023. The 7-day rolling mean plot suggests this is due to isolated drought years rather than a persistent baseline shift. For Compact delivery obligations, this suggests that flows have improved relative to the historical threshold. However, the 10th percentile threshold was derived from data from 1980-2010, so this conclusion should be interpreted cautiously. The 1980-2010 baseline may reflect higher flows than current conditions, potentially underestimating true water scarcity. 
+> Below threshold days decreased from an average of 36 days per year in 2000-2010 to an average of 28 days per year in 2011-2023. The 7-day rolling mean plot suggests this is due to isolated drought years rather than a persistent baseline shift. For Compact delivery obligations, this suggests that flows have improved relative to the historical threshold. However, the 10th percentile threshold was derived from data from 1980-2010, so this conclusion should be interpreted cautiously. The 1980-2010 baseline may reflect higher flows than current conditions, potentially underestimating true water scarcity. 
 
 ---
 
@@ -435,9 +436,7 @@ lees_ferry_annual <- annual_summary |>
   filter(site_no == "09380000") |>
   filter(water_year < 2024) |>
   mutate(median_tad = median(total_annual_discharge))
-```
 
-```{r}
 lees_ferry_annual |>
   ggplot(aes(x = water_year, y = total_annual_discharge, fill = total_annual_discharge >= median_tad)) +
   geom_col() +
@@ -455,7 +454,7 @@ lees_ferry_annual |>
 
 In 2–3 sentences: (1) describe the direction and approximate timing of any structural shift in the record, (2) identify one year that stands out as an exception to the dominant pattern and what you know about its cause, and (3) explain what this pattern means for Compact water accounting.
 
-> ... Total annual discharge at Lees Ferry shows a clear shift beginning in 2000. Prior to 2000 there were many wet years where discharge was well above the long-term median, while flows after 2000 consistently hovered near or below it. One exception is 2011, which had above average snowpack (Colorado Division of Water Resources, 2011). The Colorado River Compact allocated water based on historical flow records, which included much wetter periods that reliably recharged the basin (Bureau of Reclamation, 2012). The shift shown at Lees Ferry suggests the Colorado River is no longer delivering the volume of water it once was and that the river is over-allocated.   
+> Total annual discharge at Lees Ferry shows a clear shift beginning in 2000. Prior to 2000 there were many wet years where discharge was well above the long-term median, while flows after 2000 consistently hovered near or below it. One exception is 2011, which had above average snowpack (Colorado Division of Water Resources, 2011). The Colorado River Compact allocated water based on historical flow records, which included much wetter periods that reliably recharged the basin (Bureau of Reclamation, 2012). The shift shown at Lees Ferry suggests the Colorado River is no longer delivering the volume of water it once was and that the river is over-allocated.   
 
 ---
 
@@ -477,17 +476,13 @@ baseline <- annual_summary |>
   group_by(site_no) |>
   summarise(baseline_mean = mean(total_annual_discharge, na.rm = TRUE), baseline_sd = sd(total_annual_discharge, na.rm = TRUE)) |>
   ungroup()
-```
 
-```{r}
 baseline_joined <- left_join(annual_summary, baseline, by = "site_no") |> 
   mutate(anomaly = (total_annual_discharge - baseline_mean) / baseline_sd)
 
 baseline_joined <- baseline_joined |>
   left_join(select(joined, site_no, name) |> distinct(), by = "site_no")
-```
 
-```{r}
 nrow(baseline_joined) == nrow(annual_summary)
 
 sum(is.na(baseline_joined$baseline_mean)) == 0
@@ -515,7 +510,7 @@ ggplot(heatmap, aes(x = water_year, y = name, fill = anomaly)) +
 
 **c.** In 3–4 sentences: (1) describe whether the post-2000 drought signal appears across all gauges or only some, (2) identify two specific years that appear as basin-wide anomalies — one dry, one wet — and name the climate event that caused each, and (3) explain what simultaneous basin-wide anomalies tell you that a single-gauge record cannot.
 
-> ...The post-2000 drought signal appears consistently across all gauges, with most sites showing below-average anomalies from the early 2000s onward. This suggests that the drought is a basin-wide phenomenon. Water year 1984 stands out as a basin-wide wet anomaly, driven by record snowpack following several wet winters across the Rocky Mountains (Kunkel & Stevens, 2022). Water year 2002 appears as a basin-wide dry anomaly, corresponding to one of the most severe single-year droughts in Colorado Basin history (Kunkel & Stevens, 2022). The simultaneous nature of these anomalies across all seven gauges confirms that the signal is climatically driven. A single gauge record could suggest this conclusion but not prove it, since an anomaly at one site could reflect local land use, reservoir operations, or measurement error rather than a true basin-wide climate signal.
+> The post-2000 drought signal appears consistently across all gauges, with most sites showing below-average anomalies from the early 2000s onward. This suggests that the drought is a basin-wide phenomenon. Water year 1984 stands out as a basin-wide wet anomaly, driven by record snowpack following several wet winters across the Rocky Mountains (Kunkel & Stevens, 2022). Water year 2002 appears as a basin-wide dry anomaly, corresponding to one of the most severe single-year droughts in Colorado Basin history (Kunkel & Stevens, 2022). The simultaneous nature of these anomalies across all seven gauges confirms that the signal is climatically driven. A single gauge record could suggest this conclusion but not prove it, since an anomaly at one site could reflect local land use, reservoir operations, or measurement error rather than a true basin-wide climate signal.
 
 ---
 
@@ -531,9 +526,7 @@ $$\bar{X}_{year} = \frac{\sum (lon_i \times Q_i)}{\sum Q_i} \qquad \bar{Y}_{year
 
 ```{r}
 weighted_coords <- left_join(annual_summary, site_meta, by = "site_no")
-```
 
-```{r}
 nrow(annual_summary) == nrow(weighted_coords)
 
 sum(is.na(weighted_coords$dec_lat_va)) == 0
@@ -566,10 +559,6 @@ left_map_panel <- ggplot() +
   annotate("text", x = -111.5, y = 37.5, label = "Utah", color = "gray20", size = 4) +
   annotate("text", x = -111.5, y = 35.5, label = "Arizona", color = "gray20", size = 4)
 
-left_map_panel
-```
-
-```{r}
 right_map_panel <- ggplot(flow_weighted, aes(x = water_year, y = weighted_lat)) +
   geom_line() +
   geom_smooth(method = "lm", color = "black") +
@@ -577,18 +566,13 @@ right_map_panel <- ggplot(flow_weighted, aes(x = water_year, y = weighted_lat)) 
   annotate("text", x = 1993, y = 37.14, label = "1993", size = 3) +
   annotate("text", x = 2023, y = 37.3, label = "2023", size = 3)
   
-
-right_map_panel
-```
-
-```{r}
 left_map_panel + right_map_panel
 ```
 
 
 **c.** Your latitude time series should show two years where the weighted center spikes dramatically northward. Identify those two years and explain: (1) what climate event caused each spike, (2) what they have in common physically, and (3) what the long-term upward trend in weighted latitude suggests about which part of the basin is becoming proportionally more important to total flow — and why that matters for water managers downstream.
 
-> ...The two years where the flow-weighted center spikes dramatically northward are 1993 and 2023, corresponding to exceptionally wet years across the upper Colorado Basin driven by above-average snowpack in the Colorado River headwaters (U.S. Geological Survey, 2024; Tillman et al., 2025). This disproportionately increased flow from upper basin gauges relative to southern tributaries, pulling the weighted center northward. The long-term upward trend in weighted latitude suggests that northern headwater gauges are becoming proportionally more important to total basin flow over time. This matters for water managers because Compact allocations assume a relatively stable geographic distribution of flow sources. If the basin's hydrologic center of mass is shifting north, downstream users who depend on southern tributary contributions may face increasing reliability risk.
+> The two years where the flow-weighted center spikes dramatically northward are 1993 and 2023, corresponding to exceptionally wet years across the upper Colorado Basin driven by above-average snowpack in the Colorado River headwaters (U.S. Geological Survey, 2024; Tillman et al., 2025). This disproportionately increased flow from upper basin gauges relative to southern tributaries, pulling the weighted center northward. The long-term upward trend in weighted latitude suggests that northern headwater gauges are becoming proportionally more important to total basin flow over time. This matters for water managers because Compact allocations assume a relatively stable geographic distribution of flow sources. If the basin's hydrologic center of mass is shifting north, downstream users who depend on southern tributary contributions may face increasing reliability risk.
 
 ---
 
@@ -610,13 +594,9 @@ seasonal_regime <- water_year |>
   mutate(month = month(Date),
   season = case_when(month %in% 4:6 ~ "Snowmelt", month %in% 7:9 ~ "Monsoon", month %in% 10:12 ~ "Low-flow", month %in% 1:3 ~ "Winter"),
   season = factor(season, levels = c('Snowmelt', 'Monsoon', 'Low-flow', 'Winter')))
-```
 
-```{r}
 seasonal_regime <- left_join(seasonal_regime, site_meta, by = "site_no")
-```
 
-```{r}
 nrow(seasonal_regime) == nrow(water_year)
 sum(is.na(seasonal_regime$drain_area_va)) == 0
 ```
@@ -642,9 +622,7 @@ peak_timing <- seasonal_regime |>
 
 peak_timing_lees <- peak_timing |>
   filter(site_no == "09380000")
-```
 
-```{r}
 ggplot(peak_timing_lees, aes(x = water_year, y = day_of_year)) +
   geom_point() +
   geom_smooth(method = "lm") +
@@ -653,7 +631,7 @@ ggplot(peak_timing_lees, aes(x = water_year, y = day_of_year)) +
 
 **d.** In 2–3 sentences: (1) describe the direction and magnitude of the peak timing trend, (2) is it statistically visible or buried in noise? (3) What would a two-week earlier peak timing mean operationally for reservoir managers trying to capture spring runoff before it passes downstream?
 
-> ...Peak flow timing at Lees Ferry shows a weak upward trend over the study period, suggesting peaks are occurring slightly later in the calendar year, though the scatter in the data indicate this trend is largely buried in noise. The lack of a clear earlier-peak signal is likely attributable to Glen Canyon Dam's regulation of flow immediately upstream. Dam release schedules can obscure the natural snowmelt timing signal that would otherwise be visible at an unregulated gauge. Peak timing two weeks earlier would have significant operational consequences for reservoir managers. Storage capacity would need to be freed up earlier in the spring to capture runoff, requiring earlier drawdowns that would conflict with maintaining winter storage levels. 
+> Peak flow timing at Lees Ferry shows a weak upward trend over the study period, suggesting peaks are occurring slightly later in the calendar year, though the scatter in the data indicate this trend is largely buried in noise. The lack of a clear earlier-peak signal is likely attributable to Glen Canyon Dam's regulation of flow immediately upstream. Dam release schedules can obscure the natural snowmelt timing signal that would otherwise be visible at an unregulated gauge. Peak timing two weeks earlier would have significant operational consequences for reservoir managers. Storage capacity would need to be freed up earlier in the spring to capture runoff, requiring earlier drawdowns that would conflict with maintaining winter storage levels. 
 
 ---
 
@@ -676,9 +654,7 @@ We'll build a simple but physically grounded model: can Glenwood Springs (an upp
 lees_model <- annual_summary |>
   filter(site_no == "09380000") |>
   rename(lees_flow = total_annual_discharge)
-```
 
-```{r}
 glenwood_springs <- annual_summary |> 
   filter(site_no == "09085000") |>
     rename(glenwood_flow = total_annual_discharge)
@@ -687,24 +663,18 @@ lees_glenwood <- left_join(lees_model, glenwood_springs, by = "water_year")
 
 nrow(lees_glenwood) == nrow(lees_model)
 sum(is.na(lees_glenwood$glenwood_flow)) == 0
-```
 
-```{r}
 dominant_season <- seasonal_summary |>
   filter(site_no == "09380000") |>
   group_by(water_year) |> 
   slice_max(total_seasonal_discharge, n = 1, with_ties = FALSE) |>
   ungroup()
-```
 
-```{r}
 lees_glenwood_dominant_season <- left_join(lees_glenwood, dominant_season, by = "water_year")
 
 nrow(lees_glenwood_dominant_season) == nrow(lees_glenwood)
 sum(is.na(lees_glenwood_dominant_season$season)) == 0
-```
 
-```{r}
 lees_glenwood_dominant_season <- lees_glenwood_dominant_season |>
   mutate(log_lees_flow = log(lees_flow), log_glenwood_flow = log(glenwood_flow))
 ```
@@ -714,6 +684,8 @@ lees_glenwood_dominant_season <- lees_glenwood_dominant_season |>
 **b.** Fit a linear model predicting `log_lees` from `log_glenwood`, `season`, and their interaction, If you haven't seen linear modeling in R, we will cover it in more detail later in this course, but, the syntax is straightforward: `lm(response ~ predictor1 * predictor2, data = mydata)` fits a model with main effects and an interaction term. The interaction (`*`) allows the relationship between Glenwood and Lees to differ by season while a model without interaction (`lm(log_lees ~ log_glenwood + season)`) would assume the same Glenwood-Lees relationship in every season.
 
 ```{r}
+#| output: false
+
 mod <- lm(log_lees_flow ~ log_glenwood_flow * season, data = lees_glenwood_dominant_season)
 summary(mod)
 ```
@@ -722,7 +694,7 @@ summary(mod)
 **c.** In 3–4 sentences: (1) report the R² and state whether the overall model is statistically significant, (2) interpret the `log_glenwood` coefficient as an elasticity — what does it mean physically that the coefficient is greater than 1? (3) describe what the significant negative interaction terms tell you about the upstream-downstream relationship outside of Snowmelt season.
 
 
-> ...The R² is 0.855, which means the model explains 85.5% of the variance in Lees Ferry annual flow. The model is statistically significant with a p-value of 1.116e-13. The log_glenwood_flow coefficient of 1.80 is an elasticity, a 1% increase in Glenwood Springs flow is associated with a 1.80% increase at Lees Ferry. This means above-average headwater years are amplified as flow accumulates from tributaries downstream. Outside of Snowmelt season, the upstream-downstream amplification is much weaker across all seasons. The negative interaction terms for Monsoon, Low-flow, and Winter all substantially reduce the baseline elasticity, meaning Glenwood Springs flow is a much weaker predictor of Lees Ferry delivery outside of spring snowmelt. 
+> The R² is 0.855, which means the model explains 85.5% of the variance in Lees Ferry annual flow. The model is statistically significant with a p-value of 1.116e-13. The log_glenwood_flow coefficient of 1.80 is an elasticity, a 1% increase in Glenwood Springs flow is associated with a 1.80% increase at Lees Ferry. This means above-average headwater years are amplified as flow accumulates from tributaries downstream. Outside of Snowmelt season, the upstream-downstream amplification is much weaker across all seasons. The negative interaction terms for Monsoon, Low-flow, and Winter all substantially reduce the baseline elasticity, meaning Glenwood Springs flow is a much weaker predictor of Lees Ferry delivery outside of spring snowmelt. 
 
 ---
 
@@ -764,18 +736,18 @@ residual_histogram
 
 **d.** In 3–4 sentences: (1) identify the outlier water year visible in your scatter plot. Which year is it and why did the model fail to predict it? (2) Do the residuals appear approximately normal, or is there a tail that concerns you? (3) Name two additional predictors that would most improve this model and explain the physical mechanism behind each.
 
-> ...The most notable outlier is 1983, which the model substantially underpredicted. This was an exceptionally wet year, producing flows far outside the range the model was trained on. The residuals are approximately normally distributed and centered near zero, though the long right tail driven by 1983 suggests the model struggles with extreme wet years. An additional predictor that would improve the model is spring snowpack levels at upstream SNOTEL stations, which directly drive spring runoff volume and would help the model anticipate extremely wet years. A soil moisture variable would also improve the model, as it would capture how much upstream precipitation is absorbed by dry soils before reaching the channel.
+> The most notable outlier is 1983, which the model substantially underpredicted. This was an exceptionally wet year, producing flows far outside the range the model was trained on. The residuals are approximately normally distributed and centered near zero, though the long right tail driven by 1983 suggests the model struggles with extreme wet years. An additional predictor that would improve the model is spring snowpack levels at upstream SNOTEL stations, which directly drive spring runoff volume and would help the model anticipate extremely wet years. A soil moisture variable would also improve the model, as it would capture how much upstream precipitation is absorbed by dry soils before reaching the channel.
 
-> ...
-References
 
-> ...Bureau of Reclamation. (2012, December). Colorado River Basin water supply and demand study: Study report. https://usbr.gov/lc/region/programs/crbstudy/finalreport/Study%20Report/StudyReport_FINAL_Dec2012.pdf
+**References**
 
-> ...Colorado Division of Water Resources, Office of the State Engineer. (2011, April). Colorado water supply conditions update. https://spl.cde.state.co.us/artemis/nrserials/nr513internet/nr513201104internet.pdf
+Bureau of Reclamation. (2012, December). Colorado River Basin water supply and demand study: Study report. https://usbr.gov/lc/region/programs/crbstudy/finalreport/Study%20Report/StudyReport_FINAL_Dec2012.pdf
 
-> ...Kunkel, K. E., & Stevens, L. E. (2022). Colorado: State climate summary 2022. NOAA National Centers for Environmental Information. https://statesummaries.ncics.org/chapter/co/
+Colorado Division of Water Resources, Office of the State Engineer. (2011, April). Colorado water supply conditions update. https://spl.cde.state.co.us/artemis/nrserials/nr513internet/nr513201104internet.pdf
 
-> ...Tillman, F. D., Masbruch, M. D., Knight, J. E., Engott, J. A., Lopez, S. F., Jones, C. J., Dickinson, J. E., & Miller, M. P. (2025). Hydrologic response of groundwater and streamflow to natural and anthropogenic drivers of change in headwaters of the upper Colorado River basin during recent wet (1982–1999) and drought (2000–2022) conditions. Journal of Hydrology: Regional Studies, 60, 102554. https://doi.org/10.1016/j.ejrh.2025.102554
+Kunkel, K. E., & Stevens, L. E. (2022). Colorado: State climate summary 2022. NOAA National Centers for Environmental Information. https://statesummaries.ncics.org/chapter/co/
 
-> ...U.S. Geological Survey. (2024). Colorado River Basin drought and the 2023 water year. https://www.usgs.gov/tools/colorado-river-basin-drought-and-2023-water-year
+Tillman, F. D., Masbruch, M. D., Knight, J. E., Engott, J. A., Lopez, S. F., Jones, C. J., Dickinson, J. E., & Miller, M. P. (2025). Hydrologic response of groundwater and streamflow to natural and anthropogenic drivers of change in headwaters of the upper Colorado River basin during recent wet (1982–1999) and drought (2000–2022) conditions. Journal of Hydrology: Regional Studies, 60, 102554. https://doi.org/10.1016/j.ejrh.2025.102554
+
+U.S. Geological Survey. (2024). Colorado River Basin drought and the 2023 water year. https://www.usgs.gov/tools/colorado-river-basin-drought-and-2023-water-year
 
