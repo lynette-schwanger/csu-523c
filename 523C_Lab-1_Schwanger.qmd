@@ -656,11 +656,11 @@ We'll build a simple but physically grounded model: can Glenwood Springs (an upp
 
 ```{r}
 lees_model <- annual_summary |>
-  filter(site_no == "09380000") |>
+  filter(site_no == "09380000" & water_year <= 2023) |>
   rename(lees_flow = total_annual_discharge)
 
 glenwood_springs <- annual_summary |> 
-  filter(site_no == "09085000") |>
+  filter(site_no == "09085000" & water_year <= 2023) |>
     rename(glenwood_flow = total_annual_discharge)
 
 lees_glenwood <- left_join(lees_model, glenwood_springs, by = "water_year")
@@ -698,7 +698,7 @@ summary(mod)
 **c.** In 3–4 sentences: (1) report the R² and state whether the overall model is statistically significant, (2) interpret the `log_glenwood` coefficient as an elasticity — what does it mean physically that the coefficient is greater than 1? (3) describe what the significant negative interaction terms tell you about the upstream-downstream relationship outside of Snowmelt season.
 
 
-> The R² is 0.855, which means the model explains 85.5% of the variance in Lees Ferry annual flow. The model is statistically significant with a p-value of 1.116e-13. The log_glenwood_flow coefficient of 1.80 is an elasticity, a 1% increase in Glenwood Springs flow is associated with a 1.80% increase at Lees Ferry. This means above-average headwater years are amplified as flow accumulates from tributaries downstream. Outside of Snowmelt season, the upstream-downstream amplification is much weaker across all seasons. The negative interaction terms for Monsoon, Low-flow, and Winter all substantially reduce the baseline elasticity, meaning Glenwood Springs flow is a much weaker predictor of Lees Ferry delivery outside of spring snowmelt. 
+> The adjusted R² is 0.6572, which means the model explains 65.7% of the variance in Lees Ferry annual flow. The model is statistically significant with a p-value of 4.114e-08. The log_glenwood_flow coefficient of 1.80 is an elasticity, a 1% increase in Glenwood Springs flow is associated with a 1.80% increase at Lees Ferry. This means above-average headwater years are amplified as flow accumulates from tributaries downstream. Outside of Snowmelt season, the upstream-downstream amplification is much weaker across all seasons. The negative interaction terms for Monsoon, Low-flow, and Winter all substantially reduce the baseline elasticity, meaning Glenwood Springs flow is a much weaker predictor of Lees Ferry delivery outside of spring snowmelt. 
 
 ---
 
@@ -720,7 +720,7 @@ pred_v_actual_plot <- aug |>
   geom_point() +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   labs(title = "Predicted vs. Actual Flow at Lees Ferry", y = "Actual Flow (log cfs)", x = "Predicted Flow (log cfs)", color = "Season") +
-  geom_text(data = filter(aug, abs(.resid) > 0.2), aes(label = water_year), size = 3, nudge_y = 0.06)
+  geom_text(data = filter(aug, abs(.resid) > 0.2), aes(label = water_year), size = 3, nudge_y = 0.03)
   
 
 pred_v_actual_plot
