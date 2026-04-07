@@ -253,12 +253,12 @@ Store the result as a new column `dist_to_border` in your cities data frame. Pro
 make_border_line <- function(x, dissolve = TRUE) {if (dissolve) {x |> 
     st_union() |> 
     st_cast("MULTILINESTRING")} else {x |> 
-        st_combine() |> st_cast("MULTILINESTRING")}}
+        st_combine() |> 
+        st_cast("MULTILINESTRING")}}
 
 
 add_distance_km <- function(cities, target_geom, col_name) {cities |>
-    mutate(
-      !!col_name := st_distance(geometry, target_geom)[ ,1] |>
+    mutate(!!col_name := st_distance(geometry, target_geom)[ ,1] |>
         set_units("km") |>
         drop_units())}
 
@@ -424,7 +424,8 @@ ggrepel::geom_label_repel(
 :::
 
 ```{r}
-big_cities <- cities |> slice_max(population, n = 10)
+big_cities <- cities |> 
+  slice_max(population, n = 10)
 ```
 
 ```{r}
@@ -444,7 +445,6 @@ ggplot() +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
   theme_void() +
   annotate("text", x = -90000, y = 1200000, label = "10 Largest U.S. Cities by Population", size = 6)
-  #labs(title = "10 Largest US Cities by Population")
 ```
 
 ## 3.2 Distance to National Border
@@ -481,12 +481,24 @@ In 2–3 sentences: (1) where are the cities farthest from the national border? 
 Color all cities by distance to the nearest state border. Highlight and label the 5 cities farthest from any state line.
 
 ```{r}
-
+ggplot() +
+  geom_sf(data = countries) +
+  geom_sf(data = states) +
+  geom_sf(data = cities, aes(color = dist_to_state)) +
+  ggrepel::geom_label_repel(
+  data = farthest_cities_sb,
+  aes(geometry = geometry, label = city),
+  stat = "sf_coordinates",
+  size = 3) +
+  coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
+  scale_color_viridis_c(name = "Distance to State Border (km)") +
+  theme_void() +
+  annotate("text", x = 0, y = 1200000, label = "U.S. Cities by Distance from State Border", size = 6)
 ```
 
 In 2–3 sentences: (1) how does the pattern differ from 3.2? (2) Which states appear to have the largest interior areas — do any water resources features (large river basins, aquifer extents) correlate with the states where cities can be far from borders? (3) What would a hydrologist use this distance for?
 
-> ...
+> The pattern highlights the central interior area of states rather than the country. Texas and Western states appear to have the largest interior areas, which track with their large overall area. These states also have large water resource features such as the Colorado and Arkansas River Basins, as well as the High Plains Ogallala Aquifer. For hydrologists, distance to a state border could be useful to identify which watersheds a state has full authority over, and which areas closer to state borders would require collaborative governance. 
 
 ## 3.4 Equidistance Zone: Mexico and Canada
 
@@ -497,12 +509,32 @@ Create a variable for the absolute difference between the two distances, then us
 :::
 
 ```{r}
+equidistant_cities <- cities |>
+  filter(abs(dist_to_mexico - dist_to_canada) <100) |>
+  slice_max(population, n = 5)
+```
 
+```{r}
+ggplot() +
+  geom_sf(data = countries) +
+  geom_sf(data = states) +
+  geom_sf(data = cities, aes(color = abs(dist_to_mexico - dist_to_canada))) +
+  gghighlight(abs(dist_to_mexico - dist_to_canada) < 100, use_direct_label = FALSE) +
+  geom_sf(data = equidistant_cities, color = "deeppink2", size = 2) +
+  ggrepel::geom_label_repel(
+   data = equidistant_cities,
+   aes(geometry = geometry, label = city),
+   stat = "sf_coordinates",
+   size = 3) +
+  coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
+  scale_color_viridis_c(name = "Equidistance (km)") +
+  theme_void() +
+  annotate("text", x = 0, y = 1250000, label = "U.S. Cities Approximately Equidistant from the Mexican and Canadian Borders", size = 4)
 ```
 
 In 2–3 sentences: (1) describe where the equidistant zone runs geographically, (2) does it surprise you that this band cuts through the interior of the country where it does? (3) What does this zone imply about the relative influence of Canadian vs. Mexican climate systems on cities in this corridor?
 
-> ...
+> The equidistant zone runs through the center of the western U.S. then dips southeast after the Mississipi River toward Florida. While initially the curve was surprising, the geometry makes sense after quick assessment. Cities in this equidistant corridor likely experience a transitional climate zone where arctic and tropical systems often collide. 
 
 ---
 
@@ -538,8 +570,20 @@ Filter to cities within 160 km, drop geometry if needed, then summarize: count r
 :::
 
 ```{r}
-
+total_pop <- sum(cities$population)
 ```
+
+```{r}
+border_zone <- cities |>
+  filter(dist_to_border < 160)
+```
+
+```{r}
+ft_table_five <- border_zone |>
+  st_drop_geometry() |>
+  summarize(cities_in_zone = n(), population_in_zone = sum(population), percent_of_total = (population_in_zone / total_pop) * 100) 
+```
+
 
 In 2–3 sentences: (1) report the percentage and compare it to the ACLU's estimate, (2) explain why the result might be higher than many people expect given the geography of the US, (3) name one scenario where a water resources professional might need to navigate federal jurisdictional boundaries in a similar way — where a regulatory zone defined by distance from a physical boundary changes what analysis or permitting is required.
 
