@@ -189,6 +189,11 @@ national_border <- make_border_line(states)
 cities <- add_distance_km(cities, national_border, "dist_to_border")
 
 farthest_cities_nb <- top_cities(cities, "dist_to_border") 
+```
+
+```{r}
+#| label: tbl-one
+#| tbl-cap: "U.S. Cities Farthest from the National Border"
 
 ft_table_one <- farthest_cities_nb |>
     select(city, state_id, dist_to_border) |>
@@ -214,6 +219,11 @@ state_border <- make_border_line(states, dissolve = FALSE)
 cities <- add_distance_km(cities, state_border, "dist_to_state")
 
 farthest_cities_sb <- top_cities(cities, "dist_to_state") 
+```
+
+```{r}
+#| label: tbl-two
+#| tbl-cap: "U.S. Cities Farthest from a State Border"
 
 ft_table_two <- farthest_cities_sb |>
     select(city, state_id, dist_to_state) |>
@@ -239,6 +249,11 @@ mexico_border <- make_border_line(mexico)
 cities <- add_distance_km(cities, mexico_border, "dist_to_mexico")
 
 farthest_cities_mx <- top_cities(cities, "dist_to_mexico") 
+```
+
+```{r}
+#| label: tbl-three
+#| tbl-cap: "U.S. Cities Farthest from Mexico Border"
 
 ft_table_three <- farthest_cities_mx |>
     select(city, state_id, dist_to_mexico) |>
@@ -264,6 +279,11 @@ canada_border <- make_border_line(canada)
 cities <- add_distance_km(cities, canada_border, "dist_to_canada")
 
 farthest_cities_ca <- top_cities(cities, "dist_to_canada") 
+```
+
+```{r}
+#| label: tbl-four
+#| tbl-cap: "U.S. Cities Farthest from Canadian Border"
 
 ft_table_four <- farthest_cities_ca |>
     select(city, state_id, dist_to_canada) |>
@@ -429,6 +449,11 @@ total_pop <- sum(cities$population)
 
 border_zone <- cities |>
   filter(dist_to_border < 160)
+```
+
+```{r}
+#| label: tbl-five
+#| tbl-cap: "U.S. Cities Within 100-Mile Zone"
 
 ft_table_five <- border_zone |>
   st_drop_geometry() |>
@@ -440,7 +465,6 @@ ft_table_five <- border_zone |>
 
 ft_table_five
 ```
-
 
 In 2–3 sentences: (1) report the percentage and compare it to the ACLU's estimate, (2) explain why the result might be higher than many people expect given the geography of the US, (3) name one scenario where a water resources professional might need to navigate federal jurisdictional boundaries in a similar way — where a regulatory zone defined by distance from a physical boundary changes what analysis or permitting is required.
 
@@ -563,26 +587,56 @@ border_zone_wgs <- cities_wgs |>
 
 pal <- colorNumeric("viridis", domain = cities_wgs$`Distance to National Border (km)`)
 
+popup = paste0(
+  "<b>", cities_wgs$City, "</b><br>",
+  "State: ", cities_wgs$State, "<br>",
+  "Population: ", format(cities_wgs$Population, big.mark = ","), "<br>",
+  "Distance to National Border: ", cities_wgs$`Distance to National Border (km)`, " km", "<br>",
+  "Distance to Mexico: ", cities_wgs$`Distance to Mexico (km)`, " km", "<br>",
+  "Distance to Canada: ", cities_wgs$`Distance to Canada (km)`, " km", "<br>",
+  "Distance to State Border: " , cities_wgs$`Distance to State Border (km)`, " km")
+
+equidist_popup = paste0(
+  "<b>", equidist_wgs$City, "</b><br>",
+  "State: ", equidist_wgs$State, "<br>",
+  "Population: ", format(equidist_wgs$Population, big.mark = ","), "<br>",
+  "Distance to National Border: ", equidist_wgs$`Distance to National Border (km)`, " km", "<br>",
+  "Distance to Mexico: ", equidist_wgs$`Distance to Mexico (km)`, " km", "<br>",
+  "Distance to Canada: ", equidist_wgs$`Distance to Canada (km)`, " km", "<br>",
+  "Distance to State Border: " , equidist_wgs$`Distance to State Border (km)`, " km")
+
+border_popup = paste0(
+  "<b>", border_zone_wgs$City, "</b><br>",
+  "State: ", border_zone_wgs$State, "<br>",
+  "Population: ", format(border_zone_wgs$Population, big.mark = ","), "<br>",
+  "Distance to National Border: ", border_zone_wgs$`Distance to National Border (km)`, " km", "<br>",
+  "Distance to Mexico: ", border_zone_wgs$`Distance to Mexico (km)`, " km", "<br>",
+  "Distance to Canada: ", border_zone_wgs$`Distance to Canada (km)`, " km", "<br>",
+  "Distance to State Border: " , border_zone_wgs$`Distance to State Border (km)`, " km")
+
 leaflet() |> 
   addProviderTiles(providers$CartoDB.DarkMatter) |> 
   addPolygons(data = states_wgs, 
               fillOpacity = 0, 
               weight = 1, 
               color = "grey50") |>
-  addCircles(data = cities_wgs, 
+  addCircleMarkers(data = cities_wgs, 
              color = ~pal(`Distance to National Border (km)`), 
              group = "All Cities", 
-             popup = leafpop::popupTable(st_drop_geometry(cities_wgs), feature.id = FALSE, row.numbers = FALSE)) |>
-  addCircles(data = equidist_wgs, 
+             radius = 1,
+             popup = popup) |>
+  addCircleMarkers(data = equidist_wgs, 
              color = "#8B0A50", 
              group = "Equidistant Zone", 
              fillOpacity = 1, 
-             popup = leafpop::popupTable(st_drop_geometry(equidist_wgs), feature.id = FALSE, row.numbers = FALSE)) |>
-  addCircles(data = border_zone_wgs, 
+             radius = 1,
+             popup = equidist_popup) |>
+  addCircleMarkers(data = border_zone_wgs, 
              color = "#CD6600", 
              group = "100-Mile Border Zone", 
              fillOpacity = 1, 
-             popup = leafpop::popupTable(st_drop_geometry(border_zone_wgs), feature.id = FALSE, row.numbers = FALSE)) |>
+             radius = 1,
+             popup = border_popup) |>
   addLegend(position = "bottomright", 
             colors = c("#8B0A50", "#CD6600"), 
             labels = c("Equidistant Zone", "100-Mile Border Zone"), 
@@ -597,7 +651,7 @@ leaflet() |>
 
 **Methods note**: In 2–3 sentences, describe the CRS transformation needed to convert from `eqdc` to `leaflet`-compatible coordinates, and any design choices you made to keep the map responsive (e.g., filtering, clustering, or simplifying geometries).
 
-> I transformed the CRS from eqdc to leaflet compatible WGS84 coordinates using st_transform(data, 4326). I also filtered the cities data to just the columns needed to create the map, and rounded the distances to one decimal place in an effort to keep the map responsive. 
+> I transformed the CRS from eqdc to leaflet compatible WGS84 coordinates using st_transform(data, 4326). I also filtered the cities data to just the columns needed to create the map, and rounded the distances to one decimal place in an effort to keep the map responsive. Rendering was taking 30+ minutes, so I used paste0 for the popups instead of popup = leafpop::popupTable.
 
 
 References
