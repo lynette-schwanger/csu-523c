@@ -327,8 +327,7 @@ ggplot() +
   stat = "sf_coordinates",
   size = 3) +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
-  theme_void() +
-  annotate("text", x = -90000, y = 1200000, label = "10 Largest U.S. Cities by Population", size = 6)
+  theme_void()
 ```
 
 ## 3.2 Distance to National Border
@@ -352,8 +351,7 @@ ggplot() +
   size = 3) +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
   scale_color_viridis_c(name = "Distance to Border (km)") +
-  theme_void() +
-  annotate("text", x = 0, y = 1200000, label = "U.S. Cities by Distance from National Border", size = 6)
+  theme_void() 
 ```
 
 In 2–3 sentences: (1) where are the cities farthest from the national border? (2) Does the geographic pattern make sense given the shape of CONUS? (3) Name one water resources application where distance to a national border would be a meaningful variable.
@@ -376,8 +374,7 @@ ggplot() +
   size = 3) +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
   scale_color_viridis_c(name = "Distance to State Border (km)") +
-  theme_void() +
-  annotate("text", x = 0, y = 1200000, label = "U.S. Cities by Distance from State Border", size = 6)
+  theme_void()
 ```
 
 In 2–3 sentences: (1) how does the pattern differ from 3.2? (2) Which states appear to have the largest interior areas — do any water resources features (large river basins, aquifer extents) correlate with the states where cities can be far from borders? (3) What would a hydrologist use this distance for?
@@ -406,8 +403,7 @@ ggplot() +
    size = 3) +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
   scale_color_viridis_c(name = "Equidistance (km)") +
-  theme_void() +
-  annotate("text", x = 0, y = 1250000, label = "U.S. Cities Approximately Equidistant from the Mexican and Canadian Borders", size = 4)
+  theme_void() 
 ```
 
 
@@ -493,8 +489,7 @@ ggplot() +
    size = 3) +
   scale_color_gradient(low = "darkred", high = "orange", name = "Distance to Border (km)") +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
-  theme_void() +
-  annotate("text", x = 0, y = 1250000, label = "100-Mile Border Zone", size = 7) 
+  theme_void()
 ```
 
 ## 4.3 Most Populous City per State in the Zone
