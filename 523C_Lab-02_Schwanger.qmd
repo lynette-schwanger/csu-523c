@@ -513,8 +513,7 @@ ggplot() +
    size = 3) +
   scale_color_gradient(low = "darkred", high = "orange", name = "Distance to Border (km)") +
   coord_sf(xlim = c(-2230934, 2124207), ylim = c(-1611778, 1277767)) +
-  theme_void() +
-  annotate("text", x = 0, y = 1250000, label = "100-Mile Border Zone", size = 7) 
+  theme_void()
 ```
 
 In 2–3 sentences: (1) how many states have at least one city in the zone? (2) Are there states where the most populous city is NOT in the zone — what does that tell you about that state's geography? (3) How might the jurisdictional boundary created by this rule create challenges for environmental monitoring programs that cross state or national boundaries?
