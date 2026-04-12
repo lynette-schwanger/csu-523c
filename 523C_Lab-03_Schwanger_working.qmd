@@ -57,16 +57,6 @@ In addition to producing correct code and outputs, your submission should:
 ### Libraries
 
 ```{r}
-install.packages("rmapshaper")
-
-```
-
-```{r}
-install.packages("AOI")
-```
-
-
-```{r}
 #| echo: false
 #| eval: true
 #| message: false
@@ -106,6 +96,9 @@ To achieve this:
   - transform the data to `EPSG:5070`
 
 ```{r}
+conus <- aoi_get(state = "conus", county = "all")
+
+conus <- st_transform(conus, 5070)
 ```
 
 
@@ -122,6 +115,17 @@ To achieve this:
   - Since these are point objects, the difference between union/combine is mute
 
 ```{r}
+county_centroids <- st_centroid(conus)
+
+county_pts <- st_union(county_centroids)
+```
+
+```{r}
+class(county_pts)
+```
+
+```{r}
+length(county_pts)
 ```
 
 ### Step 1.3
@@ -179,14 +183,63 @@ Last, we want to ensure that our surfaces are topologically valid/simple.
 
 
 ```{r}
+voronoi <- county_pts |>
+  st_voronoi() |>
+  st_cast()
+```
 
+```{r}
+triangulated <- county_pts |>
+  st_triangulate() |>
+  st_cast()
+```
+
+```{r}
+gridded <- conus |>
+  st_make_grid(n = 70) |>
+  st_as_sf() |>
+  mutate(id = 1:n())
+```
+
+```{r}
+hexagonal <- conus |>
+  st_make_grid(n = 70, square = FALSE) |>
+  st_as_sf() |>
+  mutate(id = 1:n())
+```
+
+```{r}
+voronoi <- voronoi |>
+  st_as_sf() |>
+  mutate(id = 1:n())
+```
+
+```{r}
+triangulated <- triangulated |>
+  st_as_sf() |>
+  mutate(id = 1:n())
 ```
 
 ### Step 1.4
 
 If you plot the above tessellations you'll see that the **Voronoi**, **Delaunay triangulation**, **hexagon**, and **square grids** all produce regions far beyond the boundaries of CONUS.
 
-We need to cut these boundaries to CONUS borders. 
+```{r}
+plot(voronoi)
+```
+
+```{r}
+plot(triangulated)
+```
+
+```{r}
+plot(hexagonal)
+```
+
+```{r}
+plot(gridded)
+```
+We need to crop these boundaries to CONUS borders. 
 
 To do this, we need two different approaches:
 - **`st_intersection()`** for Voronoi and Delaunay (these tessellations create geometries that extend infinitely/far beyond the study area; intersection clips them at the exact boundary)
@@ -195,12 +248,53 @@ To do this, we need two different approaches:
 Either way, we'll need a geometry of CONUS to serve as our clipping feature. We can get this by unioning our existing county boundaries.
 
 ```{r, eval = TRUE}
+conus_boundary <- conus |>
+  st_union()
+```
 
+```{r}
+voronoi_crop <- voronoi |>
+  st_intersection(voronoi, conus_boundary)
+
+plot(voronoi_crop)
+```
+
+```{r}
+#ugh got warning and the plot is wrong
+#need to only pass geometry, then add it back
+
+voronoi_crop <- st_intersection(st_geometry(voronoi), conus_boundary) |>
+  st_as_sf() |>
+  mutate(id = 1:n())
+
+plot(voronoi_crop)
+```
+
+```{r}
+triangulated_crop <- st_intersection(st_geometry(triangulated), conus_boundary) |>
+  st_as_sf() |>
+  mutate(id = 1:n())
+
+plot(triangulated_crop)
+```
+
+```{r}
+#gah ok, apparently don't need to drop geometry for st_filter
+gridded_crop <- st_filter(gridded, conus_boundary)
+
+plot(gridded_crop)
+```
+
+
+```{r}
+hexagonal_crop <- st_filter(hexagonal, conus_boundary)
+
+plot(hexagonal_crop)
 ```
 
 ### Step 1.5
 
-With a single feature boundary, we must carefully consider the complexity of the geometry. Remember, the more points our geometry contains, the more computations needed for spatial predicates our differencing. For a task like ours, we do not need a finely resolved coastal boarder. 
+With a single feature boundary, we must carefully consider the complexity of the geometry. Remember, the more points our geometry contains, the more computations needed for spatial predicates our differencing. For a task like ours, we do not need a finely resolved coastal border. 
 
 
 To achieve this: 
@@ -210,7 +304,17 @@ To achieve this:
 - Choose what percentage of vertices to retain using the `keep` argument and work to find the highest number that provides a shape _you_ are comfortable with for the analysis:
 
 ```{r, eval = TRUE}
+?ms_simplify
+```
 
+```{r}
+conus_boundary_simple <- ms_simplify(conus_boundary, keep = 0.07)
+
+plot(conus_boundary_simple)
+```
+
+```{r}
+plot(conus_boundary)
 ```
 
 ::: callout-important
@@ -221,16 +325,22 @@ After simplification, verify the boundary is still valid and covers all dams:
 ```{r}
 #| eval: false
 # Check: Is the simplified boundary valid?
-st_is_valid(boundary_simplified)
+st_is_valid(conus_boundary_simple)
 
 # Check: Does it still contain all of CONUS?
-st_bbox(boundary_simplified)  # Should cover roughly [-125, 24] to [-66, 49]
+st_bbox(conus_boundary_simple)  # Should cover roughly [-125, 24] to [-66, 49]
+#hmm numbers don't match up
+st_bbox(conus_boundary)
+#but they are similar to the original, so probably ok
 
 # Check: Visual comparison
-plot(boundary_original, main = "Original")
-plot(boundary_simplified, main = "Simplified")
+plot(conus_boundary, main = "Original")
+plot(conus_boundary_simple, main = "Simplified")
 ```
 :::
+
+> I chose to use keep = 0.07. ?ms_simplify revealed that the default was 0.05, so I started there and noticed several coastal islands disappeared from the boundary. I worked my way up from there until all coastal islands reappeared at 0.07. While we may not need a finely resolved coastal border, I did want to ensure the major islands off the coast were included, as dams do exist on some of these islands. 
+
 
 ::: callout-note
 ## Simplification: Boundary Only, Not Tessellation
@@ -243,15 +353,45 @@ plot(boundary_simplified, main = "Simplified")
 - How many points were you able to remove? What are the consequences of doing this computationally?
 
 ```{r}
+mapview::npts(conus_boundary)
+mapview::npts(conus_boundary_simple)
 ```
+
+> The original CONUS boundary contained 11,292 points, and the simplified version contains 807 points. This reduction should significantly decrease subsequent spatial computational time throughout the lab.
+
 
 - Finally, crop **all four grids** to the CONUS boundary—but using different methods:
   - **Voronoi & Delaunay** (geometry-based tessellations): Use `st_intersection()` to *cut* these geometries at the CONUS boundary. These tessellations create boundaries that extend well beyond CONUS; intersection actually trims them.
   - **Hexagon & Square grids** (regular grids): Use `st_filter()` to keep only tiles that touch CONUS. These grids are already regularly aligned; filtering just discards edge tiles without modifying them.
 
 ```{r}
+voronoi_crop <- st_intersection(st_geometry(voronoi), conus_boundary_simple) |>
+  st_as_sf() |>
+  mutate(id = 1:n())
 
+plot(voronoi_crop)
 ```
+
+```{r}
+triangulated_crop <- st_intersection(st_geometry(triangulated), conus_boundary_simple) |>
+  st_as_sf() |>
+  mutate(id = 1:n())
+
+plot(triangulated_crop)
+```
+
+```{r}
+gridded_crop <- st_filter(gridded, conus_boundary_simple)
+
+plot(gridded_crop)
+```
+
+```{r}
+hexagonal_crop <- st_filter(hexagonal, conus_boundary_simple)
+
+plot(hexagonal_crop)
+```
+
 
 ::: callout-tip
 ## Why Different Cropping Methods?
@@ -291,7 +431,7 @@ name = function(arg1, arg2) {
 
 For this function: 
 
-  - The name can be anything you chose, _arg1_ should take an `sf` object, and _arg2_ should take a character string that will title the plot
+  - The name can be anything you choose, _arg1_ should take an `sf` object, and _arg2_ should take a character string that will title the plot
   
   - In your function, the code should follow our standard `ggplot` practice where your data is _arg1_, and your title is _arg2_
   
@@ -310,7 +450,12 @@ For this function:
       - You will need to paste character stings and variables together.
 
 ```{r}
-
+plot_tessellation_function = function(sf_object, title) {
+  ggplot(sf_object) + 
+    geom_sf(fill = "white", color = "navy", linewidth = 0.2) +
+    theme_void() +
+    labs(title = title, caption = paste(nrow(sf_object), "features")) +
+    theme(plot.caption = element_text(size = 11, hjust = 0.5))}
 ```
 
 ### Step 1.7
@@ -318,6 +463,23 @@ For this function:
 Use your new function to plot each of your tessellated surfaces and the original county data (5 plots in total):
 
 ```{r}
+plot_tessellation_function(voronoi_crop, "Voronoi")
+```
+
+```{r}
+plot_tessellation_function(triangulated_crop, "Triangulated")
+```
+
+```{r}
+plot_tessellation_function(hexagonal_crop, "Hexagonal")
+```
+
+```{r}
+plot_tessellation_function(gridded_crop, "Square")
+```
+
+```{r}
+plot_tessellation_function(conus, "U.S. Counties")
 ```
 
 # Question 2:
@@ -330,7 +492,7 @@ First, we need a function that takes a `sf` object and a `character` string and 
 
 For this function: 
 
-  - The function name can be anything you chose, _arg1_ should take an `sf` object, and _arg2_ should take a character string describing the object
+  - The function name can be anything you choose, _arg1_ should take an `sf` object, and _arg2_ should take a character string describing the object
   
   - In your function, calculate the area of `arg1`; convert the units to km^2^; and then drop the units
   
@@ -349,12 +511,39 @@ For this function:
   - Return this `data.frame`
   
 ```{r}
-
+area_df_function <- function(sf_object, label){
+  area_km2 <- sf_object |>
+    st_area() |>
+    set_units("km^2") |>
+    drop_units()
+  
+  data.frame(tesselation = label, n_features = nrow(sf_object), mean_area_km2 = mean(area_km2), sd_area_km2 = sd(area_km2), total_area_km2 = sum(area_km2))}
 ```
 
 ### Step 2.2 
 
 Use your new function to summarize each of your tessellations and the original counties. 
+
+```{r}
+area_df_function(voronoi_crop, "Voronoi")
+```
+
+```{r}
+area_df_function(triangulated_crop, "Triangulated")
+```
+
+```{r}
+area_df_function(hexagonal_crop, "Hexagonal")
+```
+
+```{r}
+area_df_function(gridded_crop, "Square")
+```
+
+```{r}
+area_df_function(conus, "Counties")
+```
+
 
 ### Step 2.3
 
@@ -363,9 +552,12 @@ Multiple `data.frame` objects can bound row-wise with `bind_rows` into a single 
 For example, if your function is called `sum_tess`, the following would bind your summaries of the triangulation and voroni object.
 
 ```{r, eval = FALSE}
-bind_rows(
-  sum_tess(triangulate_grid, "triangulation"),
-  sum_tess(voronoi_grid, "voronoi")
+all_surfaces <- bind_rows(
+  area_df_function(triangulated_crop, "triangulated"),
+  area_df_function(voronoi_crop, "voronoi"), 
+  area_df_function(hexagonal_crop, "hexagonal"), 
+  area_df_function(gridded_crop, "square"), 
+  area_df_function(conus, "counties")
 )
 ```
 
@@ -374,12 +566,28 @@ bind_rows(
 Once your 5 summaries are bound (2 tessellations, 2 coverage's, and the raw counties) print the `data.frame` as a nice table using `knitr`/`kableExtra`/`flextable` or your preferred table formatting package.
 
 ```{r, echo = FALSE}
+library(flextable)
 
+ft_one <- flextable(all_surfaces) |>
+  set_header_labels(tesselation = "Tessellation",
+    n_features = "Features",
+    mean_area_km2 = "Mean Area (km²)",
+    sd_area_km2 = "SD Area (km²)",
+    total_area_km2 = "Total Area (km²)") |> 
+    colformat_double(digits = 0)
+
+ft_one
 ```
 
 ### Step 2.5
 
 Comment on the traits of each tessellation. Be specific about how these traits might impact the results of a point-in-polygon analysis in the contexts of the modifiable areal unit problem and with respect computational requirements.
+
+> The counties tessellation standard deviation is large, meaning some counties are significantly bigger than others. For point in polygon comparisons, this could mean…
+The voronoi tessellation is similar to counties, with the same number of features and mean area, but a slightly smaller standard deviation in area. This means…
+For both the hexagonal and square tessellations, the standard deviation is 0. This makes sense as the tessellations are all the same size, but it means they’re not taking into account any geographical geometries and are completely arbitrary. For point in polygon comparisons this means…
+The triangulated tessellation has almost twice the amount of features than any other tessellation, which could require significantly more computational bandwidth for analysis. 
+
 
 ****
 
