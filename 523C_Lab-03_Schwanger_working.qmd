@@ -583,10 +583,11 @@ ft_one
 
 Comment on the traits of each tessellation. Be specific about how these traits might impact the results of a point-in-polygon analysis in the contexts of the modifiable areal unit problem and with respect computational requirements.
 
-> The counties tessellation standard deviation is large, meaning some counties are significantly bigger than others. For point in polygon comparisons, this could mean…
-The voronoi tessellation is similar to counties, with the same number of features and mean area, but a slightly smaller standard deviation in area. This means…
-For both the hexagonal and square tessellations, the standard deviation is 0. This makes sense as the tessellations are all the same size, but it means they’re not taking into account any geographical geometries and are completely arbitrary. For point in polygon comparisons this means…
-The triangulated tessellation has almost twice the amount of features than any other tessellation, which could require significantly more computational bandwidth for analysis. 
+> The counties tessellation standard deviation is large, meaning some counties are significantly bigger than others. For point in polygon comparisons, this could mean that counties with many points could just be large in area rather than dense. This is an example of the Modifiable Areal Unit Problem, as comparing point concentration across regions could become misleading. 
+The voronoi tessellation is similar to counties, with the same number of features and mean area, but a slightly smaller standard deviation in area. This means tiles are more equal in size than in the counties tessellation and therefore more comparable. However, the voronoi tessellation is still constructed using county centroid locations, so geographic distribution is still uneven. 
+For both the hexagonal and square tessellations, the standard deviation is 0. This makes sense as the tessellations are all the same size, but it means they’re not taking into account any geographical geometries and are completely arbitrary. For point in polygon comparisons this means counts are comparable across tiles, however the boundaries have little meaning for management decisions.
+The triangulated tessellation has almost twice the amount of features than any other tessellation, which would require significantly more computational bandwidth for analysis. More features means more tiles with no point counts, which could alter analysis. 
+These differences illustrate how the choice of tessellation shapes analytical conclusions, even when the underlying data remains the same.
 
 
 ****
@@ -674,7 +675,15 @@ The function should make use of spatial and non-spatial joins, sf coercion and `
 :::
   
 ```{r}
-
+point_in_polygon_function <- function(points, polygons, id_col){
+  points <- st_transform(points, st_crs(polygons))
+   polygons |>
+    st_join(points) |>
+    st_drop_geometry() |>
+    count(.data[[id_col]]) |>
+    right_join(polygons, by = id_col) |>
+    mutate(n = replace_na(n, 0)) |>
+    st_as_sf()}
 ```
 
 ### Step 3.3 
@@ -686,7 +695,66 @@ Apply your point-in-polygon function to each of your five tessellated surfaces w
 - The id column is the name of the id columns you defined.
 
 ```{r}
+voronoi_dams <- point_in_polygon_function(dams2, voronoi_crop, "id")
+```
 
+```{r}
+nrow(voronoi_dams) == nrow(voronoi_crop)
+sum(is.na("n")) == 0
+
+plot(voronoi_dams["n"])
+```
+
+```{r}
+triangulated_dams <- point_in_polygon_function(dams2, triangulated_crop, "id")
+```
+
+```{r}
+nrow(triangulated_dams) == nrow(triangulated_crop)
+sum(is.na("n")) == 0
+
+plot(triangulated_dams["n"])
+```
+
+```{r}
+gridded_dams <- point_in_polygon_function(dams2, gridded_crop, "id")
+```
+
+```{r}
+nrow(gridded_dams) == nrow(gridded_crop)
+sum(is.na("n")) == 0
+
+plot(gridded_dams["n"])
+```
+
+```{r}
+hexagonal_dams <- point_in_polygon_function(dams2, hexagonal_crop, "id")
+```
+
+```{r}
+nrow(hexagonal_dams) == nrow(hexagonal_crop)
+sum(is.na("n")) == 0
+
+plot(hexagonal_dams["n"])
+```
+
+```{r}
+county_dams <- point_in_polygon_function(dams2, conus, "fip_code")
+```
+
+```{r}
+nrow(county_dams) == nrow(conus)
+sum(is.na("n")) == 0
+
+plot(county_dams["n"])
+```
+
+```{r}
+sum(county_dams$n)
+```
+
+```{r}
+sum(county_dams$n == 0)
 ```
 
 ### Step 3.4
@@ -712,12 +780,40 @@ For this function:
       - You will need to paste character stings and variables together.
       
 ```{r}
-
+plot_pip_function <- function(sf_object, title) {
+  ggplot(sf_object) +
+    geom_sf(aes(fill = n), color = NA) +
+    scale_fill_viridis_c() +
+    theme_void() +
+    labs(title = title,caption = paste(sum(sf_object$n), "dams")) +
+    theme(plot.caption = element_text(size = 11, hjust = 0.5))}
 ```
 
 ### Step 3.5
 
 Apply your plotting function to each of the 5 tessellated surfaces with Point-in-Polygon counts:
+
+
+```{r}
+plot_pip_function(voronoi_dams, "Voronoi")
+```
+
+```{r}
+plot_pip_function(triangulated_dams, "Triangulated")
+```
+
+```{r}
+plot_pip_function(hexagonal_dams, "Hexagonal")
+```
+
+```{r}
+plot_pip_function(gridded_dams, "Square")
+```
+
+```{r}
+plot_pip_function(county_dams, "U.S. Counties")
+```
+
 
 ### Step 3.6 
 
@@ -739,8 +835,25 @@ Now that you have dam counts across all five tessellation methods, compare the r
 Your answer should be **3–4 paragraphs** and grounded in the actual visualizations and patterns you observe from your tessellation comparisons.
 
 ```{r}
-
+library(patchwork)
 ```
+
+```{r}
+plot_pip_function(voronoi_dams, "Voronoi") +
+plot_pip_function(triangulated_dams, "Triangulation") +
+plot_pip_function(hexagonal_dams, "Hexagonal") +
+plot_pip_function(gridded_dams, "Square") +
+plot_pip_function(county_dams, "Counties") +
+plot_layout(ncol = 2)
+```
+
+> Based on the plots, the hexagonal and square tessellations seem to lose some of the clustering detail in the west, as well as the hotspot in the northern U.S. that is clear in all of the other tessellations. These grids have the largest mean area and set arbitrary boundaries which dissipates dam concentation. The triangulated tessellation also significantly diffuses the hotspot in the central U.S. Since the triangulated tessellation has the most tiles, its tiles are generally smaller and therefore dam counts get spread across more units. 
+
+> If a dam operations manager wanted to understand geographic clustering I would recommend using the counties tessellation. Counties is the only tessellation that aligns with meaningful boundaries that reflect jurisdictions and decision-making units. As such, it reveals significant patterns and hotspots without over-fragmenting the landscape. The triangulated, hexagonal, and square tessellations all lose detail compared to counties, and voronoi is based on county geometry while not actually reflecting true county boundaries. While counties does have the highest standard deviation in tile area which may not be ideal for certain analysis, in the context of dam operations having legally meaningful boundaries is more important. 
+
+> The MAUP problem is clearly illustrated by the plots, the same data produced different clustering patterns depending on which tessellation was used. It would be valid to use hexagonal and square grids if doing an analysis on dam density as their tiles are uniform in size with a standard deviation of 0 km squared. Voronoi and triangulated tessellations could work well if meaningful points were used to derive the tessellations rather than the center of the county, which is arbitrary for this particular analysis. The choice of "keep = 0.07" for boundary simplification did not influence the tessellation recommendation. Simplification only affected the boundary and not the tessellation itself. 
+
+> The counties tessellation best supports management decisions in this context because it preserves clustering hotspots while also adding jurisdictional context. A dam operations manager may need to coordinate with local governments when making operational decisions, which makes county context crucial. 
 
 ---
 
@@ -787,7 +900,7 @@ knitr::kable(nid_classifier,
 - A standard summary indicates there are over 400 unique combinations of dam purposes:
 
 ```{r, echo = TRUE, eval = TRUE}
-unique(dams2$PURPOSES) %>% length()
+unique(dams2$purposes) %>% length()
 ```
 
 - By storing dam codes as a concatenated string, there is no easy way to identify how many dams serve any one purpose... for example where are the hydro electric dams?
@@ -800,7 +913,7 @@ To overcome this data structure limitation, we can identify how many dams serve 
 #| echo: false
 #| eval: false
 # create a vector of all characters in your purpose and unlist 
-dam_freq <- strsplit(dams2$PURPOSES, split = "") %>%
+dam_freq <- strsplit(dams2$purposes, split = "") %>%
   unlist() %>% 
   table() %>% 
   as.data.frame() %>% 
@@ -842,8 +955,8 @@ For example:
 #| echo: true
 #| eval: true
 # Find flood control dams in the first 5 records:
-dams2$PURPOSES[1:5]
-grepl("F", dams2$PURPOSES[1:5])
+dams2$purposes[1:5]
+grepl("F", dams2$purposes[1:5])
 ```
 
 ****
@@ -853,7 +966,33 @@ For your analysis, choose _at least_ four of the above codes, and describe why y
 Finally, use your `point-in-polygon` function to count each subset across your **cropped tessellation from Q1.4** (e.g., `hexagon_clipped` or `square_clipped`).
 
 ```{r}
+irrigation_dams <- dams2 |> 
+  filter(grepl("Irrigation", purposes, ignore.case = TRUE))
+```
 
+```{r}
+flood_dams <- dams2 |> 
+  filter(grepl("Flood Risk Reduction", purposes, ignore.case = TRUE))
+
+water_dams <- dams2 |> 
+  filter(grepl("Water Supply", purposes, ignore.case = TRUE))
+
+fire_dams <- dams2 |> 
+  filter(grepl("Fire Protection", purposes, ignore.case = TRUE))
+```
+
+> I chose Irrigation, Flood Control, Water Supply, and Fire Protection, as I think these may offer interesting geographical insights. I expect Irrigation to be concentrated in the agricultural west, and Flood Control to be concentrated in the east and midwest where conditions are wetter and more prone to flooding. Water Supply and Fire Protection dams I expect to be thoughout the west and near population centers.
+
+```{r}
+irrigation_dams_count <- point_in_polygon_function(irrigation_dams, conus, "fip_code")
+```
+
+```{r}
+flood_dams_count <- point_in_polygon_function(flood_dams, conus, "fip_code")
+
+water_dams_count <- point_in_polygon_function(water_dams, conus, "fip_code")
+
+fire_dams_count <- point_in_polygon_function(fire_dams, conus, "fip_code")
 ```
 
 ### Step 4.2
@@ -867,14 +1006,34 @@ Finally, use your `point-in-polygon` function to count each subset across your *
 - The result of this exploration is to highlight the areas of the country with the most 
 
 ```{r}
+plot_pip_function(irrigation_dams_count, "Dams Used for Irrigation") +
+  gghighlight(n > mean(n) + sd(n))
+```
 
+```{r}
+plot_pip_function(flood_dams_count, "Dams Used for Flood Risk Reduction") +
+  gghighlight(n > mean(n) + sd(n))
+```
+
+```{r}
+plot_pip_function(water_dams_count, "Dams Used for Water Supply") +
+  gghighlight(n > mean(n) + sd(n))
+```
+
+```{r}
+plot_pip_function(fire_dams_count, "Dams Used for Fire Protection") +
+  gghighlight(n > mean(n) + sd(n))
 ```
 
 ### Step 4.3
 
 Comment on the geographic distribution of dams you found. Does it make sense? How might the tessellation you chose impact your findings? How does the distribution of dams coincide with other geographic factors such as river systems, climate, ect?
 
+> The geographic distribution of dams used for irrigation make sense, they're highly concentrated in the west and a few other agricultural hotspots. Dams with the purpose of flood risk reduction are largely centered around the Mississippi River, which is prone to flooding. Water supply dams are spread throughout the U.S., mostly correlating with population centers. The geographic distribution of dams for fire protection was surprising, as they're not as evenly distributed throughout the west as I thought they might be. Instead they're heavily concentrated in the northern Great Plains. Using the county tessellation helps identify specific jurisdictions with high concentrations of dams for a specific purpose, indicating what they deem to be their biggest needs for water storage. However, counties in the west do tend to be larger in area, so dam concentration may be more accurately reflected if a smaller tessellation was used. 
+
+
 **Optional: Connect to Q6** — For purposes you chose in Q4, hypothesize in 1–2 sentences: *"Will [irrigation/hydroelectric] dams show the same LISA hotspots as all dams in Q6, or different patterns? Why?"* After completing Q6, revisit this hypothesis.
+
 
 # Question 5: Spatial Correlation of Dam Attributes — Introduction to Spatial Regression
 
