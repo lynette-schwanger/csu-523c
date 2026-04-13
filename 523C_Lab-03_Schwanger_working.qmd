@@ -551,14 +551,13 @@ Multiple `data.frame` objects can bound row-wise with `bind_rows` into a single 
 
 For example, if your function is called `sum_tess`, the following would bind your summaries of the triangulation and voroni object.
 
-```{r, eval = FALSE}
+```{r}
 all_surfaces <- bind_rows(
   area_df_function(triangulated_crop, "triangulated"),
   area_df_function(voronoi_crop, "voronoi"), 
   area_df_function(hexagonal_crop, "hexagonal"), 
   area_df_function(gridded_crop, "square"), 
-  area_df_function(conus, "counties")
-)
+  area_df_function(conus, "counties"))
 ```
 
 ### Step 2.4
@@ -1029,11 +1028,13 @@ plot_pip_function(fire_dams_count, "Dams Used for Fire Protection") +
 
 Comment on the geographic distribution of dams you found. Does it make sense? How might the tessellation you chose impact your findings? How does the distribution of dams coincide with other geographic factors such as river systems, climate, ect?
 
-> The geographic distribution of dams used for irrigation make sense, they're highly concentrated in the west and a few other agricultural hotspots. Dams with the purpose of flood risk reduction are largely centered around the Mississippi River, which is prone to flooding. Water supply dams are spread throughout the U.S., mostly correlating with population centers. The geographic distribution of dams for fire protection was surprising, as they're not as evenly distributed throughout the west as I thought they might be. Instead they're heavily concentrated in the northern Great Plains. Using the county tessellation helps identify specific jurisdictions with high concentrations of dams for a specific purpose, indicating what they deem to be their biggest needs for water storage. However, counties in the west do tend to be larger in area, so dam concentration may be more accurately reflected if a smaller tessellation was used. 
+> The geographic distribution of dams used for irrigation make sense, they're highly concentrated in the west and a few other agricultural hotspots. Dams with the purpose of flood risk reduction are largely centered around the Mississippi River, which is prone to flooding. Water supply dams are spread throughout the U.S., mostly correlating with population centers. The geographic distribution of dams for fire protection was surprising, as they're not as evenly distributed throughout the west as I thought they might be. Instead they're heavily concentrated in the northern Great Plains. Using the county tessellation helps identify specific jurisdictions with high concentrations of dams for a specific purpose, indicating what they deem to be their biggest needs for water storage. However, counties in the west do tend to be larger in area, so dam concentration may be a reflection of tile size rather than density. Dam density may be better represented if a smaller tessellation with tiles more equal in area was used. 
 
 
 **Optional: Connect to Q6** — For purposes you chose in Q4, hypothesize in 1–2 sentences: *"Will [irrigation/hydroelectric] dams show the same LISA hotspots as all dams in Q6, or different patterns? Why?"* After completing Q6, revisit this hypothesis.
 
+
+> The LISA hotspots for irrigation dams will be different than the hotspots for all dams. Specifically, I expect irrigation dam hotspots to be concentrated in the West, while hotspots for all dams will be more evenly distributed throughout the U.S.
 
 # Question 5: Spatial Correlation of Dam Attributes — Introduction to Spatial Regression
 
