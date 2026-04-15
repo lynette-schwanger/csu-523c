@@ -118,15 +118,12 @@ To achieve this:
 county_centroids <- st_centroid(conus)
 
 county_pts <- st_union(county_centroids)
-```
 
-```{r}
 class(county_pts)
-```
 
-```{r}
 length(county_pts)
 ```
+
 
 ### Step 1.3
 
@@ -186,35 +183,25 @@ Last, we want to ensure that our surfaces are topologically valid/simple.
 voronoi <- county_pts |>
   st_voronoi() |>
   st_cast()
-```
 
-```{r}
 triangulated <- county_pts |>
   st_triangulate() |>
   st_cast()
-```
 
-```{r}
 gridded <- conus |>
   st_make_grid(n = 70) |>
   st_as_sf() |>
   mutate(id = 1:n())
-```
 
-```{r}
 hexagonal <- conus |>
   st_make_grid(n = 70, square = FALSE) |>
   st_as_sf() |>
   mutate(id = 1:n())
-```
 
-```{r}
 voronoi <- voronoi |>
   st_as_sf() |>
   mutate(id = 1:n())
-```
 
-```{r}
 triangulated <- triangulated |>
   st_as_sf() |>
   mutate(id = 1:n())
@@ -226,17 +213,11 @@ If you plot the above tessellations you'll see that the **Voronoi**, **Delaunay 
 
 ```{r}
 plot(voronoi)
-```
 
-```{r}
 plot(triangulated)
-```
 
-```{r}
 plot(hexagonal)
-```
 
-```{r}
 plot(gridded)
 ```
 We need to crop these boundaries to CONUS borders. 
@@ -252,46 +233,6 @@ conus_boundary <- conus |>
   st_union()
 ```
 
-```{r}
-voronoi_crop <- voronoi |>
-  st_intersection(voronoi, conus_boundary)
-
-plot(voronoi_crop)
-```
-
-```{r}
-#ugh got warning and the plot is wrong
-#need to only pass geometry, then add it back
-
-voronoi_crop <- st_intersection(st_geometry(voronoi), conus_boundary) |>
-  st_as_sf() |>
-  mutate(id = 1:n())
-
-plot(voronoi_crop)
-```
-
-```{r}
-triangulated_crop <- st_intersection(st_geometry(triangulated), conus_boundary) |>
-  st_as_sf() |>
-  mutate(id = 1:n())
-
-plot(triangulated_crop)
-```
-
-```{r}
-#gah ok, apparently don't need to drop geometry for st_filter
-gridded_crop <- st_filter(gridded, conus_boundary)
-
-plot(gridded_crop)
-```
-
-
-```{r}
-hexagonal_crop <- st_filter(hexagonal, conus_boundary)
-
-plot(hexagonal_crop)
-```
-
 ### Step 1.5
 
 With a single feature boundary, we must carefully consider the complexity of the geometry. Remember, the more points our geometry contains, the more computations needed for spatial predicates our differencing. For a task like ours, we do not need a finely resolved coastal border. 
@@ -303,50 +244,18 @@ To achieve this:
 
 - Choose what percentage of vertices to retain using the `keep` argument and work to find the highest number that provides a shape _you_ are comfortable with for the analysis:
 
-```{r, eval = TRUE}
-?ms_simplify
-```
-
 ```{r}
+?ms_simplify
+
 conus_boundary_simple <- ms_simplify(conus_boundary, keep = 0.07)
 
 plot(conus_boundary_simple)
-```
 
-```{r}
 plot(conus_boundary)
 ```
 
-::: callout-important
-## Validation Checkpoint (Optional)
-
-After simplification, verify the boundary is still valid and covers all dams:
-
-```{r}
-#| eval: false
-# Check: Is the simplified boundary valid?
-st_is_valid(conus_boundary_simple)
-
-# Check: Does it still contain all of CONUS?
-st_bbox(conus_boundary_simple)  # Should cover roughly [-125, 24] to [-66, 49]
-#hmm numbers don't match up
-st_bbox(conus_boundary)
-#but they are similar to the original, so probably ok
-
-# Check: Visual comparison
-plot(conus_boundary, main = "Original")
-plot(conus_boundary_simple, main = "Simplified")
-```
-:::
-
 > I chose to use keep = 0.07. ?ms_simplify revealed that the default was 0.05, so I started there and noticed several coastal islands disappeared from the boundary. I worked my way up from there until all coastal islands reappeared at 0.07. While we may not need a finely resolved coastal border, I did want to ensure the major islands off the coast were included, as dams do exist on some of these islands. 
 
-
-::: callout-note
-## Simplification: Boundary Only, Not Tessellation
-
-**Important distinction**: This step simplifies the **CONUS boundary container** we use for clipping the tessellated surfaces. Simplification affects *only* the geometry of the clipping operation — it speeds up the intersection computation by reducing boundary vertices. Your tessellation tiles themselves remain **high-resolution** and unchanged. You are not simplifying the tessellation itself, only the container we clip with.
-:::
 
 - Once you are happy with your simplification, use the `mapview::npts` function to report the number of points in your original object, and the number of points in your simplified object. 
 
@@ -369,42 +278,18 @@ voronoi_crop <- st_intersection(st_geometry(voronoi), conus_boundary_simple) |>
   st_as_sf() |>
   mutate(id = 1:n())
 
-plot(voronoi_crop)
-```
 
-```{r}
 triangulated_crop <- st_intersection(st_geometry(triangulated), conus_boundary_simple) |>
   st_as_sf() |>
   mutate(id = 1:n())
 
-plot(triangulated_crop)
-```
 
-```{r}
 gridded_crop <- st_filter(gridded, conus_boundary_simple)
 
-plot(gridded_crop)
-```
 
-```{r}
 hexagonal_crop <- st_filter(hexagonal, conus_boundary_simple)
-
-plot(hexagonal_crop)
 ```
 
-
-::: callout-tip
-## Why Different Cropping Methods?
-
-**The distinction matters for your spatial analysis:**
-
-- **`st_intersection()` on Voronoi/Delaunay**: Produces edges/boundaries that align precisely with the CONUS border. Tiles at the edge are cut, not discarded. This is geometrically accurate but creates irregular edge shapes.
-
-- **`st_filter()` on hexagon/square grids**: Keeps only complete regular tiles that touch CONUS, discarding edge tiles. The boundary is a stair-step pattern following the regular grid.
-
-**In Q3**, when you compare these tessellations, you'll notice that Voronoi and Delaunay have denser tile coverage (e.g., ~2800–6200 tiles) because they extend to the exact boundary. Hexagons and squares have fewer tiles (e.g., ~1900–2000) because they're bound to a regular grid. **This difference affects spatial statistics**: denser tessellations reveal finer-grained patterns; coarser tessellations show broader regional structure. This is part of the Modifiable Areal Unit Problem (MAUP).
-
-:::
 
 ### Step 1.6
 
@@ -464,21 +349,13 @@ Use your new function to plot each of your tessellated surfaces and the original
 
 ```{r}
 plot_tessellation_function(voronoi_crop, "Voronoi")
-```
 
-```{r}
 plot_tessellation_function(triangulated_crop, "Triangulated")
-```
 
-```{r}
 plot_tessellation_function(hexagonal_crop, "Hexagonal")
-```
 
-```{r}
 plot_tessellation_function(gridded_crop, "Square")
-```
 
-```{r}
 plot_tessellation_function(conus, "U.S. Counties")
 ```
 
@@ -526,21 +403,13 @@ Use your new function to summarize each of your tessellations and the original c
 
 ```{r}
 area_df_function(voronoi_crop, "Voronoi")
-```
 
-```{r}
 area_df_function(triangulated_crop, "Triangulated")
-```
 
-```{r}
 area_df_function(hexagonal_crop, "Hexagonal")
-```
 
-```{r}
 area_df_function(gridded_crop, "Square")
-```
 
-```{r}
 area_df_function(conus, "Counties")
 ```
 
@@ -552,8 +421,7 @@ Multiple `data.frame` objects can bound row-wise with `bind_rows` into a single 
 For example, if your function is called `sum_tess`, the following would bind your summaries of the triangulation and voroni object.
 
 ```{r}
-all_surfaces <- bind_rows(
-  area_df_function(triangulated_crop, "triangulated"),
+all_surfaces <- bind_rows(area_df_function(triangulated_crop, "triangulated"),
   area_df_function(voronoi_crop, "voronoi"), 
   area_df_function(hexagonal_crop, "hexagonal"), 
   area_df_function(gridded_crop, "square"), 
@@ -564,7 +432,7 @@ all_surfaces <- bind_rows(
 
 Once your 5 summaries are bound (2 tessellations, 2 coverage's, and the raw counties) print the `data.frame` as a nice table using `knitr`/`kableExtra`/`flextable` or your preferred table formatting package.
 
-```{r, echo = FALSE}
+```{r}
 library(flextable)
 
 ft_one <- flextable(all_surfaces) |>
@@ -614,11 +482,6 @@ In the tradition of this class - and true to data science/GIS work - you need to
   - Transform the data to a CONUS AEA (EPSG:5070) projection - matching your tessellation
   - Filter to include only those within your CONUS boundary
 
-::: callout-note
-## Data Cleaning with janitor
-
-The NID CSV has messy column names (all caps with spaces). The `janitor::clean_names()` function converts them to clean snake_case (`LONGITUDE` → `longitude`, `DAM NAME` → `dam_name`). This is a lightweight utility that saves time and prevents typos in downstream code. It's part of data wrangling best practice.
-:::
  
 ```{r}
 #| message: false
@@ -662,16 +525,6 @@ Following the in-class examples develop an efficient point-in-polygon function t
   - The name of the id column as `arg3`
   
 The function should make use of spatial and non-spatial joins, sf coercion and `dplyr::count`. The returned object should be input `sf` object with a column - `n` -  counting the number of points in each tile.
-
-::: callout-important
-## Point-in-Polygon Function Design Notes
-
-1. **CRS Matching**: Ensure `points` and `polygons` are in the same CRS before calling `st_join()`. If they differ, use `st_transform()` to align them first.
-
-2. **Empty Polygons**: `st_join(...) %>% count(id)` creates one row per intersection found. Polygons with *zero* intersections will appear in the result with `n = 0` **only if** you use a *left join* (default for `st_join()`). If a polygon has no points, make sure your result still includes it; if not, use `st_join(...) %>% right_join(...)` or initialize counts explicitly.
-
-3. **Sparse vs. Dense Matrices**: In this step you're not creating matrices. However, in Q6.1 you'll use `st_touches(..., sparse = FALSE)` to build neighbor matrices explicitly. Here in Q3, `st_join()` handles the spatial predicate internally (`st_intersects` by default), so you won't set sparsity—just know that `st_join()` scales well to large datasets. For troubleshooting performance: if your function runs slowly with 91,000 dams, check whether your tessellation polygons are topologically simple (use `st_is_valid()`).
-:::
   
 ```{r}
 point_in_polygon_function <- function(points, polygons, id_col){
@@ -694,67 +547,47 @@ Apply your point-in-polygon function to each of your five tessellated surfaces w
 - The id column is the name of the id columns you defined.
 
 ```{r}
+#| fig.show: hide
 voronoi_dams <- point_in_polygon_function(dams2, voronoi_crop, "id")
-```
 
-```{r}
 nrow(voronoi_dams) == nrow(voronoi_crop)
 sum(is.na("n")) == 0
 
 plot(voronoi_dams["n"])
-```
 
-```{r}
+
 triangulated_dams <- point_in_polygon_function(dams2, triangulated_crop, "id")
-```
 
-```{r}
 nrow(triangulated_dams) == nrow(triangulated_crop)
 sum(is.na("n")) == 0
 
 plot(triangulated_dams["n"])
-```
 
-```{r}
+
 gridded_dams <- point_in_polygon_function(dams2, gridded_crop, "id")
-```
 
-```{r}
 nrow(gridded_dams) == nrow(gridded_crop)
 sum(is.na("n")) == 0
 
 plot(gridded_dams["n"])
-```
 
-```{r}
+
 hexagonal_dams <- point_in_polygon_function(dams2, hexagonal_crop, "id")
-```
 
-```{r}
 nrow(hexagonal_dams) == nrow(hexagonal_crop)
 sum(is.na("n")) == 0
 
 plot(hexagonal_dams["n"])
-```
 
-```{r}
+
 county_dams <- point_in_polygon_function(dams2, conus, "fip_code")
-```
 
-```{r}
 nrow(county_dams) == nrow(conus)
 sum(is.na("n")) == 0
 
 plot(county_dams["n"])
 ```
 
-```{r}
-sum(county_dams$n)
-```
-
-```{r}
-sum(county_dams$n == 0)
-```
 
 ### Step 3.4
 
@@ -795,21 +628,13 @@ Apply your plotting function to each of the 5 tessellated surfaces with Point-in
 
 ```{r}
 plot_pip_function(voronoi_dams, "Voronoi")
-```
 
-```{r}
 plot_pip_function(triangulated_dams, "Triangulated")
-```
 
-```{r}
 plot_pip_function(hexagonal_dams, "Hexagonal")
-```
 
-```{r}
 plot_pip_function(gridded_dams, "Square")
-```
 
-```{r}
 plot_pip_function(county_dams, "U.S. Counties")
 ```
 
@@ -835,9 +660,7 @@ Your answer should be **3–4 paragraphs** and grounded in the actual visualizat
 
 ```{r}
 library(patchwork)
-```
 
-```{r}
 plot_pip_function(voronoi_dams, "Voronoi") +
 plot_pip_function(triangulated_dams, "Triangulation") +
 plot_pip_function(hexagonal_dams, "Hexagonal") +
@@ -847,12 +670,9 @@ plot_layout(ncol = 2)
 ```
 
 > Based on the plots, the hexagonal and square tessellations seem to lose some of the clustering detail in the west, as well as the hotspot in the northern U.S. that is clear in all of the other tessellations. These grids have the largest mean area and set arbitrary boundaries which dissipates dam concentation. The triangulated tessellation also significantly diffuses the hotspot in the central U.S. Since the triangulated tessellation has the most tiles, its tiles are generally smaller and therefore dam counts get spread across more units. 
-
-> If a dam operations manager wanted to understand geographic clustering I would recommend using the counties tessellation. Counties is the only tessellation that aligns with meaningful boundaries that reflect jurisdictions and decision-making units. As such, it reveals significant patterns and hotspots without over-fragmenting the landscape. The triangulated, hexagonal, and square tessellations all lose detail compared to counties, and voronoi is based on county geometry while not actually reflecting true county boundaries. While counties does have the highest standard deviation in tile area which may not be ideal for certain analysis, in the context of dam operations having legally meaningful boundaries is more important. 
-
-> The MAUP problem is clearly illustrated by the plots, the same data produced different clustering patterns depending on which tessellation was used. It would be valid to use hexagonal and square grids if doing an analysis on dam density as their tiles are uniform in size with a standard deviation of 0 km squared. Voronoi and triangulated tessellations could work well if meaningful points were used to derive the tessellations rather than the center of the county, which is arbitrary for this particular analysis. The choice of "keep = 0.07" for boundary simplification did not influence the tessellation recommendation. Simplification only affected the boundary and not the tessellation itself. 
-
-> The counties tessellation best supports management decisions in this context because it preserves clustering hotspots while also adding jurisdictional context. A dam operations manager may need to coordinate with local governments when making operational decisions, which makes county context crucial. 
+If a dam operations manager wanted to understand geographic clustering I would recommend using the counties tessellation. Counties is the only tessellation that aligns with meaningful boundaries that reflect jurisdictions and decision-making units. As such, it reveals significant patterns and hotspots without over-fragmenting the landscape. The triangulated, hexagonal, and square tessellations all lose detail compared to counties, and voronoi is based on county geometry while not actually reflecting true county boundaries. While counties does have the highest standard deviation in tile area which may not be ideal for certain analysis, in the context of dam operations having legally meaningful boundaries is more important. 
+The MAUP problem is clearly illustrated by the plots, the same data produced different clustering patterns depending on which tessellation was used. It would be valid to use hexagonal and square grids if doing an analysis on dam density as their tiles are uniform in size with a standard deviation of 0 km squared. Voronoi and triangulated tessellations could work well if meaningful points were used to derive the tessellations rather than the center of the county, which is arbitrary for this particular analysis. The choice of "keep = 0.07" for boundary simplification did not influence the tessellation recommendation. Simplification only affected the boundary and not the tessellation itself. 
+The counties tessellation best supports management decisions in this context because it preserves clustering hotspots while also adding jurisdictional context. A dam operations manager may need to coordinate with local governments when making operational decisions, which makes county context crucial. 
 
 ---
 
@@ -964,12 +784,12 @@ For your analysis, choose _at least_ four of the above codes, and describe why y
 
 Finally, use your `point-in-polygon` function to count each subset across your **cropped tessellation from Q1.4** (e.g., `hexagon_clipped` or `square_clipped`).
 
+> I chose Irrigation, Flood Control, Water Supply, and Fire Protection, as I think these may offer interesting geographical insights. I expect Irrigation to be concentrated in the agricultural west, and Flood Control to be concentrated in the east and midwest where conditions are wetter and more prone to flooding. Water Supply and Fire Protection dams I expect to be thoughout the west and near population centers.
+
 ```{r}
 irrigation_dams <- dams2 |> 
   filter(grepl("Irrigation", purposes, ignore.case = TRUE))
-```
 
-```{r}
 flood_dams <- dams2 |> 
   filter(grepl("Flood Risk Reduction", purposes, ignore.case = TRUE))
 
@@ -980,19 +800,16 @@ fire_dams <- dams2 |>
   filter(grepl("Fire Protection", purposes, ignore.case = TRUE))
 ```
 
-> I chose Irrigation, Flood Control, Water Supply, and Fire Protection, as I think these may offer interesting geographical insights. I expect Irrigation to be concentrated in the agricultural west, and Flood Control to be concentrated in the east and midwest where conditions are wetter and more prone to flooding. Water Supply and Fire Protection dams I expect to be thoughout the west and near population centers.
-
 ```{r}
 irrigation_dams_count <- point_in_polygon_function(irrigation_dams, conus, "fip_code")
-```
 
-```{r}
 flood_dams_count <- point_in_polygon_function(flood_dams, conus, "fip_code")
 
 water_dams_count <- point_in_polygon_function(water_dams, conus, "fip_code")
 
 fire_dams_count <- point_in_polygon_function(fire_dams, conus, "fip_code")
 ```
+
 
 ### Step 4.2
 
@@ -1002,24 +819,18 @@ fire_dams_count <- point_in_polygon_function(fire_dams, conus, "fip_code")
 
 - Since your plotting function returns a `ggplot` object already, the `gghighlight` call can be added "`+`" directly to the function.
 
-- The result of this exploration is to highlight the areas of the country with the most 
+- The result of this exploration is to highlight the areas of the country with the most dams for your chosen purposes
 
 ```{r}
 plot_pip_function(irrigation_dams_count, "Dams Used for Irrigation") +
   gghighlight(n > mean(n) + sd(n))
-```
 
-```{r}
 plot_pip_function(flood_dams_count, "Dams Used for Flood Risk Reduction") +
   gghighlight(n > mean(n) + sd(n))
-```
 
-```{r}
 plot_pip_function(water_dams_count, "Dams Used for Water Supply") +
   gghighlight(n > mean(n) + sd(n))
-```
 
-```{r}
 plot_pip_function(fire_dams_count, "Dams Used for Fire Protection") +
   gghighlight(n > mean(n) + sd(n))
 ```
@@ -1031,24 +842,9 @@ Comment on the geographic distribution of dams you found. Does it make sense? Ho
 > The geographic distribution of dams used for irrigation make sense, they're highly concentrated in the west and a few other agricultural hotspots. Dams with the purpose of flood risk reduction are largely centered around the Mississippi River, which is prone to flooding. Water supply dams are spread throughout the U.S., mostly correlating with population centers. The geographic distribution of dams for fire protection was surprising, as they're not as evenly distributed throughout the west as I thought they might be. Instead they're heavily concentrated in the northern Great Plains. Using the county tessellation helps identify specific jurisdictions with high concentrations of dams for a specific purpose, indicating what they deem to be their biggest needs for water storage. However, counties in the west do tend to be larger in area, so dam concentration may be a reflection of tile size rather than density. Dam density may be better represented if a smaller tessellation with tiles more equal in area was used. 
 
 
-**Optional: Connect to Q6** — For purposes you chose in Q4, hypothesize in 1–2 sentences: *"Will [irrigation/hydroelectric] dams show the same LISA hotspots as all dams in Q6, or different patterns? Why?"* After completing Q6, revisit this hypothesis.
-
-
-> The LISA hotspots for irrigation dams will be different than the hotspots for all dams. Specifically, I expect irrigation dam hotspots to be concentrated in the West, while hotspots for all dams will be more evenly distributed throughout the U.S.
-
 # Question 5: Spatial Correlation of Dam Attributes — Introduction to Spatial Regression
 
 Dam characteristics—such as **age, surface area, storage capacity, and purpose**—vary geographically. Understanding the spatial structure of these relationships is foundational to spatial regression modeling (upcoming topics). In this question, you'll examine whether dam attributes exhibit **spatial dependence** and assess whether neighboring tiles have correlated characteristics.
-
-::: callout-note
-## Spatial Regression Motivation (Week 3-1 Foundation)
-
-Standard regression assumes observations are **independent**. But spatial data often violates this: dams in the Pacific Northwest likely share design and management practices, leading to **spatially correlated residuals**. This spatial dependence can bias confidence intervals and inflate significance tests in standard OLS regression.
-
-The solution involves **spatial lag models** (Spatial Autoregressive, SAR) or **spatial error models** (SEM) that explicitly model dependence via neighbor relationships. This lab asks: *Do your tessellation neighborhoods reveal spatial structure in dam attributes?*
-
-**For this question, use your cropped tessellation from Q1.4** (your recommended tessellation from Q3, clipped to the CONUS boundary). You'll examine whether dam attributes (age, size, count) are spatially autocorrelated—evidence that neighboring tiles have similar values, violating independence assumptions.
-:::
 
 ### Step 5.1
 
@@ -1073,6 +869,7 @@ Aggregate as follows:
 
 
 ```{r}
+#| include: false
 names(dams2)
 ```
 
@@ -1100,17 +897,13 @@ ggplot(dam_attributes) +
   scale_fill_viridis_c(na.value = "lightgrey") +
   theme_void() +
   labs(title = "Mean Dam Age by County", fill = "Mean Year Completed")
-```
 
-```{r}
 ggplot(dam_attributes) +
   geom_sf(aes(fill = mean_surface_area), color = NA) +
   scale_fill_viridis_c(na.value = "lightgrey") +
   theme_void() +
   labs(title = "Mean Dam Surface Area by County", fill = "Mean Surface Area")
-```
 
-```{r}
 ggplot(county_dams) +
   geom_sf(aes(fill = n), color = NA) +
   scale_fill_viridis_c(na.value = "lightgrey") +
@@ -1125,20 +918,6 @@ ggplot(county_dams) +
 **Neighbor Correlation: Local Spatial Variation**
 
 For your tessellation's neighbor matrix, compute the **spatial lag** of dam attributes: the average value of an attribute in a tile's neighbors. This reveals whether _spatial neighbors have similar dam attributes_—a key signal that observations are **not independent** (violating OLS assumptions).
-
-::: callout-warning
-## Critical: NA Handling in Spatial Lag Calculations
-
-Many tiles may have **zero dams** (NAs for attributes like mean_year_completed, mean_surface_area). When you compute the spatial lag via matrix multiplication, these NAs propagate and can cause `cor()` to fail with "no complete element pairs."
-
-**Solution: Impute before spatial lag calculation**
-
-1. Replace NAs in the attribute with the **global mean** (mean across all tiles, ignoring NAs)
-2. Compute the spatial lag on the imputed data
-3. When correlating, use **only tiles that had original data** (not imputed)
-
-This preserves statistical integrity: neighbors' contributions are computed correctly, but you only correlate where real observations exist.
-:::
 
 ```{r}
 #| eval: false
@@ -1156,15 +935,13 @@ count_vector <- dam_attributes$n_dams
 age_vector <- dam_attributes$mean_year
 
 size_vector <- dam_attributes$mean_surface_area
-```
 
-```{r}
+
 age_impute <- ifelse(is.na(age_vector), mean(age_vector, na.rm = TRUE), age_vector)
 
 size_impute <- ifelse(is.na(size_vector), mean(size_vector, na.rm = TRUE), size_vector)
-```
 
-```{r}
+
 W <- st_touches(dam_attributes, sparse = FALSE)
 
 diag(W) <- 0
@@ -1176,15 +953,13 @@ row_sums[row_sums == 0] <- 1
 W_std <- W / row_sums
 
 
-
 lag_count <- as.vector(W_std %*% count_vector)
 
 lag_age <- as.vector(W_std %*% age_impute)
 
 lag_size <- as.vector(W_std %*% size_impute)
-```
 
-```{r}
+
 correlate_count <- cor(count_vector, lag_count)
 
 correlate_age <- cor(age_vector, lag_age, use = "complete.obs")
@@ -1223,18 +998,6 @@ Your interpretation should focus on the **overall pattern**, not on specific reg
 
 Do **not** create a geographic map here. Save local hotspot mapping for Q6.
 
-::: callout-tip
-## Standardization Details
-
-**Why standardize?** Centering and scaling puts the attribute and spatial lag on the same scale (mean=0, SD=1), making it easy to identify quadrants and interpret outliers.
-
-```r
-scale(x, center=TRUE, scale=TRUE)[, 1]
-```
-
-Returns a numeric vector (not a matrix). Use `[, 1]` to extract it, or use `as.vector()` explicitly.
-:::
-
 ```{r}
 #| eval: false
 # Suggested workflow (write your own implementation):
@@ -1248,16 +1011,14 @@ Returns a numeric vector (not a matrix). Use `[, 1]` to extract it, or use `as.v
 standardized_count <- scale(count_vector, center = TRUE, scale = TRUE)[, 1]
 
 standardized_lag_count <- scale(lag_count, center = TRUE, scale = TRUE)[, 1]
-```
 
-```{r}
+
 quadrant <- case_when(standardized_count > 0 & standardized_lag_count > 0 ~ "HH",
   standardized_count < 0 & standardized_lag_count < 0 ~ "LL",
   standardized_count > 0 & standardized_lag_count < 0 ~ "HL",
   standardized_count < 0 & standardized_lag_count > 0 ~ "LH")
-```
 
-```{r}
+
 counties_moran <- ggplot() +
   geom_point(aes(x = standardized_count, y = standardized_lag_count, color = quadrant), alpha = .8) +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -1265,9 +1026,8 @@ counties_moran <- ggplot() +
   scale_color_manual(values = c("HH" = "sienna", "LL" = "steelblue", "HL" = "goldenrod", "LH" = "forestgreen")) +
   labs(title = "Moran's I Scatterplot - Dam Count",x = "Standardized Dam Count", y = "Spatial Lag", color = "Quadrant") +
   theme_minimal()
-```
 
-```{r}
+
 table(quadrant)
 ```
 
@@ -1276,17 +1036,6 @@ table(quadrant)
 ### Step 5.4
 
 **Global Interpretation of Spatial Patterns**
-
-::: callout-tip
-## Writing Guide: Interpreting Spatial Correlation
-
-Use this structure to organize your response:
-
-1. **State your findings clearly** — cite specific correlation values from your Step 5.2 table. Which attributes show the strongest clustering?
-2. **Connect to structure** — what does the scatterplot suggest about broad spatial organization, without moving into local mapping yet?
-3. **Explain why** — relate to dam history, geology, hydrology, or policy at the regional scale
-4. **Analyze patterns** — describe what the Moran scatterplot and correlation values reveal about overall dam distributions
-:::
 
 Write 2–3 paragraphs (400–600 words) addressing:
 
@@ -1321,18 +1070,6 @@ What do these correlation values and Moran scatterplot patterns tell us about da
 
 ```
 
-### Step 5.5 (Optional) — Hypothesis Checkpoint
-
-Before moving to Q6, answer this question to verify your understanding:
-
-**Given your correlation results from Step 5.2, what do you expect to see in a Moran scatterplot (Q6)?** 
-
-- If all correlations are > 0.5: Do you expect most points to cluster in the upper-right (HH) and lower-left (LL) quadrants, or scattered across all four?
-- If correlations are weak (< 0.3): Would you expect many High-Low or Low-High outliers?
-- Based on dam geography (e.g., TVA region, Colorado River Basin), where do you predict hotspots (HH) and coldspots (LL) will concentrate?
-
-Write 2–3 sentences predicting Q6 outcomes before you compute LISA. After Q6, revisit this prediction to see if reality matched your expectation.
-
 ---
 
 # Question 6: Local Spatial Autocorrelation (LISA) — Mapping Hotspots and Coldspots
@@ -1343,22 +1080,6 @@ While global statistics like Moran's I (Q5) test for clustering "on average," sp
 
 In this question, you'll compute LISA using your **cropped recommended tessellation** (from Q1.4) and **CONUS counties** as the alternative support. This gives a direct test of how local clustering changes when analysis units shift from equal-area tiles to administrative units.
 
-::: callout-note
-## LISA Concept (Week 3-1 Lectures)
-
-LISA compares each tile's **standardized dam count** ($z_i$) to the **standardized spatial lag** ($\text{lag}_z$):
-
-$$\text{lag}_z = \frac{1}{w_i} \sum_{j \in N(i)} w_{ij} z_j$$
-
-where neighbors $j \in N(i)$ are adjacent tiles, and $w_{ij}$ = row-standardized adjacency weight (1 if touching, 0 otherwise).
-
-The resulting **LISA quadrants** reveal:
-- **High-High (HH)**: High dam count, high-count neighbors → hotspot
-- **Low-Low (LL)**: Low dam count, low-count neighbors → coldspot  
-- **High-Low (HL)**: High count, low neighbors → potentially isolated cluster edge
-- **Low-High (LH)**: Low count, high neighbors → potential anomaly or outlier
-:::
-
 ### Step 6.1
 
 Crop your tessellations to ensure consistent boundaries:
@@ -1368,30 +1089,6 @@ Crop your tessellations to ensure consistent boundaries:
 **b.** Use **counties** as the required alternative comparison unit (no extra clipping needed if your counties object is already CONUS-only).
 
 **c.** For each clipped tessellation, recompute dam counts using point-in-polygon joining to ensure correct aggregation within the cropped geometry.
-
-::: callout-tip
-## Cropping Tessellations Correctly
-
-```
-# Recommended tessellation (e.g., hexagon_grid)
-hex_cropped <- st_filter(hexagon_grid, usa_boundary)
-
-# Required comparison unit: counties (already CONUS)
-county_units <- counties_sf
-
-# Recompute dam counts on cropped grids
-# (Use your point_in_polygon function or st_join + count pattern)
-hex_dams <- st_join(hex_cropped, dams_sf) %>%
-  group_by(id) %>%
-  summarise(n = n(), .groups = "drop")
-
-county_dams <- st_join(county_units, dams_sf) %>%
-  group_by(id) %>%
-  summarise(n = n(), .groups = "drop")
-```
-
-**Important**: Cropping changes tile counts and boundary geometries. Re-aggregate dam counts *after* cropping to match the new tile geometry.
-:::
 
 > I chose counties as my recommended tessellation in Q3, so I'll use the hexagonal as the comparison tessellation. All cropped objects already exist from past steps. 
 
@@ -1409,36 +1106,14 @@ Compute neighbors and spatial lag for your **recommended tessellation**:
 
 **e.** Standardize both dam counts and spatial lag (z-score normalization).
 
-::: callout-important
-## Validation Checkpoint (Optional but Recommended)
-
-After computing the neighbor matrix, verify it's valid:
-
-```{r}
-#| eval: false
-# Check 1: Is the matrix symmetric? (for undirected adjacency)
-all(neighbor_matrix == t(neighbor_matrix))
-
-# Check 2: Are all rows row-standardized (divide by row sum)?
-rowSums(neighbor_weights)  # Should all be 1 (or 0 for isolated tiles)
-
-# Check 3: Are there isolated tiles (no neighbors)?
-sum(rowSums(neighbor_weights) == 0)
-
-# If any isolated tiles, document how you'll handle them in spatial lag calculation
-```
-:::
-
 ```{r}
 county_lisa <- dam_attributes |>
   mutate(quadrant = quadrant)
-```
 
-```{r}
+
 hexagonal_count <- hexagonal_dams$n
-```
 
-```{r}
+
 W_hexagonal <- st_touches(hexagonal_dams, sparse = FALSE)
 
 diag(W_hexagonal) <- 0
@@ -1450,22 +1125,19 @@ row_sums_hex[row_sums_hex == 0] <- 1
 W_std_hex <- W_hexagonal / row_sums_hex
 
 lag_hex <- as.vector(W_std_hex %*% hexagonal_count)
-```
 
-```{r}
+
 standardized_hex <- scale(hexagonal_count)[, 1]
 
 standardized_lag_hex <- scale(lag_hex)[, 1]
-```
 
-```{r}
+
 hex_quadrant <- case_when(standardized_hex > 0 & standardized_lag_hex > 0 ~ "HH",
   standardized_hex < 0 & standardized_lag_hex < 0 ~ "LL",
   standardized_hex > 0 & standardized_lag_hex < 0 ~ "HL",
   standardized_hex < 0 & standardized_lag_hex > 0 ~ "LH")
-```
 
-```{r}
+
 hex_lisa <- hexagonal_dams |>
   mutate(quadrant = hex_quadrant)
 ```
@@ -1565,8 +1237,6 @@ counties_lisa
 **d.** Interpret: Which unit reveals clustering more clearly for your purpose? Do patterns align between your chosen tessellation and counties, or does MAUP (modifiable areal unit problem) create divergent local structure?
 
 ```{r}
-library(patchwork)
-
 counties_lisa + hexagonal_lisa +
   plot_layout(ncol = 2)
 ```
