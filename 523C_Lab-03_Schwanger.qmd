@@ -115,6 +115,7 @@ To achieve this:
   - Since these are point objects, the difference between union/combine is mute
 
 ```{r}
+#| output: false
 county_centroids <- st_centroid(conus)
 
 county_pts <- st_union(county_centroids)
@@ -212,6 +213,7 @@ triangulated <- triangulated |>
 If you plot the above tessellations you'll see that the **Voronoi**, **Delaunay triangulation**, **hexagon**, and **square grids** all produce regions far beyond the boundaries of CONUS.
 
 ```{r}
+#| output: false
 plot(voronoi)
 
 plot(triangulated)
@@ -245,6 +247,8 @@ To achieve this:
 - Choose what percentage of vertices to retain using the `keep` argument and work to find the highest number that provides a shape _you_ are comfortable with for the analysis:
 
 ```{r}
+#| output: false
+
 ?ms_simplify
 
 conus_boundary_simple <- ms_simplify(conus_boundary, keep = 0.07)
@@ -262,7 +266,10 @@ plot(conus_boundary)
 - How many points were you able to remove? What are the consequences of doing this computationally?
 
 ```{r}
+#| output: false
+
 mapview::npts(conus_boundary)
+
 mapview::npts(conus_boundary_simple)
 ```
 
@@ -402,6 +409,8 @@ area_df_function <- function(sf_object, label){
 Use your new function to summarize each of your tessellations and the original counties. 
 
 ```{r}
+#| output: false
+
 area_df_function(voronoi_crop, "Voronoi")
 
 area_df_function(triangulated_crop, "Triangulated")
@@ -451,10 +460,14 @@ ft_one
 Comment on the traits of each tessellation. Be specific about how these traits might impact the results of a point-in-polygon analysis in the contexts of the modifiable areal unit problem and with respect computational requirements.
 
 > The counties tessellation standard deviation is large, meaning some counties are significantly bigger than others. For point in polygon comparisons, this could mean that counties with many points could just be large in area rather than dense. This is an example of the Modifiable Areal Unit Problem, as comparing point concentration across regions could become misleading. 
-The voronoi tessellation is similar to counties, with the same number of features and mean area, but a slightly smaller standard deviation in area. This means tiles are more equal in size than in the counties tessellation and therefore more comparable. However, the voronoi tessellation is still constructed using county centroid locations, so geographic distribution is still uneven. 
-For both the hexagonal and square tessellations, the standard deviation is 0. This makes sense as the tessellations are all the same size, but it means they’re not taking into account any geographical geometries and are completely arbitrary. For point in polygon comparisons this means counts are comparable across tiles, however the boundaries have little meaning for management decisions.
-The triangulated tessellation has almost twice the amount of features than any other tessellation, which would require significantly more computational bandwidth for analysis. More features means more tiles with no point counts, which could alter analysis. 
-These differences illustrate how the choice of tessellation shapes analytical conclusions, even when the underlying data remains the same.
+
+>The voronoi tessellation is similar to counties, with the same number of features and mean area, but a slightly smaller standard deviation in area. This means tiles are more equal in size than in the counties tessellation and therefore more comparable. However, the voronoi tessellation is still constructed using county centroid locations, so geographic distribution is still uneven. 
+
+>For both the hexagonal and square tessellations, the standard deviation is 0. This makes sense as the tessellations are all the same size, but it means they’re not taking into account any geographical geometries and are completely arbitrary. For point in polygon comparisons this means counts are comparable across tiles, however the boundaries have little meaning for management decisions.
+
+>The triangulated tessellation has almost twice the amount of features than any other tessellation, which would require significantly more computational bandwidth for analysis. More features means more tiles with no point counts, which could alter analysis. 
+
+>These differences illustrate how the choice of tessellation shapes analytical conclusions, even when the underlying data remains the same.
 
 
 ****
@@ -547,7 +560,8 @@ Apply your point-in-polygon function to each of your five tessellated surfaces w
 - The id column is the name of the id columns you defined.
 
 ```{r}
-#| fig.show: hide
+#| output: false
+
 voronoi_dams <- point_in_polygon_function(dams2, voronoi_crop, "id")
 
 nrow(voronoi_dams) == nrow(voronoi_crop)
@@ -669,10 +683,13 @@ plot_pip_function(county_dams, "Counties") +
 plot_layout(ncol = 2)
 ```
 
-> Based on the plots, the hexagonal and square tessellations seem to lose some of the clustering detail in the west, as well as the hotspot in the northern U.S. that is clear in all of the other tessellations. These grids have the largest mean area and set arbitrary boundaries which dissipates dam concentation. The triangulated tessellation also significantly diffuses the hotspot in the central U.S. Since the triangulated tessellation has the most tiles, its tiles are generally smaller and therefore dam counts get spread across more units. 
-If a dam operations manager wanted to understand geographic clustering I would recommend using the counties tessellation. Counties is the only tessellation that aligns with meaningful boundaries that reflect jurisdictions and decision-making units. As such, it reveals significant patterns and hotspots without over-fragmenting the landscape. The triangulated, hexagonal, and square tessellations all lose detail compared to counties, and voronoi is based on county geometry while not actually reflecting true county boundaries. While counties does have the highest standard deviation in tile area which may not be ideal for certain analysis, in the context of dam operations having legally meaningful boundaries is more important. 
-The MAUP problem is clearly illustrated by the plots, the same data produced different clustering patterns depending on which tessellation was used. It would be valid to use hexagonal and square grids if doing an analysis on dam density as their tiles are uniform in size with a standard deviation of 0 km squared. Voronoi and triangulated tessellations could work well if meaningful points were used to derive the tessellations rather than the center of the county, which is arbitrary for this particular analysis. The choice of "keep = 0.07" for boundary simplification did not influence the tessellation recommendation. Simplification only affected the boundary and not the tessellation itself. 
-The counties tessellation best supports management decisions in this context because it preserves clustering hotspots while also adding jurisdictional context. A dam operations manager may need to coordinate with local governments when making operational decisions, which makes county context crucial. 
+>Based on the plots, the hexagonal and square tessellations seem to lose some of the clustering detail in the west, as well as the hotspot in the northern U.S. that is clear in all of the other tessellations. These grids have the largest mean area and set arbitrary boundaries which dissipates dam concentation. The triangulated tessellation also significantly diffuses the hotspot in the central U.S. Since the triangulated tessellation has the most tiles, its tiles are generally smaller and therefore dam counts get spread across more units. 
+
+>If a dam operations manager wanted to understand geographic clustering I would recommend using the counties tessellation. Counties is the only tessellation that aligns with meaningful boundaries that reflect jurisdictions and decision-making units. As such, it reveals significant patterns and hotspots without over-fragmenting the landscape.  The triangulated, hexagonal, and square tessellations all lose detail compared to counties, and voronoi is based on county geometry while not actually reflecting true county boundaries. While counties does have the highest standard deviation in tile area which may not be ideal for certain analysis, in the context of dam operations having legally meaningful boundaries is more important. 
+
+>The MAUP problem is clearly illustrated by the plots, the same data produced different clustering patterns depending on which tessellation was used. It would be valid to use hexagonal and square grids if doing an analysis on dam density as their tiles are uniform in size with a standard deviation of 0 km squared. Voronoi and triangulated tessellations could work well if meaningful points were used to derive the tessellations rather than the center of the county, which is arbitrary for this particular analysis. The choice of "keep = 0.07" for boundary simplification did not influence the tessellation recommendation. Simplification only affected the boundary and not the tessellation itself. 
+
+>The counties tessellation best supports management decisions in this context because it preserves clustering hotspots while also adding jurisdictional context. A dam operations manager may need to coordinate with local governments when making operational decisions, which makes county context crucial. 
 
 ---
 
