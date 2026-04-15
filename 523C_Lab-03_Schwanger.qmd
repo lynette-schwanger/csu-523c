@@ -293,7 +293,7 @@ hexagonal_crop <- st_filter(hexagonal, conus_boundary_simple)
 
 ### Step 1.6
 
-The last step is to plot your tessellations. We don't want to write out 5 ggplots (or mindlessly copy and paste `r emo::ji("smile")`)
+The last step is to plot your tessellations. We don't want to write out 5 ggplots (or mindlessly copy and paste)
 
 Instead, lets make a function that takes an `sf` object as _arg1_ and a character string as _arg2_ and returns a ggplot object showing _arg1_ titled with _arg2_. 
 
