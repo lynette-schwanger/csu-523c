@@ -1045,6 +1045,10 @@ counties_moran <- ggplot() +
   theme_minimal()
 
 
+counties_moran
+```
+
+```{r}
 table(quadrant)
 ```
 
@@ -1083,9 +1087,11 @@ What do these correlation values and Moran scatterplot patterns tell us about da
 
 **Note**: In future weeks, we'll explore how spatial structure revealed here relates to statistical modeling of dam attributes.
 
-```{r}
+> Dam count and dam age show the strongest spatial lag correlations of ~0.7. Dam count clustering makes geographic sense, as regions with high dam density tend to share similar water management needs. Dam age clustering suggests that dams were built in regionally-coherent eras. Surface area shows almost no spatial correlation, suggesting tha dam size is driven by other factors such as geology and river characteristics. 
 
-```
+> The Moran scatterplot shows that points are concentrated in the LL and HH quadrants with a general positive trend, but the relationship does show considerable spread. Many outliers exist in the HH quadrant, suggesting a few highly heterogeneous neighborhoods. This pattern is consistent with the strong correlation of 0.71 for dam count. While positive spatial correlation exists, it's not uniform across the U.S. Dam age may show a similar pattern as dam count as they have similar correlations, however surface area would likely show a much more diffuse pattern. 
+
+> Neighboring tiles are generally similar in dam count and age, but clustering is weak for dam surface area. Count clustering can likely be attributed to shared river systems and climates among counties. Dam age clustering may be a result of regional policy and funding implementation. Dam size is determined by local river capacity and does not seem to be driven by regional trends. Geographic influences seen in dam count and age are also seen in dam usage. Irrigation dams clustered in the west, as those counties share similar arid climates that drive the need for water storage. Similarly, flood control dams clustered around the Mississippi largely due to a wetter climate and the need to mitigate flood risk shared by those counties. 
 
 ---
 
@@ -1290,6 +1296,10 @@ Write a 3–4 paragraph synthesis addressing:
    - How do your LISA findings from Q6 compare to the dam purpose patterns you identified in Q4? (E.g., do irrigation dams cluster the same way as all dams?)
    - Where do policies need special attention to local anomalies? (HL/LH outliers)
 
-```{r}
+> Many HH hotspots seem to be made up of dams for flood control, irrgation, and water supply, appearing in very arid or very wet environments with high populations or agricultural regions. Specifically, HH hotspots appear in the northeast, southeast, central, and northwest regions of the U.S. Hydrologically, this makes sense, as dams appear more often near areas where water sources exist. The Colorado River Basin is a notable hotspot, explained by the arid climate making the river the primary water source for the region as well as the 1922 Colorado River Compact which required multi-state water management. LL coldpots are generally associated with rural areas with little development.
 
-```
+> Several HL outliers are scattered throughout the west, likely representing counties containing isolated infrastructure investments such as the Hoover Dam. LH outliers appear along the edges of major hotspot regions, signaling transition zones between dense dam clusters and sparse surrounding areas. 
+
+> The choice of tessellation does affect LISA conclusions, illustrating MAUP. The county map reveals more fragmented hotspot patterns, while the hexagonal map shows broader HH regions. Counties shows more HH tiles, 756 versus 525, likely because administrative boundaries align with jurisdictional patterns of dam management, which captures localized clustering more precisely. The hexagonal grid's uniform tile size reduces local variation and obscures transition zones. This illustrates that the specific location and extent of local clusters is dependent on the tessellation. 
+
+> LISA output can inform dam operations, reporting, and policy by identifying regions where coordination efforts should be concentrated. HH hotspots in the west, central, southeast, and northeast based on the LISA output can be prioritized for collaboration among states and other jurisdictions. LL coldspots likely have simpler management structures with less interdependency between neighboring countes, therefore requiring less coordination. The dam purpose patterns generally correspond with certain LISA hotspots. Flood control dams clustered in the central US match the LISA HH hotspots in that region, and irrigation dams concentrated in the West correspond to some western HH LISA clusters. HL counties representing isolated high dam count counties may need special policy attention as they may face unique mangement challenges without the benefits of regional collaboration. 
