@@ -381,8 +381,6 @@ raster_values <- na.omit(raster_values)
 
 ```{r}
 km12 <- kmeans(raster_values, centers = 12)
-
-km12
 ```
 
 ### Step 4:
@@ -469,8 +467,6 @@ plot(flood_uncertainty, col = blues9)
 ```
  
  - Third once you have a summed raster layer, copy it as a new layer, and set all 0 values to NA. Then map the raster with `mapview`. Zoom and pan around the interactive map noting that a pixel level is displayed in the upper right hand corner.
- 
-> Why are some of the cell values not an even number?
 
 ```{r}
 flood_map <- flood_uncertainty
@@ -480,72 +476,12 @@ values(flood_map)[values(flood_map) == 0] <- NA
 mapview(flood_map, col.regions = blues9, layer.name = "Flood Certainty")
 ```
 
+Why are some of the cell values not an even number?
+
+> Cell values represent the number of indices that identified a given pixel as flooded. Some cells may display decimal values due to mapview reprojecting the raster from UTM zone 15N to WGS84 for display, which can cause distortion. In this case, all values appear as whole numbers.
 
 Congratulations! You have successfully carried out a complete flood analysis from data acquisition through evaluation. This kind of work goes on regularly and is part of a couple national efforts (NOAA, USGS, FirstStreet, FEMA) to generate flood inundation libraries that contribute to better extraction and classification of realtime flood events, resource allocation during events, and damage assessments post events.
 
 Here we used Landsat imagery but the same process could be implemented on drone footage, MODIS data, or other private satellite imagery.
 
 Your evaluation was based purely on the raster data structure and your ability to conceptualize rasters as vectors of data with dimensional structure. You applied simple mathematical operators (+, /, -) to the raster bands, and a kmeans clustering algorithm to the data matrix of the multiband raster - all within ~100 lines of code!
-
-# Extra Credit
-
-Check out this drone footage taken during the flooding in Palo, Iowa.
-
-<center>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/n7aJnLLzocE?si=GsEs7F0Ytuk_zCgB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</center>
-
-In particular we see a bit of residential flooding at minute 2:17 (screen shot below)
-
-<center>
-![](../img/palo-flood.png)
-</center>
-
-Our goal is to see if our flood classifications were able to capture this event.
-
-****
-
-Use `mapview` to generate a slippy map of the Palo, Iowa `bbox.` Find the location shown in the above image using context clues and different base maps. Once you do, do the following:
-
-  - Create a `sf` object from the latitude and longitude of the mouse coordinates at the impacted location
-  - use the `st_point` constructor to create an `sfg`; convert it to an `sfc` with the appropriate lat/lng CRS; and the `transform` to the CRS of the flood rasters
-      
-  - Use `terra::extract` to extract the binary flood values at that location from the six layer flood map stack
-  
-> How many of the maps captured the flooding at that location? 
-
-```{r}
-
-```
-
-****
-
-# Rubric
-
-- [ ] **Question 1: Data Acquisition** (20)
-- [ ] **Question 2: Image Creation** (30)
-- [ ] **Question 3: Thresholding** (40)
-- [ ] **Question 4: Classification** (30)
-- [ ] **Question 5: Summary** (20)
-- [ ] **Extra Credit: Pixel Evaluation** (20)
-- [ ] **Well Structured and appealing Qmd deployed as web page** (10)
-
-**Total:** 150 points (170 total)
-
-# Submission
-
-You will submit a URL to your web page deployed with GitHub pages.
-
-To do this:
-
- - Knit your lab document
- - Stage/commit/push your files
- - If you followed the naming conventions in the "Set Up" of lab 2, your lab 5 link will be available at: 
- 
-`https://USERNAME.github.io/csu-523c/lab-04.html`
-
-Submit this URL in the appropriate Canvas dropbox. Also take a moment to update your personal webpage with this link and some bullet points of what you learned. While not graded as part of this lab, it will be your final!
-
-
-
-
