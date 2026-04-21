@@ -220,28 +220,28 @@ What does each image allow you to see?
 
 ```{r}
 plotRGB(landsat_crop, r = 4, g = 3, b = 2, stretch = "lin", 
-        main = "Natural Color: Red-Green-Blue")
+        main = "Natural Color: Red-Green-Blue", mar = c(3, 3, 2, 1))
 ```
 
 > The natural color plot is closest to what human eyes would see. Water and the flood extend are very dark, which makes detail difficult to see.  
 
 ```{r}
 plotRGB(landsat_crop, r = 5, g = 4, b = 3, stretch = "lin",
-        main = "Color Infrared: NIR-Red-Green")
+        main = "Color Infrared: NIR-Red-Green", mar = c(3, 3, 2, 1))
 ```
 
 > The infrared plot highlights vegetation, as plants reflect NIR bands.
 
 ```{r}
 plotRGB(landsat_crop, r = 5, g = 6, b = 4, stretch = "lin",
-        main = "Water Focus: NIR-SWIR1-Red")
+        main = "Water Focus: NIR-SWIR1-Red", mar = c(3, 3, 2, 1))
 ```
 
 > This combination of bands clearly allows us to see the river channel and the flood extent. 
 
 ```{r}
 plotRGB(landsat_crop, r = 1, g = 6, b = 5, stretch = "lin",
-        main = "Coastal-SWIR1-NIR")
+        main = "Coastal-SWIR1-NIR", mar = c(3, 3, 2, 1))
 ```
 
 > I chose to include the coastal band in an effort to distinguish shallow vs deep water and detect turbidity. The river is dark, with the flooded extent showing up as blue with subtle variation. 
