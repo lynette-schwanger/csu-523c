@@ -196,9 +196,6 @@ window.Quarto = {
   <li><a href="#step-5" id="toc-step-5" class="nav-link" data-scroll-target="#step-5">Step 5:</a></li>
   </ul></li>
   <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5">Question 5</a></li>
-  <li><a href="#extra-credit" id="toc-extra-credit" class="nav-link" data-scroll-target="#extra-credit">Extra Credit</a></li>
-  <li><a href="#rubric" id="toc-rubric" class="nav-link" data-scroll-target="#rubric">Rubric</a></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission">Submission</a></li>
   </ul>
 </nav>
     </div>
@@ -276,8 +273,8 @@ window.Quarto = {
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(palo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-4995da459051156569af" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-4995da459051156569af">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["polygon",420]},{"method":"addPolygons","args":[[[[{"lng":[-91.81281300000001,-91.778813,-91.778813,-91.81281300000001,-91.81281300000001],"lat":[42.048236,42.048236,42.082236,42.082236,42.048236]}]]],null,"palo",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"polygon","stroke":true,"color":"#333333","weight":0.5,"opacity":0.9,"fill":true,"fillColor":"#6666FF","fillOpacity":0.6,"smoothFactor":1,"noClip":false},"<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>request&emsp;<\/th><td>Palo, Iowa&emsp;<\/td><\/tr><tr><td>2<\/td><th>score&emsp;<\/th><td>100&emsp;<\/td><\/tr><tr><td>3<\/td><th>arcgis_address&emsp;<\/th><td>Palo, Iowa&emsp;<\/td><\/tr><tr><td>4<\/td><th>x&emsp;<\/th><td>-91.79581&emsp;<\/td><\/tr><tr><td>5<\/td><th>y&emsp;<\/th><td>42.06524&emsp;<\/td><\/tr><tr><td>6<\/td><th>geometry&emsp;<\/th><td>sfc_POLYGON&emsp;<\/td><\/tr><\/table><\/div>",{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"1",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},{"stroke":true,"weight":1,"opacity":0.9,"fillOpacity":0.84,"bringToFront":false,"sendToBack":false}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-91.81281300000001,42.048236,-91.778813,42.082236,true,"palo","Zoom to palo","<strong> palo <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"palo",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#6666FF"],"labels":["palo"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"palo"}]}],"limits":{"lat":[42.048236,42.082236],"lng":[-91.81281300000001,-91.778813]},"fitBounds":[42.048236,-91.81281300000001,42.082236,-91.778813,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\"position\":\"relative\",\"bottomleft\":\"0px\",\"background-color\":\"rgba(255, 255, 255, 0.7)\",\"box-shadow\":\"0 0 2px #bbb\",\"background-clip\":\"padding-box\",\"margin\":\"0\",\"padding-left\":\"5px\",\"padding-right\":\"5px\",\"color\":\"#333\",\"font-size\":\"9px\",\"font-family\":\"\\\"Helvetica Neue\\\", Arial, Helvetica, sans-serif\",\"text-align\":\"left\",\"z-index\":\"700\"});\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-89f7363a204806e15efd" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-89f7363a204806e15efd">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["polygon",420]},{"method":"addPolygons","args":[[[[{"lng":[-91.81281300000001,-91.778813,-91.778813,-91.81281300000001,-91.81281300000001],"lat":[42.048236,42.048236,42.082236,42.082236,42.048236]}]]],null,"palo",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"polygon","stroke":true,"color":"#333333","weight":0.5,"opacity":0.9,"fill":true,"fillColor":"#6666FF","fillOpacity":0.6,"smoothFactor":1,"noClip":false},"<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>request&emsp;<\/th><td>Palo, Iowa&emsp;<\/td><\/tr><tr><td>2<\/td><th>score&emsp;<\/th><td>100&emsp;<\/td><\/tr><tr><td>3<\/td><th>arcgis_address&emsp;<\/th><td>Palo, Iowa&emsp;<\/td><\/tr><tr><td>4<\/td><th>x&emsp;<\/th><td>-91.79581&emsp;<\/td><\/tr><tr><td>5<\/td><th>y&emsp;<\/th><td>42.06524&emsp;<\/td><\/tr><tr><td>6<\/td><th>geometry&emsp;<\/th><td>sfc_POLYGON&emsp;<\/td><\/tr><\/table><\/div>",{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"1",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},{"stroke":true,"weight":1,"opacity":0.9,"fillOpacity":0.84,"bringToFront":false,"sendToBack":false}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-91.81281300000001,42.048236,-91.778813,42.082236,true,"palo","Zoom to palo","<strong> palo <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"palo",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#6666FF"],"labels":["palo"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"palo"}]}],"limits":{"lat":[42.048236,42.082236],"lng":[-91.81281300000001,-91.778813]},"fitBounds":[42.048236,-91.81281300000001,42.082236,-91.778813,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\"position\":\"relative\",\"bottomleft\":\"0px\",\"background-color\":\"rgba(255, 255, 255, 0.7)\",\"box-shadow\":\"0 0 2px #bbb\",\"background-clip\":\"padding-box\",\"margin\":\"0\",\"padding-left\":\"5px\",\"padding-right\":\"5px\",\"color\":\"#333\",\"font-size\":\"9px\",\"font-family\":\"\\\"Helvetica Neue\\\", Arial, Helvetica, sans-serif\",\"text-align\":\"left\",\"z-index\":\"700\"});\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
 </div>
 </div>
 </section>
@@ -671,547 +668,7 @@ max values  :   15955, 17035, 18409, 19288, 23896,  26946 </code></pre>
 <li><p>Once the <code>kmeans</code> algorithm runs, the output will be a list of components. One of these is <code>cluster</code> which provides a vector of integers from (1:<code>k</code>) indicating the cluster to which each row was allocated.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>km12 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(raster_values, <span class="at">centers =</span> <span class="dv">12</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>km12</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>K-means clustering with 12 clusters of sizes 936, 1339, 122, 512, 1100, 1195, 742, 2412, 713, 728, 1124, 1269
-
-Cluster means:
-     coastal      blue     green       red     nir08    swir16
-1   7539.778  7835.376  8523.507  8615.035 10534.221  9019.020
-2   8665.735  9027.376  9879.486 10922.503 14440.355 17223.774
-3  10879.844 11810.590 13566.492 14346.779 18258.590 18266.205
-4   8235.906  8595.111  9407.990  9891.619 13052.078 13089.975
-5   8231.527  8568.526  9542.495  9650.262 16386.884 14596.116
-6   7618.928  7913.176  8495.385  8824.253  8452.252  7711.457
-7   8978.708  9502.958 10820.036 11185.170 17536.438 16488.927
-8   8360.434  8678.060  9376.290 10198.371 13245.522 15527.567
-9   8148.700  8451.474  9619.331  9294.142 19669.797 15113.119
-10  7718.904  7890.915  8614.508  8280.670 16579.140 11999.988
-11  7521.742  7773.394  8483.077  8403.391 12513.655 10124.987
-12  7603.770  7786.083  8454.649  8201.928 14500.833 11016.952
-
-Clustering vector:
-    [1]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  7  5  5  5  4 11 11  4  7
-   [25]  9  9  9 10  1 11 10 10  1  1 11 11 11 11 11 11 12 12 11 11 11  1  1  1
-   [49]  1 11  4 12 12 12 12 12 10 12 12 12 12 12 11  1 12 12 12 10 12 12 12 10
-   [73]  1  6  6  6  6  6  6  6 11 12 10 12 12 12 12 12 12 10 10 10  1  6  6  6
-   [97]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9 12 11  4  4  4  4  4  5  4
-  [121] 10  9 10 12  1 10  9  9 12  1  1 11  1 11 11  1 11  1  1  1  1  1  6  6
-  [145]  1  6  4 11 11  1  1  1 11 12 12 12  1 11 11  1 12 12 12 10 12 12 11 12
-  [169]  1  6  6  6  6  6  6  1 11 12 12 12 12 12 12 12 12 10 10 12  6  6  6  6
-  [193]  9  9  9  9 10 11 12  5  9  9  9  9  9 12  4  5  9  5  5  8  4 11  1  6
-  [217]  1 12 12 11 10  9  9 10 11  1 11 11  1  1 11  1 11 11  1  1  6  6  6  6
-  [241]  6  1  4  4 11 12 12 11  1 11 12 12 11 11 12 11 12 12 12 12 12 12 10 10
-  [265] 12  1  6  6  6  1 11 12 12 10 12 10 10 10 10 10 10 10 12  1  6  6  6  6
-  [289]  5  5  5  4  4 11 11  1 11 12  7  9  9  5  5  9  9  5  5  5  1  1 11  4
-  [313] 10 10  9 10 10 10 10  1  1  1 11  1  6  1 11 11 11  1  1  1  6  6  6  6
-  [337]  6  1  4  4 12 10 12 12 11 11 12 11  1 11 12 11 12 12 12 12 12 12 10 10
-  [361] 12 12 11 11 11 12 12 11 12 12 12 12 10 10 12 10 10 10 12  6  6  6  6  1
-  [385]  4  4  4  4  4 11 12 10 12 12  5  9  9  5  9  9  9  5 10 11  1 10  5  5
-  [409] 10  9  9  9 12 11  1  1 12 12 11  1  1  1  1 11 11  1  6  6  6  6  6  6
-  [433]  6  6  4 10 10 10 10 10 12  1 11 11  1 11 10 12 12 12 12 12 12 12 12 12
-  [457] 11 11 11 11 11  1  1  1 12 10 10 10 10 12 12 12 10 10 12  6  6  6  6  1
-  [481] 12 12 12 12 11 12 12 10 10 10  4 10 10 11 12 10 12 12 11 12 10  9  9  9
-  [505]  9  9  9  9 10 12 11 10  9  9 10 11  1  1 11  1  1  6  6  6  6  6  6  6
-  [529]  6  1  5 12 12 12 12 10 12 12 12 12 12 12 10 12 10 10 12 11 12 12 12 12
-  [553]  1  1 11  1 11 11 11 11 12 12 11 12 12 12 12 10 10 10 11  6  6  6  6  1
-  [577] 12 10 12 12 12 10 12 12 12 12 11 11 12 12 10 10 12 10 10  5  5  5  9  9
-  [601]  5  5  5  5  5  8  5  8  8  5  5 12  1  1  1  1  1  6  6  6  6  6  6  6
-  [625]  6  1  8  1  1  1  1  1  1  1  1  1 11 11  1 11 10 10 12 12 10 12 12 10
-  [649] 11 11 12 12 12 12 12 12 10 12 11  1 11 12 10 10 10 12  1  6  6  6  6  6
-  [673] 10 12 12 12 10 10 10 10 12 10  5 10  9  5  8  8  8  8  8  8  8  8  5  7
-  [697]  5  8  8  8  8  8  8  8  8  8  8  4 11 11 12 10  5 12 12 11  1  6  1 11
-  [721]  1  4  4  6  6  6  6  6  6  6  1  6  6  6  6 12 11 11 11 12 12 12 11 11
-  [745] 11 11 12 12 12 12 12 10 12 11 11  1 11 12 10 10 12 12  1  6  6  6  6  6
-  [769] 10 10 10 10 10 10  9  9  9  9  9  5  5  8  8  8  8  8  8  8  8  8  8  7
-  [793]  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  8  4  5  7
-  [817]  2  4  1  6  6  6  6  6  6  6  6  6  6  6  1 11 11  1 11  1 11 11 12 12
-  [841] 11 11 12 10 10 12 12 12 11  1  1 11 10 10 10 10 12 11  6  6  6  6  6  6
-  [865]  9  9  9  9  9  9  9  9  9  9  9  5  8  8  8  8  8  8  8  8  8  8  8  7
-  [889]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  2  7  5 10  9
-  [913]  7  4  6  6  6  6  6  6  6  6  6  6  6  1 11 11 11 12 12 12  1  1 12 12
-  [937] 12 12 12 10 10 12 11  1  6  6 11 12 10 12 10 12 11 12  6  6  6  6  6  6
-  [961]  9  9  9  9  9  9  9  9  5  8  5  2  8  8  8  8  8  8  8  8  8  8  5  7
-  [985]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  7  5  9 10  5
- [1009]  8  6  6  6  6  6  6  6  6  6  6  6  6  1 11 11 12 12 12 11 11 11 11 12
- [1033] 12 12 11 12 12 11 11  1  1  1 12 10 10 12 12 11 11 12  6  6  6  6  6  6
- [1057]  9  9  9  9  9  9  9  5  8  8  7  8  8  8  8  8  8  8  8  8  8  8  5  7
- [1081]  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  5  5  5  9  7
- [1105]  1  6  6  6  6  6  6  6  6  6  6  6  6  1 12 10 12 12 12 12 11 11 11 11
- [1129] 12 12 11 12 12 11 11 11  1  1 11 12 12 12 12 11 11 12  1  6  6  6  6  1
- [1153]  9  9  9  9  9  9  7  8  8  8  7  8  8  8  8  8  8  8  8  8  8  8  5  7
- [1177]  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  5  5  9  7  4
- [1201]  6  6  6  1  1  1  1  1 11 11  1  1 11 11 12 12 12 12 12 12 12 11 11  1
- [1225] 11 11 12 12 12 12 12 12 11  1 11 11 11 12 12  1 11 12  1  6  6  6  6  6
- [1249]  9  9  7  7  9  3  7  8  8  8  2  2  8  8  8  8  8  8  8  8  8  8  2  7
- [1273]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4  5  5  9  9  7  1
- [1297]  6  6  1 12 12 12 12 10 10 10 12 12 12 12 12 12 12 12 12 12 12 12 11  1
- [1321]  1 11 12 12 11 11 12 12 12 11 11 11 12 12 12  1  1 12  1  6  6  6  6  6
- [1345]  9  9  7  5  9  7  7  8  8  8  2  2  8  8  8  8  8  8  8  8  8  8  5  9
- [1369]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4  5  5  9  7  4  6
- [1393]  6  6  1 11 12 10 12 10 10 12 10 10 12 10 10 10 10 12 12 12 12 12 11  1
- [1417]  1 11 11 12 11 11 12 12 12 12 11 12 12 12 11  1  1 12  1  6  6  6  6  6
- [1441]  9  9  7  5  9  9  9  2  8  8  7  2  8  8  8  8  8  8  8  8  8  8  5  7
- [1465]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  5  9  7  6  6
- [1489]  6  6  6 11 12 12 12 10 10 12 10 10 12 12 12 12 12 12 12 12 12 12 12 11
- [1513]  1  1 11 12 11 11  1 11 12 11 11 12 12 12 12 12 12 11  6  6  6  6  6  6
- [1537]  7  7  7  7  7  7  7  7  7  7  7  8  8  8  8  8  8  8  8  8  8  8  5  9
- [1561]  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  9  7  7  4  6  6
- [1585]  6  6  6 11 12 12 12 12 12 12 10 10 12 12 11 12 10 12 12 12 12 12 12 12
- [1609] 12 12 11 11  1  6  1 11 12  1  1 12 12 11 11 12 10 11  6  6  6  6  6  6
- [1633]  8  8  8  8  8  8  8  8  8  8  7  2  8  8  8  8  8  8  8  8  8  8  5  9
- [1657]  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  9  7  1  6  6
- [1681]  6  6  6  1 11 12 12 11 11 11 12 12 12 11 11 12 10 12 12 12 12 12 12 12
- [1705] 10 12 11  1  6  1 11  1  1 11 12 12 10 10 12 12 10 12  6  6  6  6  6  1
- [1729]  8  8  8  8  8  8  8  8  8  8  2  7  8  8  8  8  8  8  8  8  8  8  2  9
- [1753]  2  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  5  7  1  6  6
- [1777]  6  6  6  1  1 12 12 11  1 11 11 11 11  1 11 12 12 12 12 11 12 12 12 12
- [1801] 12 11 11 11  1  1 11  6  1 12 12 11 10 10 10 12 12 10  1  6  6  6  6 12
- [1825]  8  8  8  8  8  8  8  8  8  8  7  2  8  8  8  8  8  8  8  8  8  8  2  7
- [1849]  7  2  8  8  8  2  2  8  8  2  2  8  8  5  5  8  8  5  9  9  7  1  6  1
- [1873] 11  1  1 12 11 11 12 11  1 11 11 11 11  1 11 12 10 10 10 12 12 12 10 12
- [1897] 10 12 12 12 11 11 10 11 12 12 12 12 12 12 12 12 12 10  1  6  6  6  6 11
- [1921]  8  8  8  8  8  8  8  8  8  8  7  2  2  2  2  2  2  2  2  2  2  2  2  7
- [1945]  7  2  8  2  8  8  8  8  2  8  8  8  8  8  2  2  2  9  9  9  7  1  1  1
- [1969]  1  1 11 11 11 11 11 11  6  1 11  1 11  1  1 11 12 12 12 10 12 10 10 12
- [1993] 12 10 12 12 12 12 10 10 10 12 12 12 12 12 10 10 12 11  6  6  6  6  6  1
- [2017]  8  8  8  8  8  8  8  8  8  8  7  2  2  2  2  2  2  2  2  2  2  8  2  9
- [2041]  5  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  2  5  5  9  9  1  6  6
- [2065]  6  1 11 11  1  1 11  1  6  1  1 11 11 11 11 11 10 10 12 12 12 12 12 12
- [2089] 10 12 11 12 12 10 10 10 10 12 12 12 12 12 12 12 12 11  6  6  6  6  6  1
- [2113]  8  8  8  8  8  8  8  8  8  8  2  7  2  2  2  2  2  2  2  2  2  8  2  7
- [2137]  2  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  2  5  3  7  7  1  6  1
- [2161]  6  6 11 12 11  1 11 11  6  6  1  1  1 11 11 11 12 10 12 12 12 12 12 10
- [2185] 12 12 11 12 12 10 12 12 12 11 11 12 11 12 12 12 10 11  6  6  6  6  6  6
- [2209]  8  8  8  8  8  8  8  8  8  8  2  7  2  2  2  2  2  2  2  2  2  2  2  7
- [2233]  2  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  8  5  5  7  7  4 11 11
- [2257] 11 11 11 10 12  1 11 12  1  1  1 11 11 11 11 11 11 12 11 12 12 10 10 10
- [2281] 12 12 12 12 12 12 11 11 11 12 12 12 11 11 12 12 12  1  6  6  6  6  6  6
- [2305]  8  8  8  8  8  8  8  8  8  8  7  7  2  2  2  5  2  2  2  2  2  2  2  7
- [2329]  7  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  2  5  9  9  9  5 11 12
- [2353] 11 11 11 12 11  6  1  1 11 12 11  1  1 11 11 11 11 12 12 12 12 10 12 12
- [2377] 10 12 12 12 11 11 12 12 11 12 11 11 11 11 11 12 12  6  6  6  6  6  6  6
- [2401]  8  8  8  8  8  8  8  8  8  8  7  2  2  8  8  2  2  2  2  2  2  2  2  7
- [2425]  7  8  8  8  8  8  8  8  8  8  8  8  8  2  2  2  2  5 10  9  9  7 11 11
- [2449] 11  1  1 11 11  6  6  6  1 12 11 11 11 11  1 11 12 10 10 10 12 12 12 12
- [2473] 10 10 10 12 11 12 12 12 11 11 11 11 11 12 12 12 11  6  6  6  6  6  6  6
- [2497]  8  8  8  8  8  8  8  8  8  8  2  7  2  2  2  2  2  2  2  2  2  2  2  7
- [2521]  7  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  9  5  9  7 11 11
- [2545] 11  1 11 12 12  1  6  6  6 11 11 11 11  1 11 11 12 10 10 10 12 11 12 12
- [2569] 12 12 11 11 12 12 12 11 12 12 12 12 12 12 11 12 11  6  6  6  6  6  6  6
- [2593]  8  8  8  8  8  8  8  8  8  8  2  7  2  2  2  2  2  2  2  2  2  2  2  7
- [2617]  7  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  2  2  2  4  1
- [2641] 11 12 12 11 12 12  1  6  6 11 12 11 11  1  1 11 11 12 12 12 12 12 12 11
- [2665] 11 11 11 12 10 12 11 12 12 12 10 11 12 12 11 10  1  6  6  6  6  6  6  1
- [2689]  8  8  8  8  8  8  8  8  8  8  7  7  2  2  2  2  2  8  2  2  2  2  2  7
- [2713]  7  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  2  8  8  8  8 11
- [2737] 11 12 11 11 11 11 12  1  6  1 11  1  6  1  1  1  1 12 12 12 10 10 12 12
- [2761] 11  1 12 12 12 12 12 12 11 11 12 12 12 12 11 12  6  6  6  6  6  6  6  1
- [2785]  8  8  8  8  8  8  8  8  8  8  7  2  2  2  2  2  2  2  2  7  7  2  2  9
- [2809]  9  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5 12
- [2833]  1  1 12 11 11  1  1 11  1 11 11  1  6  1 11  1 11 12 11 12 12 12 12 12
- [2857] 12 12 12 12 12 12 12 12 11 11 12 12 10 10 10 11  6  6  6  6  6  6  1  6
- [2881]  8  8  8  8  8  8  8  8  8  8  2  7  5  8  5  5  8  8  8  8  8  2  7  9
- [2905]  9  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  8  8  8  2  4
- [2929] 11 11 12 11  1  6  6  1 12 12 11  1  1  1  1  1 11 12 12 12 10 10 10 12
- [2953] 12 12 10 10 12 12 11 11 11 11 11 12 12 12 12  1  6  6  6  6  6  1  6  6
- [2977]  8  8  8  8  8  8  8  8  8  8  2  9  9 12 12 12  5  8  8  8  8  8  5  9
- [3001]  7  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  2  2  8  8  8  2  5
- [3025] 12 11 11  1  1  6  6  6  1  1  1  1  1  1 11  1  1  1 11 11 12 12 12 10
- [3049] 10 10 10 10 12 11 12 11 11 11 12 10 12 10 12  6  6  6  6  6  1 11  6  6
- [3073]  8  8  8  8  8  8  8  8  8  8  2  9  9  9  5 10  4  4  8  8  8  8  2  7
- [3097]  5  5  5  5  5  5  5  5  5  5  5  9  5  5  2  5  5  5  5  9  5  5  5  7
- [3121]  4 12  1  1  6  6  6  6  6  6  6  6  1  1  1  6  6  1  1  1 12 12 12 12
- [3145] 12 12 12 12 11 12 11 12 12 11 12 12 12 10 11  6  6  6  6  6 11 11  1  6
- [3169]  8  8  8  8  8  8  8  8  8  8  7  9  9  7  5 10 10  5  7  2  2  2  2  7
- [3193]  9  7  5  9  9  9  5  5  9  5  5  5  9  9  9  5  9  9  9  9  9  9  5  7
- [3217] 10 10 12 11  1  1  6  1  1  6  6  6  6  6  1  1 11 11 11 11 12 12 11 12
- [3241] 12 12 12  1  1 11 11 12 12 12 12 12 11 12  6  6  6  6  6  1 12 11  1  1
- [3265]  8  8  8  8  8  8  8  8  8  8  7  7  2  2  8 10  5  9  7  7  2  2  2  7
- [3289]  9  9  7  9  7  7  7  7  5  7  7  7  7  9  9  7  7  9  9  7  7  7  7  7
- [3313]  5  5  7  4  1  1  6  6  6  6  6  6  6  1  1  1  1  1  1 11 12 12 11 12
- [3337] 12 12 11 11 11 11 11 12 12 12 12 11 11  1  6  6  6  6  6  1 11 12 11 11
- [3361]  8  8  8  8  8  8  8  8  8  8  2  7  8  8  8  5  9  7  5  5  8  2  2  7
- [3385]  9  5  7  9  9  5  5  5  7  5  9  5  5  9  9  7  5  5  5  5  5  5  5  7
- [3409]  5  5  8  4  4  6  6  6  1  1  1  1 11 11 11  1  1  6  6  1 11 11 11  1
- [3433]  1  1  1  1 11 11 11 12 11 11 11 11  6  6  6  6  6  6  6  1 11 11 11 11
- [3457]  8  8  8  8  8  8  8  8  8  8  2  7  8  8  8  2  2  2  2  2  2  2  2  7
- [3481]  9  7  5  9  5  7  5  9  7  5  9  5  7  9  5  7  9  9  9  9  5  5  5  7
- [3505]  9  9  5  3  4  6  6  1  1  1  1  1  1  1  1  1  1  1  6  6  1  1  1  1
- [3529] 11 11  1  1 11 11  1 11  1 12 12  1  6  6  6  6  6  6  6 11 12 11 11 12
- [3553]  8  8  8  8  8  8  8  8  8  8  7  7  8  8  8  2  2  2  2  2  2  2  2  7
- [3577]  9  7  5  9  5  7  5  9  7  5  9  5  7  5  9  7  9  5  5  5  5  7  5  7
- [3601]  9 10  5  7  3  1  1  1  6  6  6  6  6  6  6  6  6  6  6  1 11  6  6  1
- [3625] 12 12  1  1 11 11  1 11 11 12 11  6  6  6  6  6  6  6  6 11 12 11  1 11
- [3649]  8  8  8  8  8  8  8  8  8  8  7  2  8  8  8  8  2  2  2  2  2  2  2  2
- [3673]  9  9  7  5  5  7  5  9  7  7  9  5  7  5  9  9  9  5  5  9  9  9  5  7
- [3697]  7  5  9  3  3  4  6  1  4  4  1  6  1  1  1  6  6  6  6  6  1  6  6  1
- [3721] 11 12 11  1 11 11 11 11 12 12  1  6  6  6  6  6  6  6  1  1  1  1  1  1
- [3745]  8  8  8  8  8  8  8  8  8  8  2  7  8  8  8  8  8  2  2  2  2  2  2  5
- [3769]  9  9  7  5  9  7  5  9  7  7  9  5  5  5  7  3  3  3  3  3  7  9  9  7
- [3793]  9 10 11  4  4  4  1  4  2  2 11  1 12 12 12 11 11 11 11 11  1 11  1 11
- [3817] 11 12 11  1 11 11 12 12 12 12  6  6  6  6  6  6  6  6  1 12 11  1  1  1
- [3841]  8  8  8  8  8  8  8  8  8  8  8  5  8  8  8  8  8  8  8  8  2  2  2  5
- [3865]  9  9  7  9  9  5  7  7  7  9  9  5  7  9  3  3  3  3  3  3  7  9  9  7
- [3889]  5 12  1  1  1  1  4  4  8  4 11 11 11  1 11 12  1  1  1  1  1  1 11 11
- [3913] 11 12 12 11 11 11 11 11 11  1  6  6  6  6  6  6  6  1 11 11 11 12 11 12
- [3937]  8  8  8  8  8  8  8  8  8  8  2  2  8  8  4  4  8  8  8  2  2  2  2  7
- [3961]  9  9  7  9  9  9  9  7  7  9  9  9  7  7  3  3  3  3  3  3  7  5  5  3
- [3985]  7  4  4  4  4  4  4  4  4  4  4 11 11  1  1 12  6  1  1  1  1  1  1 11
- [4009] 11 12 12  1 11 11 12  1  6  6  6  6  6  6  6  6  6 11 11 11 11 12 12 10
- [4033]  8  8  8  8  8  8  8  8  8  8  2  5  8  8  8  8  8  2  2  7  7  7  7  7
- [4057]  7  7  7  7  7  7  7  7  7  7  7  7  7  9  9  9  5  9  9  5  4  4  5  7
- [4081]  7  4  4  4  4  4  4 11  1  1  4  4  4  4  4 11  1  1  1 12 12 11 11 11
- [4105] 11 11 11 11  1 12 11  6  6  6  6  6  6  6  6  1 11 12 11 11 11 11 12 12
- [4129]  5  8  8  8  8  8  8  8  8  8  8  5  8  8  8  8  2  7  7  2  5  8  8  2
- [4153]  5  9  9  9  9  9  9  9  9  9  9  9  9  9  9 10 10  9  9 10 10 10  5  7
- [4177]  7  4  4  4 11 11  4  4  4  1  6  1  1  1  4  4  4  4 11 11 11 12 12 12
- [4201] 11 11  1  1 11 11  1  6  6  6  6  6  6  1  1 11 11 11 11 11 11 11 12  1
- [4225]  9  5  8  8  8  8  8  8  8  8  8  5  8  8  8  2  7  7  8  8  8  8  8  8
- [4249]  5  9  9  9  7  9  9  9  9  9  5  9  9  9  9  5  5  5  9  5  9  9  9  7
- [4273]  3  7  5  5  4  4  5  5  8  1  6  1  1  6  1  1  1  4  4  4  4 11  1  1
- [4297] 11 12 11 11  1  1  6  6  6  6  6  6  6 11 12 11 12  1 11 12 11 11 12  1
- [4321]  9  9  9  5  8  8  8  8  8  8  8  5  8  8  2  7  5  8  8  8  8  8  8  2
- [4345]  9  9  9  9  9  9  9  9  9  7  7  7  9  9  5  5  5  5 10  5  5 10  5  5
- [4369]  7  8  4  4  4  4  5  5  2  1  6  1  1  6  6  1  6  6  6  1  4  4  4  4
- [4393] 11  1  1 11  6  6  6  6  6  6  6  1 12 12 12 12 11 11 12 12 11 11 10  1
- [4417]  9  9  9  9  5  8  8  8  8  8  5  5  5  8  7  5  8  8  8  8  8  8  8  2
- [4441]  5  5  5  5  5  5  5  9  5  5  5  7  9  9  5  5  5  5  5  5  5  5  9  9
- [4465]  5 11 11 12  4  4  5  8  5  1  6  6  6  6  6  1  1  6  6  6  1  1 11  4
- [4489]  4  4  4  4  6  6  6  6  6  6  1 12 10 12 12 12 11 11 12 12 12 12 12 11
- [4513]  5  9  9  5  8  8  8  8  8  8  8  9  5  5  7  8  8  8  8  8  8  8  8  5
- [4537]  5  8  8  8  8  8  8  2  2  2  8  8  8  8  8  8  8  8  8  8  8  8  5  9
- [4561]  5 11 11 12  4  4  4  5  5  4  6  6  6  6  1 11 11  6  1  4  7  4  1  6
- [4585]  6 11  4  4  4  1  6  6  1 11  1  1  1 11 11  1  6  1 12 12 12 12 12 10
- [4609]  8  5  5  5  8  8  8  8  8  8  8 10  9  7  7  8  8  8  8  8  8  8  8  2
- [4633]  2  8  8  8  8  8  8  8  2  2  8  8  8  8  8  8  8  8  8  8  8  8  4  5
- [4657]  7  7  9  5 11 11  4  4  4  1  6  6  6  6  1 12 12  1  4  3  3  2 11  6
- [4681]  6  1 11  6  6  1  4  4  4  4  1  6  1 11  1  6  1  6  1 11 11 11 12 10
- [4705]  8  8  8  5  5  5  4  8  8  8  8  9  9  5  5  8  2  5  5  5  5  2  8  2
- [4729]  2  8  8  8  8  8  8  8  2  8  5  8  8  8  8  8  8  8  8  8  8  8 10  5
- [4753]  7  3  9 10  1  1  4  4 11  6  6  6  6  6  6  1  1  6  4  3  7  5 12  1
- [4777]  6  1  6  6  6  6  6  1  4  4  4  4  1 11 11  6  6  6  6  1 11 11 12 10
- [4801]  8  8  8  8  8  5  5  5  8  8  4  5  5  5  5  5  9  5  5  5  5  9  2  2
- [4825]  2  8  8  8  8  8  2  2  2  8  8  8  4  4  8  4  8  8  8  8  8  8  9  9
- [4849]  7  9  7  4  1  1 11 11  1  6  6  6  6  6  6  6  6  6 11  2  5 12 12 12
- [4873] 11  6  6  6  6  6  6  1 11 12  4  5  4  4  4  1  6  6  6  6  6  1 12 10
- [4897]  8  8  8  8  8  8  5  5  5  8  4 10  7  5  8  2  2  2  2  2  2  2  5  8
- [4921]  2  8  8  8  8  8  2  2  2  8  8  9  9  9  9  9  9  5  9  9  9  5  5  5
- [4945]  5  7  7  4  1  1  1  1  1  1  1  1  1  1  6  6  1  1  1 11 12 12 12 11
- [4969]  1  6  6  6  6  6  6 11 12 12 12 12 12 12  4  4  4  4  1  6  6  6  6  1
- [4993]  8  8  8  8  8  8  8  8  5  5  5 10  7  5  8  8  2  2  2  2  2  2  5  2
- [5017]  2  8  8  8  8  8  2  2  2  8  5  9  9  9  9 10  5  5  9  9  5  4 12  5
- [5041]  7  7  7  1  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 11 10 12 12  1
- [5065]  6  6  6  6  6  6  1 11 12 12 12 12 12 12 12 12 11  4  4  4  4  1  1  6
- [5089]  8  8  8  8  8  8  8  8  8  8  5  9  7  8  8  8  2  2  2  2  2  2  8  2
- [5113]  2  8  8  8  8  8  2  8  8  8  5  9  9  9  9  9  5  9  9 10 10 10 10  5
- [5137]  7  3  9  1  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 11 12 12 10  1
- [5161]  6  6  6  6  6  6  1 12 11 12 12 12 10 10 10 12 12 12 12  4  4  4  4  4
- [5185]  8  8  8  8  8  2  8  8  8  8  8  7  7  5  8  8  2  2  2  2  2  8  8  2
- [5209]  2  8  8  8  8  2  8  8  8  8  8  9  9  9  9  7  9  7  5 10  5  5  9  5
- [5233]  9  9  5  1  6  6  6  6  6  6  6  6  6  6  6  6  6  6  1 12 12 12 11  6
- [5257]  6  6  6  6  6  6 11 10 12 12 12 12 12 10 10 12 11 12 12 12  6  6  1  1
- [5281]  8  8  8  8  8  8  8  8  8  8  8  7  5  9  5  8  2  2  2  2  2  2  5  8
- [5305]  2  8  8  8  8  2  8  8  8  8  8  9  9  3  7  7 10  5  5  9  5  7  9  5
- [5329]  9  5 11  1  1  1  6  6  6  1  6  6  6  6  6  6  6  1 12 11 10 10  1  6
- [5353]  6  6  6  6  6  1 12 12 12 12 12 10 10 10 12 12 12 12 10 11  6  6  6  6
- [5377]  8  8  8  8  8  8  8  8  2  8  2  3  9  7  9  5  5  2  2  2  2  8  5  8
- [5401]  2  8  8  8  8  8  8  8  8  8  5  9  9  7  5  5  9  5  9  9  5  5  5  5
- [5425]  5  5 12 11 11  1  6  6  6  6  6  6  6  6  6  6  6 11 12 11 12 12 12  1
- [5449]  6  6  6  6  6  1 12 12 12 12 10 10 10 12 12 12 12 10 10  1  6  6  6  6
- [5473]  8  8  8  8  8  8  8  8  8  8  2  7  9  9  9  7  7  5  2  2  2  8  4  8
- [5497]  8  8  8  8  8  8  8  8  8  8  5 10  9  9  9  5  5  9  5  5  5  5  5  5
- [5521]  5  5 10 12 11  1  1  6  1 11  1  6  6  6  6  6  6 12 10 10 12 11 12  1
- [5545]  6  6  6  6  6 11 12 12 11 12 10 12 12 11 12 12 10 10 10 12 11  1  1 11
- [5569]  8  8  8  8  8  8  8  8  8  8  7  7  9  9  9  3  3  7  7  2  2  4  4  8
- [5593]  8  8  8  8  8  8  8  8  8  8  4 10  9  5  5  9  5  9 10 10  5  5  5  7
- [5617]  7  5 10 10 10 10  1  6  6  1  6  1 11 11 11  1  1 11 12 12 11 11 12  1
- [5641]  6  6  6  6  1 12 12 11 12 10 10 12 10 11 12 11 12 10 12 12 12 12 11 11
- [5665]  8  8  8  8  8  2  2  2  2  5  7  7  9  9  9  9  3  9  9  9  2  4  5  5
- [5689]  2  4  8  5  5  5  8  5  5  5  5 10  5  5  5 10 10  5 10 10  5  7  7  3
- [5713]  3  7  5  5  9  7  4  1  1  3  4 12 10 10 10 12 11 12 12 12  1 11 12  1
- [5737]  6  6  6  6  1 12 12 12 12 10 12 12 12 12 11 12 11 12 12 12 12 10 10 12
- [5761]  7  7  7  7  7  7  7  3  3  3  7  3  3  3  7  7  3  9  9  7  7  5  5  4
- [5785]  5  5  5  9  5  7  7  5  5  7  5 10 12  5  5 10 10  5 10 10  5  7  5  5
- [5809]  5  5  5  5  5  5  4  4  1  4 10 10 10 10 10 12 10 10 10 12  1 11 12 12
- [5833]  1  6  6  6  1 12 12 10 10 12 12 10 10 10 12 12 12 12 11 11 12 12 12 12
- [5857]  5  7  7  7  9  9  9  3  3  3  3  3  8  8  8  8  8  5  7  7  7  7  5  4
- [5881]  5  5  5  5  5  7  7  9  7  7  9  5  9  9  9  9  9  5 10 10  5  5  5  5
- [5905]  5  7  7  5  5 10 11  1  1 11 12 12 11 11 12 10 10 12 11 11  1 11 12 12
- [5929]  1  6  6  6  6 11 10 10 10 10 10 10 12 10 12 12 12 11 12 10 10 12 12 12
- [5953]  7  7  7  7  9  9  9  7  3  3  3  7  8  8  4  8  8  8  8  8  7  7  7  5
- [5977]  5  5  5  5  5  9  9  9  3  3  9  5  5  9  9  9  5 10 10  5  5  5 10  9
- [6001]  7  7  5  5 10 12 11 12 10 11 10 12 11 11 11 11 12  6  6  1 12 12 10 12
- [6025] 11  6  6  6  6  1 12 12 11 12 10 12 11 12 12 12 12 11 12 12 10 12 12 12
- [6049]  3  7 10 12  9  9  9  7  3  3  3  3  8  4  4  4  4  8  4  4  4  5  7  7
- [6073]  7  5  9  9  9  5  9  5  7  7  5  5 10  9  9 10 10 10  9  5  5  5 10  5
- [6097]  3  7 10 10 12 12 12 12 10 12 10 12  1  6  1  1  1  6 12 12 10 10 10 12
- [6121] 10  1  6  6  6  6  1 12 12 10 10 12 12 12 12 12 12 12 12 11 12 10 12 12
- [6145]  9  9 12 12  9  9  9  3  7  3  3  7  8  4  4  4  4  4  4  4  4  4  8  7
- [6169]  7  7  8  5  9 10  9  5  5  5 10 10 10  5  9  9  9 10 10  7  7 10 10  9
- [6193]  7  7  9 10 12 11 12 11 12 11 11 11  6  6  6  1 11 11 10 10 11  1 11 11
- [6217] 10 11  6  6  6  6  6  1 10 10 10 10 12 12 11 12 12 12 12 11 11 12 10 10
- [6241]  9  9  5  5  9  9  7  3  7  7  7  7  8  4  4  4  4  4  4  4  4  4  4  4
- [6265]  5  7  7  8  5  9  9  5  9  9  9 10  5  5 10 10 12 12 12  7  4 10  9  9
- [6289]  5  5  9 12  1  1 11 11 11  1 11 11  6  6  6  1 12 12 10 12 11 11 11 11
- [6313] 11 11  1  6  6  6  6  6  1 12 10 10 10 12 11 12 11 12 10 12 11 11 11 12
- [6337]  7  9  9  9  9  9  9  9  7  7  7  7  8  4  4  4  4  8  4  4  4  4  4  4
- [6361]  4  7  7  7  7  7  9  9  9  9  9 10  5  5  5 11 11 11 11 11 11 10  9  5
- [6385]  5 10 11  1  1 11 11 12 12 11 12 12 11 12 10 10 12 11 11 11 11 11 11  1
- [6409]  1 11  1  1  6  6  6  6  6  6 11 10 10 10 10 10 12 10 12 12 12 11 12 10
- [6433]  9  9  9  9  9  9  9  9  9  9  9  7  8  8  8  4  4  8  8  8  4  4  4  4
- [6457]  4  8  7  7  7  7  9  9  9  9 10 10 10 12  4  1 11 11  1  1  1  1 12  5
- [6481]  5 11  1  1  6  1 12 10 11 11 11 12 12 10  9  9 12 11 11 11 11 10 12 11
- [6505]  1  1  6  1  6  6  6  6  6  6  6  1 11 12 10 10 10 10 12 12 12 11 12 12
- [6529]  7  9  5  7  7  7  9  5  5  7  5  7  8  8  8  4  8  4  8  8  8  8  4  4
- [6553]  5  5  5  7  7  7  7  9  9  9 10 12  1  1  1  1  1 11  1 11  1  6 11  5
- [6577]  4  1 11 11 11 11 10 12 11 12 11 11 11 12 12 10 11  1  1 11 12  5  5 11
- [6601]  1  6  6  1 11  1  6  6  6  6  6  6  6  6  6 11 12 10 10 10 12 12 12 12
- [6625]  7  5  7  5  5  5  7  9  5  5  5  7  8  8  8  8  8  5  5  5  5  5  5  5
- [6649]  5  5  5  5  7  9  5  9  9 10 11  1  1  1 11 12 11 12 11  1 11  1  1  1
- [6673]  4  1 12 12 12 12 12 11  1 12 11 12 12 12  1  1  4  1  1  1 12 10 12 12
- [6697] 11  1  1 11 11  1  6  6  6  6  6  6  6  6  6  6  6  1 11 12 12 12 10 12
- [6721]  9  9  5  9  9  9  9  9  9  9  5  7  8  4  4  4  5  5  5  5  5  5  5  5
- [6745]  4  1  6  6  4  7  5  5 12  1  6  1  1  1 11 12 12 10 11  1  6  6  6  1
- [6769]  1  1  1  1 11 11 12 12 11 10 12 11 12  5  4  4  4  1  1  1 11 10 10 12
- [6793] 11  6  1  4  1  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  1 11 12 12
- [6817]  5  5  5  5  5  5  9  7  5  7  7  7  2  8  8  8  5  5  5  5  5  5  5  5
- [6841]  4 11  6  6  6  4  5  5 11  1 11 12 12  4  5  3  3  9 10 11  1  6  6  1
- [6865] 11  1  6  6  6 11 12 11 10  9 11 11 11 12 12 11 11  1  1  1 11 10 12 12
- [6889] 11  1  6 11  1  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  1 11 12
- [6913]  7  7  2  7  7  7  5  7  7  5  5  7  8  8  8  8  4  4  4  5  5 11  4  4
- [6937]  4  4  1  1  1  1  5  9  5 11 12 12 10  7  3  3  3  7  5 10 10 12  6  1
- [6961]  4  6  6  6  6  1  1  1  9  5  4 11 11 12 12  4 12  1  1  1 11 10 10 12
- [6985] 12  1  6 11  1  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  1
- [7009]  5  5  5  5  9  9  5  5  5  5  5  7  7  7  5  4  4  4  4  5  5  4  5  9
- [7033]  9  5  4  4 11  1 11  5  5 12 12 10  9  7  7  3  3  7  7  7  7  5  5 12
- [7057]  4  4 11 11  1 11 10 12 10  5  5  5  5  5  5  5  4 11  1  1 11 10 10 12
- [7081] 12  1  1 11  1  6  6  6  6  6 11 11  6  6  6  6  6  6  6  6  6  6  6  6
- [7105]  8  2  5  5  5  8  8  5  8  8  8  7  9  9  8  4  8  5  5  5  7  2  2  2
- [7129]  2  5  4 11 11 11  1 11  5  5  5  9  9  9  7  3  3  3  7  3  3  3  7  9
- [7153]  5  5  5 10  5  5  5 10 10 10  9 10  9  9 10  5  4  4 11  1  1 12 10  5
- [7177] 12  1 11 11  1  6  6  6  6  6 12 10 11  1  6  6  6  6  6  6  6  6  6  6
- [7201]  8  8  8  8  8  8  8  8  8  8  8  7  7  5  5  5  5  5  5  2  2  2  2  2
- [7225]  2  2  8  8  5  5 11  1 11  5  5  9  9  9  7  3  3  7  7  3  3  3  7  7
- [7249]  9  5  5 10  5  9  9  9  5  5 10  5  5  9  5  5  5  5 12  1  1 12  5  5
- [7273] 10 11 11  1  1  6  6  6  6  6 12 10 12 10  1  1  6  6  6  6  6  6  6  6
- [7297]  8  8  8  8  8  8  8  8  8  8  8  7  7  5  5  5  4  5  2  2  2  2  2  2
- [7321]  2  2  2  2  2  2  8  8  4  7  7  5  9  9  9  3  7  3  7  7  7  3  3  7
- [7345]  9  7  5  5  9  9  5  9  5  5  9  4 10  5  5  4  9  9 12 12  1 11  5  5
- [7369]  5 12 11  1  1  6  6  6  6  6 12 12 12 10 12 12 11  1  6  6  6  6  6  6
- [7393]  8  8  8  8  8  8  8  8  8  8  8  7  7  5  4  4  4  5  2  2  2  2  2  2
- [7417]  2  2  2  2  2  2  2  2  2  2  7  7  7  9  9  3  3  3  3  3  3  3  3  5
- [7441]  5  5  5  5  7  5 10  9  9  5  5 10 10 12 11 12  9  9 11 12  1 12  5  5
- [7465]  5 12 11  1  6  6  6  6  6  6 11 12 12 12 12 12 12 12 12 12 11  6  6  6
- [7489]  8  8  8  8  8  8  8  8  8  8  8  5  2  4 11  4  4  5  2  2  2  2  2  2
- [7513]  2  2  2  2  2  2  2  2  2  2  2  7  7  7  9  3  3  7  3  3  3  3  7 10
- [7537] 10  9 10 10  9  5 10  9  9  7  5  5  9 12  1 12  9 10  1  1  1 12 10  5
- [7561]  5 12  1  1  6  6  6  6  6  6 12 10 12 12 12 11 12 12 12 12 12 11  6  6
- [7585]  8  8  8  8  8  8  8  8  8  8  8  5  7  4  4  8  8  5  2  2  2  2  2  2
- [7609]  2  2  2  2  2  2  2  2  2  2  2  2  7  7  7  7  7  7  3  3  3  7  5  5
- [7633]  7  9  9  5  5  5  5  9  7  7  7  7  5 10  1  1  9  9  1  6  1 12 12  4
- [7657]  5 11  1  1  6  6  6  6  6  6 12 12 12 12 12 12 11 12 10 10 10 10 11  6
- [7681]  8  8  8  8  8  8  8  8  8  8  8  7  7  8  4  8  8  5  2  2  2  2  2  2
- [7705]  2  2  2  2  2  2  2  2  2  2  2  2  2  7  5  5  7  3  3  3  3  5  5  5
- [7729]  5  5  7  7  9  5  5  9  9  5  5  5 10  4  1  6 10  9  1  6  1 12 12 11
- [7753] 11  1  1  6  6  6  6  6  6 11 12 12 10 12 12 11 11 12 10 10 10 10 12  6
- [7777]  8  8  8  8  8  4  4  4  4  4  4  7  5  4  5  5  8  2  2  2  2  2  2  2
- [7801]  2  2  2  2  2  2  2  2  2  2  2  2  2  7  7  5  7  3  3  7  9  9  9  9
- [7825]  9  9  9  9  9  5 10 10  5 12 11 11 11 11  1  1 11 12  6  1 11 11 11  1
- [7849]  1  1  1  1  6  1 11  1 11 12 12 10 10 11 11 11 12 12 12 10 10 10 12  1
- [7873]  8  8  4  4  4 10 10 10 12 10 10  5  5  5  5  2  2  2  2  2  2  2  2  2
- [7897]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  7  7  5  7  3  7  7  7  7  9
- [7921]  5  5  9  7  9  5  5  4  4  4  4  4  4  4  4  1  1 11 11 11  1  1  6  6
- [7945]  6  1 11 11  1  1  1  1  1 11 12 12 12 12 11 11 12 12 11 12 10 10 10  1
- [7969]  4 12 12 12 10 10 10 10 10 10 10 10  7  5  3  2  2  2  2  2  2  2  2  2
- [7993]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  7  9  7  7  7  8  8  2  7  7
- [8017]  7  5  4  4  4  4  4  4  4  4  4  4  4  4  4 11 11 11  1  1  1  6  6  6
- [8041]  6  1  1  1  6  6  1  1  1 12 12 11 12 12 11 11 11 12 11 12 10 10 10  1
- [8065] 10 10 10 10 10 10 10 10 10  9  9  9  7  2  2  2  2  2  2  2  2  2  2  2
- [8089]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  7  9  7  7  7  8  8  8  8  8
- [8113]  8  8  4  4  4  8  8  4  4  4  4  4  4  4  4  1  1  1  6  6  1  6  6  6
- [8137]  6  1  1  1  1  1 11 11  1 11 11 11 12 12 11 11 11 11 11 11 12 10 10 11
- [8161] 10 10 10 10 10 10 10  9  9  7  2  7  7  2  2  2  2  2  2  2  2  2  2  2
- [8185]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  7  5  7  7  7  5  8  8  8  8
- [8209]  8  8  4  4  4  4  4  4 12 12 12 10 10 12 12 11  6  6  6  6  6  1  1  1
- [8233]  1  1  1  1  1 11 11 11  1  1 11 11 11 11  1 11 12 11 11 11 12 10 12  1
- [8257] 10 10 10 10 10 12 10  5  2  2  2  7  7  2  2  2  2  2  2  2  2  2  2  2
- [8281]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  5 10  5  5  7  5  5  8  8  8
- [8305]  8  8  4  4  4  4  4  4  4 10 10 12  4  4 12 11  6  6  6  6  1  1  1  1
- [8329]  6  1  1  1  1 11 12 12 11 11 11 11 11 11  1 11 11  1  1 11 12 10 12  1
- [8353] 10 12 10 10 12 10  5  8  2  2  2  2  7  2  2  2  2  2  2  2  2  2  2  2
- [8377]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  5  5  5  5  5  7  5  5  8  4
- [8401]  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4 11 11 11  1 11  1  6  1  1
- [8425]  1  1  1 11 11 11 11 12 12 11  1 11 11  1  1  1  6  1  1 12 10 10 11  6
- [8449] 10 10 10  5  5  8  8  8  2  2  2  7  7  2  2  2  2  2  2  2  2  2  2  2
- [8473]  2  2  2  2  2  2  2  2  2  2  2  2  2  8  4  5  5  5  5  5  7  7  5  8
- [8497]  4  4  8  4  4  4  4  4  4  4  4  4  4  4  4 11 11  1 11 12  1  6  6  1
- [8521]  6  1 11 12 12 11 11 12 11 11  1 11 11 12 11  1  1  1 11 12 10 10  1  6
- [8545]  5  8  8  8  8  8  8  8  2  2  2  7  7  2  2  2  2  2  2  2  2  2  2  2
- [8569]  2  2  2  2  2  2  2  2  2  2  2  2  4  4  4  5  5  5  5  5  7  7  7  5
- [8593]  8  8  8  4  4  8  8  8  8  4  4  4  4  4  4  4  1  6 12 11  1  1  1  1
- [8617]  6  1  1  1  1 11 11 11 11 11 11 11  1 12 12 11 11 11 12 10 10 11  6  6
- [8641]  8  8  8  8  8  8  8  8  2  2  2  7  7  2  2  2  2  2  2  2  2  2  2  2
- [8665]  2  2  2  2  2  2  2  2  2  2  2  2  4  4  8  5  5  5  5  5  5  7  7  7
- [8689]  8  8  8  4  4  8  8  8  8  8  8  4  4  4  4  4  6  6 11 11  1  1  1  1
- [8713]  1  1  6  6  6  1  1  1 11 11 12 11  1 12 12  1 11 12 10 10 11  6  6  6
- [8737]  8  8  8  8  8  8  8  8  2  2  2  2  7  2  2  2  2  2  2  2  2  2  2  2
- [8761]  2  2  2  2  2  2  2  2  2  2  2  8  4  4  8  5  5  5  5  5  5  5  7  7
- [8785]  7  8  8  8  4  8  8  8  8  8  8  8  4  4  4  4  1 11 11  1  1  1  6  1
- [8809]  1  1  6  6  6  6  1  1  1  1 12 11 12 10 12 11 12 10 12 11  6  6  6  6
- [8833]  8  8  8  8  8  8  8  8  2  2  2  2  7  2  2  2  2  2  2  2  2  2  2  2
- [8857]  2  2  2  2  2  2  2  2  8  8  4  4  4 11  4  5  5  5  5  5  5  5  5  7
- [8881]  7  5  8  8  4  8  8  8  8  8  8  8  4  4  4  4 11 11 11 11  1  1  6 11
- [8905]  1  6  6  6  6  6  6 11 11  1 11  1 12 10 12 12 10 11  1  6  6  6  6  6
- [8929]  8  8  8  8  8  8  8  8  2  2  2  7  7  8  2  2  8  8  8  8  8  8  8  2
- [8953]  2  2  2  2  2  2  2  8  4  4  4  4  4 11  4  5  5  5  5  5  5  5  5  7
- [8977]  7  7  5  8  4  8  8  8  8  8  8  8  8  4  4  4  1  1 11  1 11  1  6 11
- [9001]  1  6  6  6  6  6  6 12 12 11  1  6 11 12 12 11  1  6  6  6  6  6  6  6
- [9025]  8  8  8  8  8  8  8  2  2  2  2  2  7  5 10 10 10  5 10 10 10  9  5  8
- [9049]  2  2  2  2  2  2  2  8  8  4  8  8  4 11  4  8  8  8  5  5  5  5  5  5
- [9073]  7  7  5  5  4  4  8  8  8  8  8  8  8  4  4  4  6  6  1  6  1  1  1  1
- [9097]  1  6  6  6  6  6  6 11 12 12 11  1 11 12  1  6  6  6  6  6  6  6  6  1
- [9121]  8  8  8  8  8  8  8  8  2  2  2  2  7  5  5  5  5  5 10  9  5  5  5  8
- [9145]  2  2  2  2  2  2  2  8  8  8  8  8  4  1 11  4  5  5  5  5  5  5  5  5
- [9169]  5  7  7  5  5  8  8  8  8  8  8  8  8  4  4  4  1  6  6  1  1  1  1 11
- [9193] 11  6  6  6  6  6  1 11 11 12 12 11 11 11  6  6  6  6  6  6  6  6  1 11
- [9217]  8  8  8  8  8  8  8  8  2  2  2  2  7  8  8  8  8  8  5  7  3  7  8  8
- [9241]  2  2  2  8  2  8  8  8  8  8  8  8  4  1  1  4  8  5  8  8  5  5  5  5
- [9265]  5  5  7  7  5  8  8  8  8  8  8  8  8  8  4  4  1  6  6 11 11  1  1  1
- [9289] 11  6  6  6  6  6  6  1 12 12 12 12 11  1  6  6  6  6  1 11 11 11 11 12
- [9313]  8  8  8  8  8  8  8  8  2  2  2  7  5  8  8  8  8  8  5  3  3  3  7  8
- [9337]  8  8  8  8  8  8  8  8  8  8  8  8  8 11 11  4  8  5  8  8  5  5  5  5
- [9361]  5  5  5  7  5  5  8  8  8  8  8  8  8  8  4  4  1  6  6  1 11  1  1  6
- [9385]  1  6  6  6  1  1  1  1 11 11 12 12 11  6  6  6  6 11 12 10 12 10 10 10
- [9409]  8  8  8  8  8  8  8  8  2  2  2  7  7  8  8  8  8  8  5  3  3  7  7  8
- [9433]  4  8  8  8  8  8  8  8  8  8  8  8  8  4 11  4  8  8  8  8  8  5  5  5
- [9457]  5  5  5  5  7  5  8  8  8  8  8  8  8  8  4  4  1  1  6  6 11 11  1  1
- [9481]  1  6  6  6  1 11 11 12 11 11 11 11  1  6  6  6  6 12 10 12 12 11 12 10
- [9505]  2  8  8  8  8  8  8  8  2  2  7  7  7  8  8  8  8  8  7  7  9  9  9  8
- [9529]  8  2  2  2  2  2  2  2  2  8  8  8  8  4  4  5  5  5  5  5  5  5  5  5
- [9553]  5  5  5  5  7  7  5  8  8  5  5  5  5  5  4  4 11  1  6  1 11 11 11 11
- [9577]  1  6  6  6  1 11 12 12  1  1 11 11  6  6  6  6  1 12 12 11 11 12 12 10
- [9601]  7  2  7  7  7  7  7  7  7  7  3  7  3  7  5  5  7  7  7  9  7  7  7  7
- [9625]  7  7  7  7  7  7  7  7  7  7  2  7  7  5  5  5  7  7  7  7  7  7  7  5
- [9649]  5  7  7  9  9  7  7  5  5  5  4  5  8  8  8  4  4 11  1  1 11  1  1  1
- [9673]  1  1  1  1  1 11 11 11 11 11 11 12  1  6  6  6  1 10 10 12 12 10 11 12
- [9697]  7  7  2  2  7  7  7  2  2  7  2  7  7  9  9  9  5  8  2  2  8  2  2  2
- [9721]  8  8  2  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4  8  8 10
- [9745]  5  7  7  9  9  9  7  7  7  5  8  8  8  8  8  8  8  4 11 11  1 11  1  6
- [9769]  1 11 11  1 11  1  1 11 11 11 12 10 11  6  6  6  1 10 10 12 11 12 12 12
- [9793]  2  2  2  2  2  2  7  2  2  8  8  2  9  9  9  9  8  8  8  8  8  8  8  8
- [9817]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4  4  4 12
- [9841] 10  5  7  9  9  5  4  7  7  7  8  8  8  8  8  8  8  4  1 11 11 11  1  6
- [9865]  1  1 12 11 11 11 11 11  1 11 10 12 11  6  6  6  6 12 10 12 11 11 12 12
- [9889]  2  2  2  2  2  2  7  2  2  2  2  2  7  9  9  5  8  8  8  8  8  8  8  8
- [9913]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4  4  4  4
- [9937]  9  9  5  9  5 12 11  4  7  7  7  8  8  8  8  8  8  4  6 11 12  1  1  1
- [9961]  1  1 11 11 11 11 12 11 11 11 12 10 12  6  6  6  6 11 10 12 12 12 12 10
- [9985]  2  2  2  2  2  7  2  2  2  2  2  2  7  9  9  8  8  8  8  8  8  8  8  8
-[10009]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4  4
-[10033]  5  5  5  5  4 12 11  4  5  7  7  7  8  8  8  8  8  4  1 11 11  1  6  1
-[10057]  1  1  1 11 11 12 11 11 11 11 12 10 10 11  6  6  6  1 12 12 10 11 12 10
-[10081]  2  2  2  2  7  7  2  2  2  2  2  2  7  9  9  8  8  8  8  8  8  8  8  8
-[10105]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  4
-[10129]  8  8  8  4  4 11 11  5  9  7  7  7  7  8  8  8  8  5  1 11 11  1  1  1
-[10153]  1 11 11 11 11 11 11 11  1 11 12 12 10 10  6  6  6  1 12 11 11 10 10 10
-[10177]  2  2  2  7  7  2  2  2  2  2  2  2  7  5  5  8  8  8  8  8  8  8  8  8
-[10201]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[10225]  8  8  8  4  4  1 11  5  9  9  7  7  7  5  8  8  8  5 11 11 12 11 11  1
-[10249]  1 11 11  1  1  1  1 11  1 11 11 12 10 10 11  6  6  6  1 12 12 10 10 10
-[10273]  2  2  7  7  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10297]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[10321]  8  8  8  4  4 11 11  9  9  9  9  7  7  7  5  8  8  5  4 11 12 11 11 11
-[10345] 11 11 11  1  1  1  1 11 11 11 11 12 10 10 12  6  6  6  6 11 12 12 10 10
-[10369]  2  2  7  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10393]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[10417]  8  8  8  8  4 11 11  5  9  9  9  7  7  7  7  5  8  5  9  9 12 11 11 11
-[10441] 12 10 10 12 12 11 11 11 11 11 12 10 10 10 12  1  6  6  6  1 11 12 12 10
-[10465]  2  7  7  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10489]  8  8  8  8  8  2  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[10513]  8  8  8  8  8  4 11  4  5  5  5  7  7  7  7  7  2  5 10  9 11  6 11 12
-[10537]  5  7  7  7  5 12 12 12 12 12 11 11 11 12 10 12  1  6  6  1 12 12 12 10
-[10561]  7  7  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10585]  8  8  8  2  2  2  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[10609]  8  8  8  8  5  5  4 11  4  5  5  7  7  7  7  7  7  5  5  9  1  1 12 12
-[10633]  5  7  7  7  4  4 10 10 10 10 12 12 11 11 12 10 11  6  6  1 12 10 10 10
-[10657]  7  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10681]  8  8  8  8  2  8  8  8  8  8  8  8  8  8  5  5  8  8  8  8  8  8  8  8
-[10705]  8  8  8  8  8  5  5  5  5  8  8  7  7  5  7  7  7  9  9  9  1  1 12 12
-[10729]  5  7  7  2  5  5  7  5  9  9 10 10 10 12 12 12 12  6  6  6  1 12 10 10
-[10753]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10777]  8  8  8  8  2  8  8  2  8  8  8  8  8  8  5  5  5  8  8  8  8  8  8  8
-[10801]  8  8  5  5  5 10  5  5  5  5  4  5  7  5  7  7  7  7  7  9 10  6 11 10
-[10825]  5  7  7  7  7  7  7  7  9  5 10 10 10 10 10 10 11  6  6  6  6 11 10 10
-[10849]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10873]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  5  5  5  5  5  8  8  8  8
-[10897]  5  5  5  5  5 10  5 10  5  5  5  5  5  7  7  7  7  7  7  7  5  1  1 12
-[10921]  4  2  7  7  7  7  7  7  5  9 10 10 12 10 10 10 11  6  6  6  6  6 11 11
-[10945]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  8
-[10969]  8  8  8  8  8  8  8  8  8  4  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[10993]  8  8  8  8  4 10  5  5  5  2  2  4 11  8  2  2  7  7  9  7  9 12 11  4
-[11017]  4  7  7  7  7  7  7  7  9  9  5 10 12 10 10 12  1  6  6  6  6  6  6  6
-[11041]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  8  8  8  8  2
-[11065]  8  2  8  8  8  2  2  8  8  4  4  8  8  8  8  8  8  8  8  8  8  8  4  8
-[11089]  8  8  8  8  5  5  2  2  7  2  2  2  4  4  8  2  7  7  9  9  9 12 12 12
-[11113]  9  9  7  7  7  3  3  7  9  9  9 12 12 10 10 10 11  6  6  6  6  6  6  6
-[11137]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  2  8  8  2  8  2  2
-[11161]  2  2  8  8  8  2  2  2  8  8  8  8  8  8  8  8  8  8  8  8  8  4  4  8
-[11185]  8  8  8  8  5  2  2  2  2  2  2  2  8  4  4  8  5  7  9  9  9  5 11 10
-[11209]  9  9  9  9  9  7  7  7  9  5 10 10 10 12 12 10 10 11 11  6  6  6  6  6
-[11233]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  2  8  2  2  2  2  2
-[11257]  2  2  8  8  2  2  2  2  8  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[11281]  8  8  8  8  5  2  2  2  2  2  2  2  2  4  4  4  4  7  7  9  9 10  4  9
-[11305]  9  9  9  9  9  9  9  9  5 11 11 10 10 12 11 11 12 12 12 11  6  6  6  6
-[11329]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  8  8  8  2  2  2  2  2
-[11353]  2  2  2  2  2  2  2  2  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[11377]  8  8  8  8  5  2  2  2  2  2  2  2  8  8  8  4  4  5  7  9 10 12 10  9
-[11401]  9  9  5  7  5 10  9  9 11  6 11 11 11 12  4  1 11  1 11 10  1  6  6  6
-[11425]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  8  8  5  8  8  2  2  2  2  2
-[11449]  2  2  2  2  2  2  2  2  8  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[11473]  8  8  8  8  5  2  2  2  2  2  2  2  8  2  8  8  8  5  7  5 10 12 10 10
-[11497]  5  9  5  9  5  5  9  9 11 11 10 10 10 10  4 11  1 11 12 12 11  6  6  6
-[11521]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  5  2  8  8  2  2  2  2  2
-[11545]  2  2  2  2  2  2  2  2  8  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8
-[11569]  8  8  5  5  5  2  2  2  2  2  2  2  2  8  2  2  2  5  7  9 10 12 10  9
-[11593]  9  9  5  5  5  7  9 10 12  5  5 10 10 10 10  9 12 12 12 11 11  1  1  6
-[11617]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  2  5  8  8  2  2  2  2  2  2
-[11641]  2  2  2  2  2  2  2  2  8  5  5  5  5  5  5  5  8  8  8  8  5  5  5  5
-[11665]  5  5  5  5  5  2  2  2  2  2  2  2  2  2  2  2  2  2  7  9 10 12 10  9
-[11689]  5  7  9  9  9  9  5 10  5  7  5 10 10 10  5  5 10 10 10 12 11  1  6  6
-[11713]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  5  8  8  2  2  2  2  2  8  2
-[11737]  2  2  2  2  2  2  2  2  8  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5
-[11761]  5  5  5  5  5  2  2  2  2  2  2  2  2  2  8  2  2  2  7  7 10 10 10  9
-[11785]  7  9  9  9  9  9  5 12  5  7 10 10 10  5  5 12 12 10 10 10 10 11  6  6
-[11809]  2  2  2  2  2  2  2  2  2  2  2  7  7  2  8  8  8  8  2  2  2  2  8  8
-[11833]  2  2  2  2  2  2  2  2  8  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5
-[11857]  5  5  5  5  5  8  2  2  2  2  2  2  8  2  8  8  2  7  7  7 10 10 10  9
-[11881]  7  9  5  9  9  9 10 12  9  8  5 10 10  5 12 12 10 10 10  9  9 10  6  1
-[11905]  2  2  2  2  2  2  2  2  2  2  2  7  7  5  8  2  2  8  2  2  2  2  2  2
-[11929]  2  2  2  2  2  2  2  2  8  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5
-[11953]  5  5  5  5  5  2  8  2  2  2  2  2  8  2  2  2  2  2  7  9 10 10 10 10
-[11977]  9  7  5  9  9  9 10 12  9  5  5 10  5  5 10 10 10 10  7  7  9 10 11  1
-[12001]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  2  2  8  8  2  2  2  2  2
-[12025]  8  8  2  8  2  2  2  2  8  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5
-[12049]  5  5  5  5  5  2  2  8  2  2  2  2  2  2  2  2  8  5  7  7  9 10 10 10
-[12073]  9  9  9  9  9 10 10 10  5  2 10 10  5  5 10 10 10 10  5  7  7  7  5  1
-[12097]  2  2  2  2  2  2  2  2  2  2  2  2  7  8  8  8  2  8  8  2  2  8  8  8
-[12121]  8  8  8  8  8  8  8  8  8  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5
-[12145]  5  5  5  5  5  5  2  8  4  4  8  8  8  8  8  8  4  5  7  7  9  9 10 10
-[12169] 10 10 10 10  9  9  9  9  7  2  5 10  5  5 10 10 10 10 10  9  7  7  9 11
-
-Within cluster sum of squares by cluster:
- [1]  866854581 1270393971 1343688954 1699209551 2258088034  454524279
- [7] 2337984735 1833664711 2344708246 1048510261  953102356  964312389
- (between_SS / total_SS =  93.5 %)
-
-Available components:
-
-[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"         "iter"         "ifault"      </code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>km12 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(raster_values, <span class="at">centers =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="step-4" class="level3">
@@ -1220,15 +677,15 @@ Available components:
 <li>Create a new raster object by copying one of the original bands.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>kmeans_raster <span class="ot">&lt;-</span> landsat_crop[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>kmeans_raster <span class="ot">&lt;-</span> landsat_crop[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Set the values of the copied raster to the cluster vector from the output kmeans object.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(kmeans_raster) <span class="ot">&lt;-</span> km12<span class="sc">$</span>cluster</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(kmeans_raster) <span class="ot">&lt;-</span> km12<span class="sc">$</span>cluster</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1239,11 +696,11 @@ Available components:
 </div>
 <p>Try a few different clusters (k) to see how the map changes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>km6 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(raster_values, <span class="at">centers =</span> <span class="dv">6</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(kmeans_raster) <span class="ot">&lt;-</span> km6<span class="sc">$</span>cluster</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>km6 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(raster_values, <span class="at">centers =</span> <span class="dv">6</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(kmeans_raster) <span class="ot">&lt;-</span> km6<span class="sc">$</span>cluster</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1253,13 +710,13 @@ Available components:
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>km24 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(raster_values, <span class="at">centers =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>km24 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(raster_values, <span class="at">centers =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: did not converge in 10 iterations</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(kmeans_raster) <span class="ot">&lt;-</span> km24<span class="sc">$</span>cluster</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(kmeans_raster) <span class="ot">&lt;-</span> km24<span class="sc">$</span>cluster</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1280,13 +737,13 @@ Available components:
 <li><p>Finally add this to your flood raster stack with <code>c()</code> and make a new plot!</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>flood_table <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">values</span>(mndwi_flood), <span class="fu">values</span>(kmeans_raster))</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>flood_cluster <span class="ot">&lt;-</span> <span class="fu">which.max</span>(flood_table[<span class="dv">2</span>,])</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>kmeans_flood <span class="ot">&lt;-</span> <span class="fu">app</span>(kmeans_raster, <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> flood_cluster, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_flood)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>flood_table <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">values</span>(mndwi_flood), <span class="fu">values</span>(kmeans_raster))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>flood_cluster <span class="ot">&lt;-</span> <span class="fu">which.max</span>(flood_table[<span class="dv">2</span>,])</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>kmeans_flood <span class="ot">&lt;-</span> <span class="fu">app</span>(kmeans_raster, <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> flood_cluster, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kmeans_flood)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1304,14 +761,14 @@ Available components:
 <li>First we will calculate the total area of the flooded cells in each image. You can use <code>global</code> to determine the sum of each layer. Since flooded cells have a value of 1, the sum of an entire band is equivalent to the number of flooded cells. You can then use the resolution of the cell to convert counts to a flooded area. Print these values.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>flood_stack <span class="ot">&lt;-</span> <span class="fu">c</span>(index_flood_stack, kmeans_flood) <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"NDVI"</span>, <span class="st">"NDWI"</span>, <span class="st">"MNDWI"</span>, <span class="st">"WRI"</span>, <span class="st">"SWI"</span>, <span class="st">"KMeans"</span>))</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>flood_counts <span class="ot">&lt;-</span> <span class="fu">global</span>(flood_stack, <span class="st">"sum"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>flood_counts<span class="sc">$</span>area_km2 <span class="ot">&lt;-</span> flood_counts<span class="sc">$</span>sum <span class="sc">*</span> <span class="dv">900</span> <span class="sc">/</span> <span class="fl">1e6</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(flood_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>flood_stack <span class="ot">&lt;-</span> <span class="fu">c</span>(index_flood_stack, kmeans_flood) <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"NDVI"</span>, <span class="st">"NDWI"</span>, <span class="st">"MNDWI"</span>, <span class="st">"WRI"</span>, <span class="st">"SWI"</span>, <span class="st">"KMeans"</span>))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>flood_counts <span class="ot">&lt;-</span> <span class="fu">global</span>(flood_stack, <span class="st">"sum"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>flood_counts<span class="sc">$</span>area_km2 <span class="ot">&lt;-</span> flood_counts<span class="sc">$</span>sum <span class="sc">*</span> <span class="dv">900</span> <span class="sc">/</span> <span class="fl">1e6</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(flood_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        sum area_km2
 NDVI    926   0.8334
@@ -1326,9 +783,9 @@ KMeans  964   0.8676</code></pre>
 <li>Second we can visualize the uncertainty in our classifications by summing the entire stack using <code>app</code>. The higher the count in each pixel, the more certain we can be about its flooded state. For example, if a cell has a value of 6, it indicates that every method identified the cell as flooded, if it has a value of 2 then we know that two of the methods identified the cell as flooded. Plot your flood map using the blues9 color palette</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>flood_uncertainty <span class="ot">&lt;-</span> <span class="fu">app</span>(flood_stack, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(flood_uncertainty, <span class="at">col =</span> blues9)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>flood_uncertainty <span class="ot">&lt;-</span> <span class="fu">app</span>(flood_stack, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(flood_uncertainty, <span class="at">col =</span> blues9)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1340,72 +797,24 @@ KMeans  964   0.8676</code></pre>
 <ul>
 <li>Third once you have a summed raster layer, copy it as a new layer, and set all 0 values to NA. Then map the raster with <code>mapview</code>. Zoom and pan around the interactive map noting that a pixel level is displayed in the upper right hand corner.</li>
 </ul>
-<blockquote class="blockquote">
-<p>Why are some of the cell values not an even number?</p>
-</blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>flood_map <span class="ot">&lt;-</span> flood_uncertainty</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(flood_map)[<span class="fu">values</span>(flood_map) <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(flood_map, <span class="at">col.regions =</span> blues9, <span class="at">layer.name =</span> <span class="st">"Flood Certainty"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>flood_map <span class="ot">&lt;-</span> flood_uncertainty</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(flood_map)[<span class="fu">values</span>(flood_map) <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(flood_map, <span class="at">col.regions =</span> blues9, <span class="at">layer.name =</span> <span class="st">"Flood Certainty"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-5fa62e38fb9f7abdcedb" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-5fa62e38fb9f7abdcedb">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addRasterImage","args":["data:image/png;base64,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",[[42.08247389784549,-91.81355686180419],[42.04768726196073,-91.77795931783035]],"Flood Certainty","Flood Certainty",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"removeLayersControl","args":[]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"Flood Certainty",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addControl","args":["","topright","imageValues-Flood Certainty","info legend "]},{"method":"addImageQuery","args":["Flood Certainty",[-91.81355686180419,42.04742080340203,-91.77787781924566,42.08247389784549],"mousemove",7,"Layer"]},{"method":"addLegend","args":[{"colors":["#F7FBFF , #F7FBFF 0%, #D9E8F5 20%, #B6D4E9 40%, #81B9DA 60%, #4B98C9 80%, #2171B5 100%, #2171B5 "],"labels":["1","2","3","4","5","6"],"na_color":"#BEBEBE","na_label":"NA","opacity":1,"position":"topright","type":"numeric","title":"Flood Certainty","extra":{"p_1":0,"p_n":1},"layerId":null,"className":"info legend","group":"Flood Certainty"}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-91.8135568618042,42.04780127070886,-91.77810544042319,42.0824738978455,true,"Flood_Certainty","Zoom to Flood_Certainty","<strong> Flood_Certainty <\/strong>","bottomright"]}],"limits":{"lat":[42.04768726196073,42.08247389784549],"lng":[-91.81355686180419,-91.77795931783035]}},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\"position\":\"relative\",\"bottomleft\":\"0px\",\"background-color\":\"rgba(255, 255, 255, 0.7)\",\"box-shadow\":\"0 0 2px #bbb\",\"background-clip\":\"padding-box\",\"margin\":\"0\",\"padding-left\":\"5px\",\"padding-right\":\"5px\",\"color\":\"#333\",\"font-size\":\"9px\",\"font-family\":\"\\\"Helvetica Neue\\\", Arial, Helvetica, sans-serif\",\"text-align\":\"left\",\"z-index\":\"700\"});\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-5b08480c2ed90b64bbb2" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-5b08480c2ed90b64bbb2">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addRasterImage","args":["data:image/png;base64,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",[[42.08247389784549,-91.81355686180419],[42.04768726196073,-91.77795931783035]],"Flood Certainty","Flood Certainty",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"removeLayersControl","args":[]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"Flood Certainty",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addControl","args":["","topright","imageValues-Flood Certainty","info legend "]},{"method":"addImageQuery","args":["Flood Certainty",[-91.81355686180419,42.04742080340203,-91.77787781924566,42.08247389784549],"mousemove",7,"Layer"]},{"method":"addLegend","args":[{"colors":["#F7FBFF , #F7FBFF 0%, #D9E8F5 20%, #B6D4E9 40%, #81B9DA 60%, #4B98C9 80%, #2171B5 100%, #2171B5 "],"labels":["1","2","3","4","5","6"],"na_color":"#BEBEBE","na_label":"NA","opacity":1,"position":"topright","type":"numeric","title":"Flood Certainty","extra":{"p_1":0,"p_n":1},"layerId":null,"className":"info legend","group":"Flood Certainty"}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-91.8135568618042,42.04780127070886,-91.77810544042319,42.0824738978455,true,"Flood_Certainty","Zoom to Flood_Certainty","<strong> Flood_Certainty <\/strong>","bottomright"]}],"limits":{"lat":[42.04768726196073,42.08247389784549],"lng":[-91.81355686180419,-91.77795931783035]}},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\"position\":\"relative\",\"bottomleft\":\"0px\",\"background-color\":\"rgba(255, 255, 255, 0.7)\",\"box-shadow\":\"0 0 2px #bbb\",\"background-clip\":\"padding-box\",\"margin\":\"0\",\"padding-left\":\"5px\",\"padding-right\":\"5px\",\"color\":\"#333\",\"font-size\":\"9px\",\"font-family\":\"\\\"Helvetica Neue\\\", Arial, Helvetica, sans-serif\",\"text-align\":\"left\",\"z-index\":\"700\"});\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
 </div>
 </div>
+<p>Why are some of the cell values not an even number?</p>
+<blockquote class="blockquote">
+<p>Cell values represent the number of indices that identified a given pixel as flooded. Some cells may display decimal values due to mapview reprojecting the raster from UTM zone 15N to WGS84 for display, which can cause distortion. In this case, all values appear as whole numbers.</p>
+</blockquote>
 <p>Congratulations! You have successfully carried out a complete flood analysis from data acquisition through evaluation. This kind of work goes on regularly and is part of a couple national efforts (NOAA, USGS, FirstStreet, FEMA) to generate flood inundation libraries that contribute to better extraction and classification of realtime flood events, resource allocation during events, and damage assessments post events.</p>
 <p>Here we used Landsat imagery but the same process could be implemented on drone footage, MODIS data, or other private satellite imagery.</p>
 <p>Your evaluation was based purely on the raster data structure and your ability to conceptualize rasters as vectors of data with dimensional structure. You applied simple mathematical operators (+, /, -) to the raster bands, and a kmeans clustering algorithm to the data matrix of the multiband raster - all within ~100 lines of code!</p>
-</section>
-<section id="extra-credit" class="level1">
-<h1>Extra Credit</h1>
-<p>Check out this drone footage taken during the flooding in Palo, Iowa.</p>
-<center>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/n7aJnLLzocE?si=GsEs7F0Ytuk_zCgB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
-</iframe>
-</center>
-<p>In particular we see a bit of residential flooding at minute 2:17 (screen shot below)</p>
-<center>
-<img src="../img/palo-flood.png" class="img-fluid">
-</center>
-<p>Our goal is to see if our flood classifications were able to capture this event.</p>
-<hr>
-<p>Use <code>mapview</code> to generate a slippy map of the Palo, Iowa <code>bbox.</code> Find the location shown in the above image using context clues and different base maps. Once you do, do the following:</p>
-<ul>
-<li><p>Create a <code>sf</code> object from the latitude and longitude of the mouse coordinates at the impacted location</p></li>
-<li><p>use the <code>st_point</code> constructor to create an <code>sfg</code>; convert it to an <code>sfc</code> with the appropriate lat/lng CRS; and the <code>transform</code> to the CRS of the flood rasters</p></li>
-<li><p>Use <code>terra::extract</code> to extract the binary flood values at that location from the six layer flood map stack</p></li>
-</ul>
-<blockquote class="blockquote">
-<p>How many of the maps captured the flooding at that location?</p>
-</blockquote>
-<hr>
-</section>
-<section id="rubric" class="level1">
-<h1>Rubric</h1>
-<ul class="task-list">
-<li><label><input type="checkbox"><strong>Question 1: Data Acquisition</strong> (20)</label></li>
-<li><label><input type="checkbox"><strong>Question 2: Image Creation</strong> (30)</label></li>
-<li><label><input type="checkbox"><strong>Question 3: Thresholding</strong> (40)</label></li>
-<li><label><input type="checkbox"><strong>Question 4: Classification</strong> (30)</label></li>
-<li><label><input type="checkbox"><strong>Question 5: Summary</strong> (20)</label></li>
-<li><label><input type="checkbox"><strong>Extra Credit: Pixel Evaluation</strong> (20)</label></li>
-<li><label><input type="checkbox"><strong>Well Structured and appealing Qmd deployed as web page</strong> (10)</label></li>
-</ul>
-<p><strong>Total:</strong> 150 points (170 total)</p>
-</section>
-<section id="submission" class="level1">
-<h1>Submission</h1>
-<p>You will submit a URL to your web page deployed with GitHub pages.</p>
-<p>To do this:</p>
-<ul>
-<li>Knit your lab document</li>
-<li>Stage/commit/push your files</li>
-<li>If you followed the naming conventions in the “Set Up” of lab 2, your lab 5 link will be available at:</li>
-</ul>
-<p><code>https://USERNAME.github.io/csu-523c/lab-04.html</code></p>
-<p>Submit this URL in the appropriate Canvas dropbox. Also take a moment to update your personal webpage with this link and some bullet points of what you learned. While not graded as part of this lab, it will be your final!</p>
 
 
 </section>
