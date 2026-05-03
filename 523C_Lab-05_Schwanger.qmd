@@ -142,38 +142,6 @@ a. Lets create a vector storing the data types/file names we want to download:
 types <- c("clim", "geol", "soil", "topo", "vege", "hydro")
 ```
 
-::: {.callout-warning collapse="true"}
-### glue
-The `glue` package provides an efficient way to interpolate and manipulate strings. It is particularly useful for dynamically constructing text, formatting outputs, and embedding R expressions within strings.
-
-#### Key Features of glue:
-
- - **String Interpolation**: Embed R expressions inside strings using `{}`.
- - **Improved Readability**: Eliminates the need for cumbersome `paste()`, `paste0()` and `sprintf()` commands.
- - **Multi-line Strings**: Easily handle multi-line text formatting.
- - **Safe and Efficient**: Optimized for performance and readability.
-
-#### Basic Usage
-- To use `glue`, you need to load the package and then call the `glue()` function with the desired string template. You can embed R expressions within curly braces `{}` to interpolate values into the string.
-
-```{r}
-class <- "ESS 523c"
-year  <- 2026
-
-glue("We are taking {class} together in {year}")
-```
-
-### Multiples
-
-- You can also use glue to interpolate multiple values at once
-
-```{r}
-classes <- c("ESS 330", "ESS 523c")
-
-glue("We are taking {classes} together in {year}")
-```
-:::
-
 b. Using `glue`, we can construct the needed URLs and file names for the data we want to download. Zenodo direct-download links end with `?download=1`, so we append that to the remote URL but keep the local filename clean:
 
 ```{r}
@@ -208,16 +176,6 @@ In this case, we are join to merge every data.frame in the list (n = `r length(l
 camels <- power_full_join(camels ,by = 'gauge_id')
 ```
 
-:::{.callout-note}
-Alternatively, we could have read straight form the urls. Strongly consider the implications of this approach as the longevity and persistence of the data is not guaranteed.
-
-```{r}
-#| eval: false
-# Read and merge data
-camels <- map(remote_files, read_delim, show_col_types = FALSE) |> 
-  power_full_join(by = 'gauge_id')
-```
-:::
 
 # Question 1: Your Turn (15 points)
 
@@ -240,34 +198,6 @@ ggplot(data = camels, aes(x = gauge_lon, y = gauge_lat)) +
   ggthemes::theme_map()
 ```
 
-We can take a moment here to learn a few new things about `ggplot2`!
-
-:::{.callout-note}
-### Color scales
-In `ggplot`, sometimes you want different things (like bars, dots, or lines) to have different colors. But how does R know which colors to use? That’s where color scales come in!
-
-scales can be used to map data values to colors (`scale_color_*`) or fill aesthetics (`scale_fill_*`). There are two main types of color scales:
-
- - Discrete color scales – for things that are categories, like "apples," "bananas," and "cherries." Each gets its own separate color.
-```{r}
-#| eval: false
-scale_color_manual(values = c("red", "yellow", "pink")) #lets you pick your own colors.
-```
-
-Or 
-
-```{r}
-#| eval: false
-scale_color_brewer(palette = "Set1") #uses a built-in color set.
-```
-
- - Continuous color scales – for numbers, like temperature (cold to hot) or height (short to tall). The color changes smoothly.
-
-```{r}
-#| eval: false
-scale_color_gradient(low = "blue", high = "red") #makes small numbers blue and big numbers red.
-```
-:::
 
 # Question 2: Your Turn (20 points)
 
@@ -716,31 +646,12 @@ rank_results(wf, rank_metric = "rsq", select_best = TRUE)
 
 > While the neural network model ranked first, I would move forward with random forest. The random forest model ranked second, with comparable metrics to the neural network model. Unlike neural network models which are a black box, random forest allows transparancy into which variables are the most important prediction drivers. This is critical for hydrological modeling because it helps us understand the why behind the prediction.  
 
-# Bridge to Q4: what the lectures cover
-
-The worked example above stops at a single random-forest fit with default hyperparameters. Q4 asks you to extend it with the rest of the unit. Before starting, re-skim the relevant lecture sections — you'll be lifting patterns directly from them:
-
-| Q4 task | Lecture reference |
-|---|---|
-| EDA with `skimr`/`visdat`, normality checks, stratification | **Week 5-1** — *Exploratory Data Analysis*, *Data Normality*, *Stratification* |
-| `recipe` design (impute, dummy, normalize, interact) | **Week 5-1** — *Feature engineering with `recipes`*, *Common normalization techniques* |
-| Workflow sets across multiple models | **Week 5-1** — *Further simplification: `workflowsets`* |
-| Variable importance & geographic-proxy interpretation | **Week 5-2** — Part 1 (*VIP*), *Which predictors carry geography?* |
-| Spatial cross-validation (`spatial_block_cv`, `spatial_clustering_cv`, `spatial_leave_location_out_cv`) | **Week 5-2** — Part 3, *Applying this to your data*, *The same idea in regression* |
-| Random-vs-spatial CV gap as a leakage diagnostic | **Week 5-2** — *The moment of truth*, *What a leaky model looks like*, *The 2×2 comparison* |
-| Hyperparameter tuning, named grids, `finalize_workflow()`, `last_fit()` | **Week 6-1** — *Optimizing Models via Tuning*, *The final fit!* |
-
-**If a line item in the rubric below doesn't look familiar, that's your cue to re-watch the relevant lecture slide — do not try to infer the API from this lab alone.**
 
 # Question 4: Build your own (200 points)
 
 Borrowing from the workflow presented above, build your own complete ML pipeline to predict mean streamflow using the CAMELS dataset.
 
 This question asks you to apply the full toolkit from Week 5 and Week 6: EDA, recipes, workflow sets, **spatial cross-validation** (CAMELS is a spatial dataset — random CV will flatter your model), hyperparameter **tuning**, variable importance, and a clean final fit with `last_fit()`. Q4 is the bulk of the lab — budget time accordingly.
-
-:::{.callout-tip}
-**Benchmark**: a well-built model typically achieves **R² > 0.9 under random CV**. Under spatial CV, expect a 0.05–0.10 drop — that's honest generalization, not a failure. **Report both.** If spatial CV stays within ~0.05 of random CV, you have strong evidence your predictors carry transferable signal.
-:::
 
 ## Data prep & EDA (30) — *Week 5-1*
 
@@ -1036,24 +947,3 @@ collect_predictions(rf_final) |>
 
 > The model's rsq value of .911 on the test set exceeded the spatial cv estimate of rsq of .881. The model appears to slightly underpredict high streamflow values and overpredict low streamflow values. High aridity basins show more scatter, and adding variables such as snowmelt timing and groundwater contributions could help the model capture that variability. 
 
-# Rubric
-
- - [ ] **Q1**:  Download data (15 pts)
- - [ ] **Q2**:  Make 2 maps (20 pts)
- - [ ] **Q3**:  Add xgboost + neural network to the workflow set (40 pts)
- - [ ] **Q4a**: Data prep & EDA (30 pts)
- - [ ] **Q4b**: Recipe with justification (30 pts)
- - [ ] **Q4c**: Define 3 models (30 pts)
- - [ ] **Q4d**: Workflow set + spatial CV comparison (35 pts)
- - [ ] **Q4e**: Tuning (named grid, ≥ 2 hyperparameters, autoplot) (25 pts)
- - [ ] **Q4f**: VIP interpretation with geographic-proxy lens (25 pts)
- - [ ] **Q4g**: `last_fit()` evaluation & plot (25 pts)
- - [ ] **Well-structured, compelling Qmd deployed as web page** (25 pts)
-
-**Total: 300 points** (Q4 = 200 pts / 67%)
-
-# Submission:
-
-Once you have completed the above steps, you can submit your lab for grading. The lab should be submitted as a URL to your deployed repo page. The repo should contain the `lab-05.qmd` file with all the code, data, and output.
-
-Good luck!
