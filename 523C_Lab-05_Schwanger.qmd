@@ -668,10 +668,13 @@ library(visdat)
 ```
 
 ```{r}
+#| output: false
 set.seed(33)
 
 skim(camels)
+```
 
+```{r}
 vis_dat(camels)
 ```
 
@@ -858,6 +861,7 @@ rf_model_grid <- rf_model_tuned |>
  > grid_space_filling was used to ensure broad coverage by maximizing the spread of combinations.
 
 ```{r}
+#| output: false
 rf_tune <- tune_grid(rf_model_tuned,
   preprocessor = recipe,
   resamples = camels_spatial_block,

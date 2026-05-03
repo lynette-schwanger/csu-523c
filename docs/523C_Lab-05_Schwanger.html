@@ -1063,863 +1063,13 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">33</span>)</span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(camels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Data summary</caption>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Name</td>
-<td style="text-align: left;">camels</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Number of rows</td>
-<td style="text-align: left;">671</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">59</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">_______________________</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Column type frequency:</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">character</td>
-<td style="text-align: left;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">53</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">________________________</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group variables</td>
-<td style="text-align: left;">None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: character</strong></p>
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 13%">
-<col style="width: 18%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 8%">
-<col style="width: 12%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">skim_variable</th>
-<th style="text-align: right;">n_missing</th>
-<th style="text-align: right;">complete_rate</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">empty</th>
-<th style="text-align: right;">n_unique</th>
-<th style="text-align: right;">whitespace</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">gauge_id</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">671</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">high_prec_timing</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">low_prec_timing</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">geol_1st_class</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">geol_2nd_class</td>
-<td style="text-align: right;">138</td>
-<td style="text-align: right;">0.79</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">dom_land_cover</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: numeric</strong></p>
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 9%">
-<col style="width: 13%">
-<col style="width: 6%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 5%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">skim_variable</th>
-<th style="text-align: right;">n_missing</th>
-<th style="text-align: right;">complete_rate</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">p0</th>
-<th style="text-align: right;">p25</th>
-<th style="text-align: right;">p50</th>
-<th style="text-align: right;">p75</th>
-<th style="text-align: right;">p100</th>
-<th style="text-align: left;">hist</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">p_mean</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3.26</td>
-<td style="text-align: right;">1.41</td>
-<td style="text-align: right;">0.64</td>
-<td style="text-align: right;">2.37</td>
-<td style="text-align: right;">3.23</td>
-<td style="text-align: right;">3.78</td>
-<td style="text-align: right;">8.94</td>
-<td style="text-align: left;">▃▇▂▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">pet_mean</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">2.79</td>
-<td style="text-align: right;">0.55</td>
-<td style="text-align: right;">1.90</td>
-<td style="text-align: right;">2.34</td>
-<td style="text-align: right;">2.69</td>
-<td style="text-align: right;">3.15</td>
-<td style="text-align: right;">4.74</td>
-<td style="text-align: left;">▇▇▅▂▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">p_seasonality</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">-0.04</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">-1.44</td>
-<td style="text-align: right;">-0.26</td>
-<td style="text-align: right;">0.08</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">0.92</td>
-<td style="text-align: left;">▁▂▃▇▂</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">frac_snow</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.20</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">0.91</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aridity</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.06</td>
-<td style="text-align: right;">0.62</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">0.70</td>
-<td style="text-align: right;">0.86</td>
-<td style="text-align: right;">1.27</td>
-<td style="text-align: right;">5.21</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">high_prec_freq</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">20.93</td>
-<td style="text-align: right;">4.55</td>
-<td style="text-align: right;">7.90</td>
-<td style="text-align: right;">18.50</td>
-<td style="text-align: right;">22.00</td>
-<td style="text-align: right;">24.23</td>
-<td style="text-align: right;">32.70</td>
-<td style="text-align: left;">▂▃▇▇▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">high_prec_dur</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.35</td>
-<td style="text-align: right;">0.19</td>
-<td style="text-align: right;">1.08</td>
-<td style="text-align: right;">1.21</td>
-<td style="text-align: right;">1.28</td>
-<td style="text-align: right;">1.44</td>
-<td style="text-align: right;">2.09</td>
-<td style="text-align: left;">▇▅▂▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">low_prec_freq</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">254.65</td>
-<td style="text-align: right;">35.12</td>
-<td style="text-align: right;">169.90</td>
-<td style="text-align: right;">232.70</td>
-<td style="text-align: right;">255.85</td>
-<td style="text-align: right;">278.92</td>
-<td style="text-align: right;">348.70</td>
-<td style="text-align: left;">▂▅▇▅▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">low_prec_dur</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">5.95</td>
-<td style="text-align: right;">3.20</td>
-<td style="text-align: right;">2.79</td>
-<td style="text-align: right;">4.24</td>
-<td style="text-align: right;">4.95</td>
-<td style="text-align: right;">6.70</td>
-<td style="text-align: right;">36.51</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">glim_1st_class_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.79</td>
-<td style="text-align: right;">0.20</td>
-<td style="text-align: right;">0.30</td>
-<td style="text-align: right;">0.61</td>
-<td style="text-align: right;">0.83</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▁▃▃▃▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">glim_2nd_class_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.14</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.14</td>
-<td style="text-align: right;">0.27</td>
-<td style="text-align: right;">0.49</td>
-<td style="text-align: left;">▇▃▃▂▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">carbonate_rocks_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.26</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">geol_porostiy</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.19</td>
-<td style="text-align: right;">0.28</td>
-<td style="text-align: left;">▇▆▇▇▂</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">geol_permeability</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">-13.89</td>
-<td style="text-align: right;">1.18</td>
-<td style="text-align: right;">-16.50</td>
-<td style="text-align: right;">-14.77</td>
-<td style="text-align: right;">-13.96</td>
-<td style="text-align: right;">-13.00</td>
-<td style="text-align: right;">-10.90</td>
-<td style="text-align: left;">▂▅▇▅▂</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">soil_depth_pelletier</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">10.87</td>
-<td style="text-align: right;">16.24</td>
-<td style="text-align: right;">0.27</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.23</td>
-<td style="text-align: right;">12.89</td>
-<td style="text-align: right;">50.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">soil_depth_statsgo</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.29</td>
-<td style="text-align: right;">0.27</td>
-<td style="text-align: right;">0.40</td>
-<td style="text-align: right;">1.11</td>
-<td style="text-align: right;">1.46</td>
-<td style="text-align: right;">1.50</td>
-<td style="text-align: right;">1.50</td>
-<td style="text-align: left;">▁▁▂▂▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">soil_porosity</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.44</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.37</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.44</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">0.68</td>
-<td style="text-align: left;">▃▇▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">soil_conductivity</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.74</td>
-<td style="text-align: right;">1.52</td>
-<td style="text-align: right;">0.45</td>
-<td style="text-align: right;">0.93</td>
-<td style="text-align: right;">1.35</td>
-<td style="text-align: right;">1.93</td>
-<td style="text-align: right;">13.96</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">max_water_content</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.64</td>
-<td style="text-align: right;">1.05</td>
-<td style="text-align: left;">▁▅▇▃▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">sand_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">36.47</td>
-<td style="text-align: right;">15.63</td>
-<td style="text-align: right;">8.18</td>
-<td style="text-align: right;">25.44</td>
-<td style="text-align: right;">35.27</td>
-<td style="text-align: right;">44.46</td>
-<td style="text-align: right;">91.98</td>
-<td style="text-align: left;">▅▇▅▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">silt_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">33.86</td>
-<td style="text-align: right;">13.25</td>
-<td style="text-align: right;">2.99</td>
-<td style="text-align: right;">23.95</td>
-<td style="text-align: right;">34.06</td>
-<td style="text-align: right;">43.64</td>
-<td style="text-align: right;">67.77</td>
-<td style="text-align: left;">▂▆▇▆▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">clay_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">19.89</td>
-<td style="text-align: right;">9.32</td>
-<td style="text-align: right;">1.85</td>
-<td style="text-align: right;">14.00</td>
-<td style="text-align: right;">18.66</td>
-<td style="text-align: right;">25.42</td>
-<td style="text-align: right;">50.35</td>
-<td style="text-align: left;">▃▇▅▂▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">water_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.94</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">19.35</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">organic_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.59</td>
-<td style="text-align: right;">3.84</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">57.86</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">other_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">9.82</td>
-<td style="text-align: right;">16.83</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.31</td>
-<td style="text-align: right;">11.74</td>
-<td style="text-align: right;">99.38</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">gauge_lat</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">39.24</td>
-<td style="text-align: right;">5.21</td>
-<td style="text-align: right;">27.05</td>
-<td style="text-align: right;">35.70</td>
-<td style="text-align: right;">39.25</td>
-<td style="text-align: right;">43.21</td>
-<td style="text-align: right;">48.82</td>
-<td style="text-align: left;">▂▃▇▆▅</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">gauge_lon</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">-95.79</td>
-<td style="text-align: right;">16.21</td>
-<td style="text-align: right;">-124.39</td>
-<td style="text-align: right;">-110.41</td>
-<td style="text-align: right;">-92.78</td>
-<td style="text-align: right;">-81.77</td>
-<td style="text-align: right;">-67.94</td>
-<td style="text-align: left;">▆▃▇▇▅</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">elev_mean</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">759.42</td>
-<td style="text-align: right;">786.00</td>
-<td style="text-align: right;">10.21</td>
-<td style="text-align: right;">249.67</td>
-<td style="text-align: right;">462.72</td>
-<td style="text-align: right;">928.88</td>
-<td style="text-align: right;">3571.18</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">slope_mean</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">46.20</td>
-<td style="text-align: right;">47.12</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">7.43</td>
-<td style="text-align: right;">28.80</td>
-<td style="text-align: right;">73.17</td>
-<td style="text-align: right;">255.69</td>
-<td style="text-align: left;">▇▂▂▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">area_gages2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">792.62</td>
-<td style="text-align: right;">1701.95</td>
-<td style="text-align: right;">4.03</td>
-<td style="text-align: right;">122.28</td>
-<td style="text-align: right;">329.68</td>
-<td style="text-align: right;">794.30</td>
-<td style="text-align: right;">25791.04</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">area_geospa_fabric</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">808.08</td>
-<td style="text-align: right;">1709.85</td>
-<td style="text-align: right;">4.10</td>
-<td style="text-align: right;">127.98</td>
-<td style="text-align: right;">340.70</td>
-<td style="text-align: right;">804.50</td>
-<td style="text-align: right;">25817.78</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">frac_forest</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.64</td>
-<td style="text-align: right;">0.37</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.28</td>
-<td style="text-align: right;">0.81</td>
-<td style="text-align: right;">0.97</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▃▁▁▂▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">lai_max</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3.22</td>
-<td style="text-align: right;">1.52</td>
-<td style="text-align: right;">0.37</td>
-<td style="text-align: right;">1.81</td>
-<td style="text-align: right;">3.37</td>
-<td style="text-align: right;">4.70</td>
-<td style="text-align: right;">5.58</td>
-<td style="text-align: left;">▅▆▃▅▇</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">lai_diff</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">2.45</td>
-<td style="text-align: right;">1.33</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">1.20</td>
-<td style="text-align: right;">2.34</td>
-<td style="text-align: right;">3.76</td>
-<td style="text-align: right;">4.83</td>
-<td style="text-align: left;">▇▇▇▆▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">gvf_max</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.72</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.61</td>
-<td style="text-align: right;">0.78</td>
-<td style="text-align: right;">0.86</td>
-<td style="text-align: right;">0.92</td>
-<td style="text-align: left;">▁▁▂▃▇</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">gvf_diff</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.32</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.19</td>
-<td style="text-align: right;">0.32</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">0.65</td>
-<td style="text-align: left;">▃▇▅▇▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">dom_land_cover_frac</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.81</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.31</td>
-<td style="text-align: right;">0.65</td>
-<td style="text-align: right;">0.86</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▁▂▃▃▇</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">root_depth_50</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.96</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.19</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: left;">▃▃▇▂▂</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">root_depth_99</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.96</td>
-<td style="text-align: right;">1.83</td>
-<td style="text-align: right;">0.30</td>
-<td style="text-align: right;">1.50</td>
-<td style="text-align: right;">1.52</td>
-<td style="text-align: right;">1.80</td>
-<td style="text-align: right;">2.00</td>
-<td style="text-align: right;">3.10</td>
-<td style="text-align: left;">▇▃▂▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">q_mean</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.49</td>
-<td style="text-align: right;">1.54</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.63</td>
-<td style="text-align: right;">1.13</td>
-<td style="text-align: right;">1.75</td>
-<td style="text-align: right;">9.69</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">runoff_ratio</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.39</td>
-<td style="text-align: right;">0.23</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.24</td>
-<td style="text-align: right;">0.35</td>
-<td style="text-align: right;">0.51</td>
-<td style="text-align: right;">1.36</td>
-<td style="text-align: left;">▆▇▂▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">slope_fdc</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.51</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.90</td>
-<td style="text-align: right;">1.28</td>
-<td style="text-align: right;">1.63</td>
-<td style="text-align: right;">2.50</td>
-<td style="text-align: left;">▂▅▇▇▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">baseflow_index</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.49</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.40</td>
-<td style="text-align: right;">0.50</td>
-<td style="text-align: right;">0.60</td>
-<td style="text-align: right;">0.98</td>
-<td style="text-align: left;">▁▃▇▅▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">stream_elas</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.83</td>
-<td style="text-align: right;">0.78</td>
-<td style="text-align: right;">-0.64</td>
-<td style="text-align: right;">1.32</td>
-<td style="text-align: right;">1.70</td>
-<td style="text-align: right;">2.23</td>
-<td style="text-align: right;">6.24</td>
-<td style="text-align: left;">▁▇▃▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">q5</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.27</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.08</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">2.42</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">q95</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">5.06</td>
-<td style="text-align: right;">4.94</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">2.07</td>
-<td style="text-align: right;">3.77</td>
-<td style="text-align: right;">6.29</td>
-<td style="text-align: right;">31.82</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">high_q_freq</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">25.74</td>
-<td style="text-align: right;">29.07</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">6.41</td>
-<td style="text-align: right;">15.10</td>
-<td style="text-align: right;">35.79</td>
-<td style="text-align: right;">172.80</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">high_q_dur</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">6.91</td>
-<td style="text-align: right;">10.07</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.82</td>
-<td style="text-align: right;">2.85</td>
-<td style="text-align: right;">7.55</td>
-<td style="text-align: right;">92.56</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">low_q_freq</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">107.62</td>
-<td style="text-align: right;">82.24</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">37.44</td>
-<td style="text-align: right;">96.00</td>
-<td style="text-align: right;">162.14</td>
-<td style="text-align: right;">356.80</td>
-<td style="text-align: left;">▇▆▅▂▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">low_q_dur</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">22.28</td>
-<td style="text-align: right;">21.66</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">10.00</td>
-<td style="text-align: right;">15.52</td>
-<td style="text-align: right;">26.91</td>
-<td style="text-align: right;">209.88</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">zero_q_freq</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.11</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.97</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">hfd_mean</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">182.52</td>
-<td style="text-align: right;">33.53</td>
-<td style="text-align: right;">112.25</td>
-<td style="text-align: right;">160.16</td>
-<td style="text-align: right;">173.77</td>
-<td style="text-align: right;">204.05</td>
-<td style="text-align: right;">287.75</td>
-<td style="text-align: left;">▂▇▃▂▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">logQmean</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">-0.11</td>
-<td style="text-align: right;">1.17</td>
-<td style="text-align: right;">-5.39</td>
-<td style="text-align: right;">-0.46</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">2.27</td>
-<td style="text-align: left;">▁▁▂▇▂</td>
-</tr>
-</tbody>
-</table>
 </div>
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_dat</span>(camels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1939,7 +1089,7 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1958,7 +1108,7 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2107,7 +1257,7 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2115,7 +1265,7 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-52-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-53-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2147,7 +1297,7 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-52-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-53-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2185,88 +1335,17 @@ aridity:p_mean  0.1048449 0.07198145   1.456555 1.458304e-01</code></pre>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> camels_spatial_block,</span>
 <span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> rf_model_grid,</span>
 <span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>→ A | warning: ! 39 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>→ B | warning: ! 42 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x1
-There were issues with some computations   A: x2   B: x1
-→ C | warning: ! 44 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x2   B: x1
-→ D | warning: ! 46 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x2   B: x1
-→ E | warning: ! 49 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x2   B: x1
-There were issues with some computations   A: x5   B: x4   C: x3   D: x2   E: x1
-→ F | warning: ! 51 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x5   B: x4   C: x3   D: x2   E: x1
-→ G | warning: ! 54 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x5   B: x4   C: x3   D: x2   E: x1
-→ H | warning: ! 56 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x5   B: x4   C: x3   D: x2   E: x1
-There were issues with some computations   A: x8   B: x7   C: x6   D: x5   E: x…
-→ I | warning: ! 59 columns were requested but there were 37 predictors in the data.
-               ℹ 37 predictors will be used.
-There were issues with some computations   A: x8   B: x7   C: x6   D: x5   E: x…
-There were issues with some computations   A: x10   B: x8   C: x7   D: x6   E: …
-There were issues with some computations   A: x13   B: x11   C: x9   D: x7   E:…
-There were issues with some computations   A: x16   B: x14   C: x12   D: x10   …
-There were issues with some computations   A: x19   B: x16   C: x14   D: x12   …
-There were issues with some computations   A: x20   B: x17   C: x14   D: x12   …
-There were issues with some computations   A: x24   B: x21   C: x18   D: x15   …
-There were issues with some computations   A: x26   B: x23   C: x20   D: x17   …
-There were issues with some computations   A: x28   B: x24   C: x21   D: x18   …
-There were issues with some computations   A: x29   B: x25   C: x21   D: x18   …
-There were issues with some computations   A: x33   B: x29   C: x25   D: x21   …
-There were issues with some computations   A: x36   B: x32   C: x28   D: x24   …
-There were issues with some computations   A: x37   B: x32   C: x28   D: x24   …
-There were issues with some computations   A: x38   B: x33   C: x28   D: x24   …
-There were issues with some computations   A: x42   B: x37   C: x32   D: x27   …
-There were issues with some computations   A: x45   B: x40   C: x35   D: x30   …
-There were issues with some computations   A: x46   B: x40   C: x35   D: x30   …
-There were issues with some computations   A: x49   B: x43   C: x37   D: x31   …
-There were issues with some computations   A: x52   B: x46   C: x40   D: x34   …
-There were issues with some computations   A: x55   B: x48   C: x42   D: x36   …
-There were issues with some computations   A: x57   B: x50   C: x43   D: x36   …
-There were issues with some computations   A: x60   B: x53   C: x46   D: x39   …
-There were issues with some computations   A: x64   B: x56   C: x49   D: x42   …
-There were issues with some computations   A: x65   B: x57   C: x49   D: x42   …
-There were issues with some computations   A: x68   B: x60   C: x52   D: x44   …
-There were issues with some computations   A: x70   B: x62   C: x54   D: x46   …
-There were issues with some computations   A: x73   B: x64   C: x56   D: x48   …
-There were issues with some computations   A: x75   B: x66   C: x57   D: x48   …
-There were issues with some computations   A: x78   B: x69   C: x60   D: x51   …
-There were issues with some computations   A: x81   B: x72   C: x63   D: x54   …
-There were issues with some computations   A: x82   B: x72   C: x63   D: x54   …
-There were issues with some computations   A: x85   B: x75   C: x65   D: x55   …
-There were issues with some computations   A: x88   B: x78   C: x68   D: x58   …
-There were issues with some computations   A: x90   B: x80   C: x70   D: x60   …</code></pre>
-</div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(rf_tune)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(rf_tune)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"rsq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"rsq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 8
    mtry min_n .metric .estimator  mean     n std_err .config         
@@ -2277,7 +1356,7 @@ There were issues with some computations   A: x90   B: x80   C: x70   D: x60   �
 4    39     2 rsq     standard   0.862    10  0.0202 pre0_mod17_post0
 5    56    14 rsq     standard   0.861    10  0.0221 pre0_mod24_post0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"rsq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"rsq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
    mtry min_n .config         
@@ -2297,21 +1376,21 @@ There were issues with some computations   A: x90   B: x80   C: x70   D: x60   �
 <li><label><input type="checkbox" checked="">If the model you chose cannot provide VIP, instead discuss the interpretability trade-off you accepted and how you would diagnose the same question (permutation importance via <code>vip::vi_permute()</code>, partial dependence, etc.).</label></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> <span class="fu">select_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"rsq"</span>)</span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>rf_final <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
-<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model_tuned) <span class="sc">|&gt;</span></span>
-<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_params) <span class="sc">|&gt;</span></span>
-<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> camels_train)</span>
-<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a>rf_final <span class="sc">|&gt;</span></span>
-<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
-<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> <span class="fu">select_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"rsq"</span>)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>rf_final <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model_tuned) <span class="sc">|&gt;</span></span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_params) <span class="sc">|&gt;</span></span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> camels_train)</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a>rf_final <span class="sc">|&gt;</span></span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2331,21 +1410,21 @@ There were issues with some computations   A: x90   B: x80   C: x70   D: x60   �
 <li><label><input type="checkbox" checked="">In 3–5 sentences, describe what you think of the results — including how the test-set metrics compare to your spatial-CV estimate, where the model under- or over-predicts, and what you’d investigate next.</label></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>rf_final <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model_tuned) <span class="sc">|&gt;</span></span>
-<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_params) <span class="sc">|&gt;</span></span>
-<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> camels_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>rf_final <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model_tuned) <span class="sc">|&gt;</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_params) <span class="sc">|&gt;</span></span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> camels_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>rf_final <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model_tuned) <span class="sc">|&gt;</span></span>
-<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_params) <span class="sc">|&gt;</span></span>
-<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(camels_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>rf_final <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model_tuned) <span class="sc">|&gt;</span></span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_params) <span class="sc">|&gt;</span></span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(camels_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(rf_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(rf_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config        
@@ -2353,7 +1432,7 @@ There were issues with some computations   A: x90   B: x80   C: x70   D: x60   �
 1 rmse    standard       0.345 pre0_mod0_post0
 2 rsq     standard       0.922 pre0_mod0_post0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_predictions</span>(rf_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_predictions</span>(rf_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 168 × 5
    .pred id               logQmean  .row .config        
@@ -2372,26 +1451,26 @@ There were issues with some computations   A: x90   B: x80   C: x70   D: x60   �
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_predictions</span>(rf_final) <span class="sc">|&gt;</span></span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">testing</span>(camels_split) <span class="sc">|&gt;</span> </span>
-<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(aridity)) <span class="sc">|&gt;</span></span>
-<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logQmean, <span class="at">y =</span> .pred, <span class="at">color =</span> aridity)) <span class="sc">+</span></span>
-<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
-<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"salmon"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>() <span class="sc">+</span></span>
-<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Observed vs Predicted Log Mean Streamflow"</span>,</span>
-<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Observed Log Mean Flow"</span>,</span>
-<span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Log Mean Flow"</span>,</span>
-<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Aridity"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_predictions</span>(rf_final) <span class="sc">|&gt;</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">testing</span>(camels_split) <span class="sc">|&gt;</span> </span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(aridity)) <span class="sc">|&gt;</span></span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logQmean, <span class="at">y =</span> .pred, <span class="at">color =</span> aridity)) <span class="sc">+</span></span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb114-7"><a href="#cb114-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb114-8"><a href="#cb114-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"salmon"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb114-9"><a href="#cb114-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>() <span class="sc">+</span></span>
+<span id="cb114-10"><a href="#cb114-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Observed vs Predicted Log Mean Streamflow"</span>,</span>
+<span id="cb114-11"><a href="#cb114-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Observed Log Mean Flow"</span>,</span>
+<span id="cb114-12"><a href="#cb114-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Log Mean Flow"</span>,</span>
+<span id="cb114-13"><a href="#cb114-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Aridity"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="523C_Lab-05_Schwanger_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
