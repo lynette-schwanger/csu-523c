@@ -21,6 +21,7 @@ This mirrors the Lees Ferry forecasting example from lecture — same `dataRetri
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
 library(plotly)
 
@@ -158,7 +159,7 @@ g1 <- ggplot(pf, aes(x = as.Date(Date), y = Flow)) +
 
 plot_ly(pf, x = ~as.Date(Date), y = ~Flow, type = "scatter", mode = "lines",
         line = list(color = "steelblue")) |>
-  layout(title = "Monthly Streamflow — Cache la Poudre at Mouth",
+  layout(title = "Monthly Streamflow: Cache la Poudre at Mouth",
          xaxis = list(title = "Date"),
          yaxis = list(title = "Flow (cfs)"))
 ```
@@ -310,8 +311,11 @@ mods <- list(
 Fit all models to the training data on the log scale. Exclude the raw `Flow` column so models only see `log_flow` as the response — each engine handles `date` and climate predictors internally.
 
 ```{r}
+#| message: false
 models <- map(mods, ~ fit(.x, log_flow ~ ., data = select(training, -Flow)))
+```
 
+```{r}
 (models_tbl <- as_modeltime_table(models))
 ```
 
@@ -346,10 +350,7 @@ test_forecast <- calibration_table |>
   mutate(.value   = expm1(.value),
          .conf_lo = expm1(pmax(.conf_lo, 0)),
          .conf_hi = expm1(.conf_hi))
-
-test_forecast
 ```
-
 
 ```{r}
 test_forecast |>
@@ -379,8 +380,11 @@ Do predictions track actuals during the 2022–2023 test window? Are confidence 
 Refit all models to the complete 2013–2023 record before forecasting forward. Refitting allows auto-tuned models (`auto.arima`, `ets`) to re-optimize their parameters with more data:
 
 ```{r}
+#| message: false
 refit_tbl <- modeltime_refit(calibration_table, data = select(pf_tbl, -Flow))
+```
 
+```{r}
 modeltime_accuracy(refit_tbl) |>
   arrange(mae) |>
   select(.model_desc, mae, mape, mase, rmse, rsq)
@@ -460,6 +464,8 @@ In lecture we showed that adding Glenwood Springs flow as an exogenous regressor
 Download data from a headwater gage on the Poudre (e.g., North Fork Cache la Poudre, USGS 06746095) and add it as a predictor:
 
 ```{r}
+#| message: false
+#| warning: false
 upstream <- readNWISdv(
   siteNumber  = "06746095",
   parameterCd = "00060",
